@@ -14,6 +14,7 @@ public class VarTest {
 		
 		a=3;
 		//a=3.14;
+		// test
 		c=a;
 		System.out.println(a);
 		a=a+4;
