@@ -1,15 +1,6 @@
 package kjw.m07.d14;
 
 public class Prob {
-	public static void main(String[] args) {
-		String str = "PROD-001#X-note#Samsung#6000000";
-		String[] strs = stringSplit(str,"#"); //stringSplit 메서드 제작 필요
-		System.out.println("===문자열 처리결과 ===");
-		for(int i = 0; i< strs.length; i++) {
-			System.out.println(strs[i]);
-		}		
-	}//end of main
-	
 	// 구분자 # 파싱해서 배열에 저장 리턴 메서드
 	private static String[] stringSplit(String str1, String str2) {
 		
@@ -33,6 +24,14 @@ public class Prob {
 		}
 		result[resultIndex]= str1.substring(startIndex); 
 		return result;
-		
-	}
+	}//end of method
+	
+	public static void main(String[] args) {
+		String str = "PROD-001#X-note#Samsung#6000000";
+		String[] strs = stringSplit(str,"#"); //stringSplit 메서드 제작 필요
+		System.out.println("===문자열 처리결과 ===");
+		for(int i = 0; i< strs.length; i++) {
+			System.out.println(strs[i]);
+		}		
+	}//end of main
 }// end of class
