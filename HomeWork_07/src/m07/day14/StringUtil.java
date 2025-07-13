@@ -3,45 +3,50 @@ package m07.day14;
 public class StringUtil {
 	private static String replaceString(String[] strArr) {
 		if (strArr == null || strArr.length == 0) {
-			return "입력 없음";
+			System.out.println("배열이 비어있음.");
+			return "";
 		}
-
-		int maxCount = 0;
-		int targetIndex = -1;
-
-		for (int i = 0; i < strArr.length; i++) {
-			int count = countChar(strArr[i], 'a');
-			if (count > maxCount) {
-				maxCount = count;
-				targetIndex = i;
+		
+		String maxAString = "";
+		int maxACount = -1;
+		
+		for(int i=0; i< strArr.length; i++) { 
+			String str = strArr[i];
+			//System.out.println("strArr[i] : " + strArr[i]);
+			
+			int currentACount=0;
+			for(int j=0; j<str.length();j++) {
+				if(str.charAt(j) == 'a') {
+					currentACount++;
+				}
+			}//out of inner for
+			if(currentACount > maxACount) {
+				maxACount = currentACount;
+				maxAString = str;
+			//	System.out.println("maxAString111111 : " + maxAString);
 			}
-		}
-
-		if (maxCount == 0) {
-			return "a 없음";
-		}
-
-		return strArr[targetIndex].replace('a', 'A');
-	}
-
-	private static int countChar(String str, char ch) {
-		int count = 0;
-		for (char c : str.toCharArray()) {
-			if (c == ch) {
-				count++;
-			}
-		}
-		return count;
-	}
+		}// out of outer for
+		
+		return maxAString.replace('a', 'A');
+		
+	} // end of method
 
 	public static void main(String[] args) {
-		System.out.println("변경된 문자열: "
-				+ StringUtil.replaceString(new String[] { "java program", "array", "java program area", "append" }));
+		// 기본org
+//		String[] arr = {"java program", "array", "java program area", "append"};
+//		String result = StringUtil.replaceString(arr);
+//		System.out.println("변경된 문자열: " + result);
 
-		System.out.println("변경된 문자열(입력 없음): "
-				+ StringUtil.replaceString(new String[] { }));
 		
-		System.out.println("변경된 문자열(a없음): "
-				+ StringUtil.replaceString(new String[] { "jv progrm", "rry", "jv progrm re", "ppend" }));
+//		String result = StringUtil.replaceString(new String[] {"java program", "array", "java program area", "append"});
+//		System.out.println("변경된 문자열" + result);
+		
+//		String[] arr = {"java program", "array", "java program area", "append"};
+//		System.out.println("변경된 문자열: " + StringUtil.replaceString(arr));
+
+		
+		System.out.println("변경된 문자열 : " + StringUtil.replaceString(new String[] {"java program", "array", "java program area", "append"}));
+		//System.out.println("변경된 문자열(입력 없음): " + StringUtil2.replaceString(new String[] { }));
+
 	}//end of main
 }// end of class
