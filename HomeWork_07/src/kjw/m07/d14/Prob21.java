@@ -1,4 +1,4 @@
-package m07.day14;
+package kjw.m07.d14;
 
 public class Prob21 {
 
