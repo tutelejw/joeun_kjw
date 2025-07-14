@@ -1,15 +1,21 @@
 package kjw.hw.m07.d15;
 
 import java.util.Vector;
+import java.util.List;
 
 	//java.uti.Vector, String, StringBuffer
 	//일단 돌아가게 , interface 기반 변경, for문 확장형으로
 public class Prob01 {
 	public Vector<String> dataChange(String[] strData){
-		//구현
-		System.out.println("리턴");
-		return null;
-		//return null;
+		//Vector<String> result = new Vector<>();
+		List<String> result = new Vector<>();
+		
+		for (int i=strData.length -1; i>= 0; i--) {
+			StringBuffer sb = new StringBuffer(strData[i]);
+			//result.add(sb.toString());
+			result.add(sb.reverse().toString());
+		}
+		return (Vector<String>) result;
 	}
 	
 	///main method
