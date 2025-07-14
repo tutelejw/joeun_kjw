@@ -1,4 +1,4 @@
-package typing.m07.d10;
+package kjw.typing.m07.d10;
 
 import java.io.*;
 public class BufferedReaderTest{

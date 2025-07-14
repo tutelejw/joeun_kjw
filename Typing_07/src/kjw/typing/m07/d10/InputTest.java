@@ -1,17 +1,21 @@
-package typing.m07.d10;
+package kjw.typing.m07.d10;
 import java.io.*;
 
-public class ReaderTest{
+public class InputTest{
 
     public static void main(String args[]){
+
+    	System.out.println(args[0]);
+    	
+        InputStream inputStream = System.in;
+
+        System.out.println("입력을 기다립니다.......");
+                       
         try{
-            InputStream inputStream = System.in;
-            Reader reader = new InputStreamReader(inputStream);
-
-            System.out.println("입력을 기다립니다.......");
-
+ 
             while(true){
-                int i = reader.read();
+                // 1. java.io 는 지연(block)될 수 있다.
+                int i = inputStream.read();
                 char c = (char) i;
 
                 System.out.println("입력하신 값: " + c);
@@ -20,6 +24,7 @@ public class ReaderTest{
                     inputStream.close();
                     break;
                 }
+                // 한글입력시 깨진
             }
         }catch(IOException e){
             e.printStackTrace();

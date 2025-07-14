@@ -1,4 +1,4 @@
-package typing.m07.d11;
+package kjw.typing.m07.d11;
 
 public class AfterThreadRunnable implements Runnable{
 	
