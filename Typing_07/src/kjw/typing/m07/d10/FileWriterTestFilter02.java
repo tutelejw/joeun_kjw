@@ -9,7 +9,8 @@ public class FileWriterTestFilter02 {
 
         br = new BufferedReader(new InputStreamReader(System.in));
 
-        bw = new BufferedWriter(new FileWriter("test.txt", true)); // append 모드
+        bw = new BufferedWriter(new FileWriter("./src/kjw/typing/m07/d11/test11.txt", true)); // append 모드
+        //bw = new BufferedWriter(new FileWriter("test.txt", true)); // append 모드
 
         System.out.println("화일에 저장하실 글을 입력하세요.");
         while (true) {
