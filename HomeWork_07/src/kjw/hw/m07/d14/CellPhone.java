@@ -43,8 +43,7 @@ public class CellPhone {
 		this.totalCallTime += totalCallTime;
 		System.out.println(phoneNumber + " 번호로 " +totalCallTime + " 통화함.");
 	}
-	public int calculateTotalFee() {
-		this.totalFee = this.totalCallTime * this.feePerCallTime;
-		return this.totalFee;
+	public void calculateTotalFee() {
+		this.totalFee = totalCallTime * feePerCallTime;
 	}
 }

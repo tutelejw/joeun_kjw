@@ -10,19 +10,19 @@ public class Prob3 {
 
 		System.out.println("========================================");
 
-//		SmartPhone smartPhone = new SmartPhone("000-000-000", 200);
-//		smartPhone.call("017-017-017", 10);
-//		smartPhone.calculateTotalFee();
-//		System.out.println(smartPhone.getPhoneNumber() + " 통화 시간: " + smartPhone.getTotalCallTime()
-//				+ ", 단가: " + smartPhone.getFeePerCallTime() + ", 총 요금: " + smartPhone.getTotalFee() + "원");
-//
-//		System.out.println("========================================");
-//
-//		SmartPhone smartPhone01 = new SmartPhone("111-111-111", 0, true, 3000);
-//		smartPhone01.call("017-017-017", 10);
-//		smartPhone01.call("016-016-016", 10);
-//		smartPhone01.calculateTotalFee();
-//		System.out.println(smartPhone01.getPhoneNumber() + " 통화 시간: " + smartPhone01.getTotalCallTime()
-//				+ ", 단가: " + smartPhone01.getFeePerCallTime() + ", 총 요금: " + smartPhone01.getTotalFee() + "원");
+		SmartPhone smartPhone = new SmartPhone("000-000-000", 200);
+		smartPhone.call("017-017-017", 10);
+		smartPhone.calculateTotalFee();
+		System.out.println(smartPhone.getPhoneNumber() + " 통화 시간: " + smartPhone.getTotalCallTime()
+				+ ", 단가: " + smartPhone.getFeePerCallTime() + ", 총 요금: " + smartPhone.getTotalFee() + "원");
+
+		System.out.println("========================================");
+
+		SmartPhone smartPhone01 = new SmartPhone("111-111-111", 0, true, 3000);
+		smartPhone01.call("017-017-017", 10);
+		smartPhone01.call("016-016-016", 10);
+		smartPhone01.calculateTotalFee(); 
+		System.out.println(smartPhone01.getPhoneNumber() + " 통화 시간: " + smartPhone01.getTotalCallTime()
+				+ ", 단가: " + smartPhone01.getFeePerCallTime() + ", 총 요금: " + smartPhone01.getTotalFee() + "원");
 	} // end of main
 } // end of class
