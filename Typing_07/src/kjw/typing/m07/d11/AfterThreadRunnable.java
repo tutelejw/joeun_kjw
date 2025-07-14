@@ -13,15 +13,16 @@ public class AfterThreadRunnable implements Runnable{
 	public void run() {
 		for(int i=1; i<100;i++) {
 			System.out.println(name+" : " +i);
-			/*
+			///*
 				//sleep() ==> API 확인  java.lang.Thread.sleep()
 				try{
 					Thread.sleep(10);
 					}catch(InterruptedException e){
 					System.out.println(e);
 					}
-			 */
+			//*/
 		}
+		System.out.println("끝끝끝끝끝끝끝");
 	}
 
 ///main method
