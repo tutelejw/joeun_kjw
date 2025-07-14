@@ -1,4 +1,4 @@
-package kjw.m07.d14;
+package kjw.hw.m07.d14;
 
 public class Prob {
 	// 구분자 # 파싱해서 배열에 저장 리턴 메서드

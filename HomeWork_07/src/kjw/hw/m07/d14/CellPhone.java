@@ -1,4 +1,4 @@
-package kjw.m07.d14;
+package kjw.hw.m07.d14;
 
 public class CellPhone {
 	private String phoneNumber;  //전화번호000-000-0000

@@ -1,4 +1,4 @@
-package kjw.m07.d14;
+package kjw.hw.m07.d14;
 public class Prob3 {
 	public static void main(String[] args) {
 		CellPhone cellPhone = new CellPhone("010-010-010", 1000);
