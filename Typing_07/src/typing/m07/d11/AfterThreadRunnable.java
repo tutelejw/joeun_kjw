@@ -1,7 +1,5 @@
 package typing.m07.d11;
 
-import com.sun.org.apache.bcel.internal.generic.VariableLengthInstruction;
-
 public class AfterThreadRunnable implements Runnable{
 	
 	private String name;
