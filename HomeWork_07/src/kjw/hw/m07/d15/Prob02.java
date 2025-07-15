@@ -2,6 +2,23 @@ package kjw.hw.m07.d15;
 
 //String 연습
 public class Prob02 {
+	public static String getParameter(String url, String paramName) {
+		System.out.println("url : " + url + " paramName : " +  paramName);
+		int index = url.indexOf("?"); //indexOf  - String 클래스 포함 메서드 구분자 위치 숫자 반환 0부터 카운트.
+		String tmp1 = url.substring(index + 1, url.length()); //url의 ? 다음 글자수 부터 끝까지 tmp1에 담고.
+		String[] tmp2 = tmp1.split("&"); //& csv로 나누어서 배열로 저장 tmp2
+		
+		String result=null;
+		for (int i=0; i<tmp2.length;i++) { //tmp2 의 갯수만큼 for 문
+			if (tmp2[i].startsWith(paramName)){				//tmp2를 for 문으로 돌려서서 String 클래스의 startsWith 메소드로 문자열 paramName = prodName 의 값을 반환
+			String[] tmp3=tmp2[i].split("=");
+			result=tmp3[1];
+			break;
+			}
+		}
+		return result;
+	}
+	
 	public static void main(String[] args) {
 		String url1 = "http://localhost/order?prodId=PROD-001&prodName=갤럭시3&price=980000";
 		
@@ -13,10 +30,7 @@ public class Prob02 {
 		System.out.println("회원 주소 : " + userAddress);		
 	}// out of main
 	
-	public static String getParameter(String url, String paramName) {
-		System.out.println("url : " + url + " paramName : " +  paramName);
-		return null;
-	}
+	
 }// out of class
 
 
