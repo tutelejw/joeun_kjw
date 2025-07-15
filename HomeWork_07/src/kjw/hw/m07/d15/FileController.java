@@ -8,35 +8,28 @@ public class FileController {
 		//reverseLine 메서드 구현.
 		//라인 수 세기
 		BufferedReader br = new BufferedReader(new FileReader(oldf));
-		int lineCount = 0;
-		while (br.readLine() != null) {
-			lineCount++;
-		}
-		//br.close();
+		List<String>m = new ArrayList<String>();
 		
-		//배열에 저장
-		String[] lines = new String[lineCount];
-		
-		//BufferedReader br = new BufferedReader(new FileReader(oldf));
-		for (int i=0; i <lineCount; i++) {
-			lines[i] = br.readLine();
+		String line = null;
+		while ((line = br.readLine())!=null) {
+			m.add(line);
 		}
 		br.close();
-		BufferedWriter bw = new BufferedWriter(new FileWriter(newf));
-		for (int i = lineCount - 1; i >= 0; i--) {
-			bw.write(lines[i]);
-			bw.newLine(); // 줄바꿈
-		}
-		bw.close();
 		
+		PrintWriter pw = new PrintWriter(new FileOutputStream(newf));
+		for (int i=m.size() - 1; i>=0; i--) {
+			pw.println(m.get(i));
+		}
+		pw.flush();
+		pw.close();	
 		
 		System.out.println("reverseLine 메서드 구현.");
 	} // out of method
 	
 	public static void main(String[] args) throws Exception{
 		FileController c = new FileController();
-		String oldf = "./src/files/oldf.txt";
-		String newf = "./src/files/newf.txt";
+		String oldf = "files/oldf.txt";
+		String newf = "files/newf.txt";
 		c.reverseLine (oldf,newf);
 	}//out of main
 } //out of classs
