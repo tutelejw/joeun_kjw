@@ -287,3 +287,90 @@ SELECT * FROM EMP_TEST;
 rollback;
 SELECT * FROM EMP_TEST;
 
+
+
+
+
+
+
+
+
+
+6 페이지=====================================================================
+
+select name||' '||title from emp_test;
+
+
+select dept_name 부서 from emp_test;
+
+
+select distinct dept_name 부서명 from emp_test;
+
+
+select distinct dept_name, name 부서명 from emp_test;
+
+
+insert into emp_test (name, dept_name) values('홍길동','관리부');
+
+
+select dept_name, name 부서명 from emp_test;
+
+select distinct dept_name, name 부서명 from emp_test;
+
+
+
+
+3.keyword :: order by (정렬, sort)
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 desc;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12;
+
+
+
+3. keyword nulls first / nulls last
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc nulls first;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc nulls last;
+
+
+
+
+
+
+7 페이지=====================================================================
+
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12;
+
+select name 이름,  salary*12 연봉 from emp_test  order by salary;
+
+select name 이름,  salary*12 연봉 from emp_test  order by 연봉;
+
+select name 이름,  salary*12 연봉 from emp_test  order by 2;
+
+
+
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by dept_name;
+select name 이름,  salary*12 연봉 from emp_test  order by dept_name;
+
+
+
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by salary;
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by salary, 부서;
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by 부서, salary;
+
+
+
+
+
+
+
+
+8 페이지=====================================================================
+
+
+
+
+
+
+
+
+
