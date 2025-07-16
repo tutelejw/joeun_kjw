@@ -256,8 +256,34 @@ SELECT * FROM EMP_TEST;
 rollback;
 
 
+DELETE FROM EMP_TEST
+WHERE id=5 or id=6;
+
+SELECT * FROM EMP_TEST;
+rollback;
 
 
 
 
+DELETE FROM EMP_TEST
+WHERE id=2 or id=3;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+
+DELETE FROM EMP_TEST
+WHERE id=2 and id=3;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+
+
+DELETE FROM EMP_TEST;
+SELECT * FROM EMP_TEST;
+rollback;
+SELECT * FROM EMP_TEST;
 
