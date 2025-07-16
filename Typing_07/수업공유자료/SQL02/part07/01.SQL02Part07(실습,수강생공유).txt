@@ -1,0 +1,68 @@
+//========================================================//
+//==> JOIN : 하나 이상의 테이블로 부터 연관된 Data 조회
+//==>  4가지 경우 : EQUI JOIN / NON-EQUI JOIN / SELF JOIN / OUTER JOIN
+
+
+
+//========================================================//
+//==> 1. NON-EQUIJOIN 
+	=> EQUI JOIN 은 = 연산자를 사용
+	=> NON-EQUI JOIN 은 =연산자를 제외한 비교 연산자 사용
+
+
+//==> sal_grade TABLE 생성
+CREATE TABLE sal_grade(
+	grade	CHAR(1)	      CONSTRAINT   salgrade_grade_nn	    NOT NULL,
+	losal	NUMBER(4)	  CONSTRAINT   salgrade_losal_uq	      UNIQUE,
+	hisal	NUMBER(4)	  CONSTRAINT   salgrade_hisal_uq	      UNIQUE
+);
+
+
+//==> RECORD 입력
+
+INSERT INTO sal_grade VALUES('A',4000,5999);
+INSERT INTO sal_grade VALUES('B',3000,3999);
+INSERT INTO sal_grade VALUES('C',2000,2999);
+INSERT INTO sal_grade VALUES('D',1000,1999);
+INSERT INTO sal_grade VALUES('E',500,999);
+
+COMMIT;
+
+SELECT * FROM sal_grade;
+
+
+
+
+
+
+
+//==============================================//
+//================== 실   습 1  ====================//
+//==============================================//
+
+1. 개발부 직원과 영업부직원 이름 , 월급 , 월급등급 , 부서명 조회
+    => 등급 높은순  ( NON-EQUI JOIN /  EQUI JOIN 같이 사용)
+
+2. sal_grade가 A  인원이 2명이상인 부서명 , 인원수 , 등급 
+     ( NON-EQUI JOIN /  EQUI JOIN 같이 사용)
+
+
+
+
+
+
+
+
+
+//==============================================//
+//==> 부서 배치 전  신입 사원 2명 RECORD 입력
+//==============================================//
+
+//==> FROEGIN KEY 제약조건 : 다른 TABLE PK or NULL 입력
+
+INSERT INTO c_emp VALUES(201,'신입1',1500,'3429-0100',null);
+INSERT INTO c_emp VALUES(202,'신입2',1500,'3429-0200',null);
+
+COMMIT;
+
+SELECT * FROM c_emp ; 
