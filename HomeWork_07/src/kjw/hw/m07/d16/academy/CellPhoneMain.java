@@ -2,7 +2,8 @@ package kjw.hw.m07.d16.academy;
 
 public class CellPhoneMain {
 	public static void main(String[] args) {
-		
+
+		//try catch, throws, throw    equals method   /     instanceof- datatype 확인 keyword
 			CellPhone myPhone = new CellPhone("SCH-600");
 			
 			myPhone.charge(20); // 20분 충전함
