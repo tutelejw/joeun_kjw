@@ -55,14 +55,21 @@ COMMIT;
 
 1.  salary가 null 이고 title가 null인 직원 검색		:: SELECT
 
+select * from emp_test where salary is null and title is null;
+
 2.  title이 null인 직원 title 계약직 변경				:: UPDATE
+update emp_test set title='계약직' where title is null;
 
 3.  월급 2000 이상인  직원 '특판팀' 변경 및
       현 월급에서 무조건 1000 차감 변경			:: UPDATE
+select * from emp_test  where SALARY>=2000;
+update emp_test set dept_name='특판팀', SALARY=SALARY-1000 where SALARY>=2000;
 
 4.  2005년 01월01일 이후 입사자 검색			:: SELECT
      (날짜 비교 ??? :: 과거, 현재, 미래)
+select * from emp_test where IN_DATE > '2005-01-01';
 
 5.  2005년 01월01일 이후 입사자 이고
       월급이 6000원 이하인 직원 검색				:: SELECT 
+select * from emp_test where IN_DATE > '2005-01-01' and SALARY >= 6000;
 //==============================================//
