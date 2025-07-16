@@ -1,0 +1,376 @@
+
+
+
+
+1 페이지=====================================================================
+
+CREATE TABLE emp_test (
+    id       NUMBER(3),              -- id 컬럼은 3자리 숫자
+    name     VARCHAR2(15),           -- name 컬럼은 15자 길이의 문자열
+    salary   NUMBER(7, 2),           -- salary 컬럼은 숫자, 소수점 2자리까지
+    title    VARCHAR2(15) DEFAULT '사원',  -- title 컬럼은 15자 길이의 문자열, 기본값 '사원'
+    in_date  DATE DEFAULT SYSDATE,   -- in_date 컬럼은 날짜, 기본값 SYSDATE (현재 날짜)
+    dept_name VARCHAR2(15)           -- dept_name 컬럼은 15자 길이의 문자열
+);
+
+
+
+
+desc emp_test;
+describe emp_test;
+select * from emp_test;
+
+create table test_table();
+
+create table test_table(
+	no number(10),
+	contents varchar2(10)
+);
+
+desc test_table;
+
+select * from test_table;
+
+drop table test_table;
+desc test_table;
+
+
+
+
+
+2 페이지=====================================================================
+select sysdate from dual;
+
+select 9*9 from dual;
+select user from dual;
+
+
+INSERT INTO emp_test (id, name, salary, title, in_date, dept_name)
+VALUES (1, '김사장', 100, '사장', '04-07-19', '개발부');
+
+
+select * from emp_test;
+
+
+
+insert
+into emp_test
+values(2, '홍길동', 1000, '부사장', '2004-07-19', '영업부');
+
+select * from emp_test;
+
+
+
+
+insert 
+into emp_test (id, name, salary )
+values (3,'홍길순',10000);
+
+select * from emp_test;
+
+
+insert 
+into emp_test(id,name,title)
+values (4, '이순신', '장군');
+
+select * from emp_test;
+
+
+commit;
+
+select * from emp_test;
+
+
+
+
+
+insert 
+into emp_test(id,name,title)
+values (4, '이순신', '장군');
+
+select * from emp_test;
+
+rollback;
+
+select * from emp_test;
+
+
+
+
+
+
+insert
+into emp_test
+values(2, USER , 1000, '부사장', sysdate, '영업부');
+
+select * from emp_test;
+
+
+
+
+3 페이지=====================================================================
+
+insert 
+into emp_test(id,name)
+values (5, '장나라');
+
+select * from emp_test;
+
+
+insert
+into emp_test
+values(6, '신나라' , NULL, null, '', '');
+
+select * from emp_test;
+
+commit
+
+4 페이지=====================================================================
+
+select * from emp_test;
+
+update emp_test
+set id = 7
+where name = 'SCOTT';
+
+
+select * from emp_test;
+
+rollback;
+
+select * from emp_test;
+
+
+
+
+
+update emp_test
+set id = 7
+where name = 'SCOTT';
+
+select * from emp_test;
+
+commit;
+
+
+
+
+
+update emp_test
+set dept_name = '관리부'
+where dept_name = '영업부';
+
+select * from emp_test;
+
+commit;
+
+
+
+
+
+
+
+실습 문제.  
+
+UPDATE EMP_TEST
+SET TITLE = '사장', SALARY = 2000, DEPT_NAME = '영업팀'
+WHERE NAME = '홍길순';
+
+SELECT * FROM EMP_TEST;
+
+
+
+UPDATE EMP_TEST
+SET DEPT_NAME = '대기발령'
+WHERE SALARY > 1500;
+
+SELECT * FROM EMP_TEST;
+
+
+
+
+UPDATE EMP_TEST
+SET TITLE = '평사원';
+
+ROLLBACK;
+
+SELECT * FROM EMP_TEST;
+
+
+
+
+UPDATE EMP_TEST
+SET SALARY = SALARY + 500;
+
+COMMIT;
+
+SELECT * FROM EMP_TEST;
+
+
+
+
+UPDATE EMP_TEST
+SET DEPT_NAME = '대기발령'
+/*WHERE DEPT_NAME=null;*/
+WHERE DEPT_NAME is null;
+
+
+UPDATE EMP_TEST
+SET DEPT_NAME = '대기발령'
+/*WHERE DEPT_NAME=null;*/
+/*WHERE DEPT_NAME is null;*/
+WHERE DEPT_NAME is not null;
+
+
+
+SELECT * FROM EMP_TEST where dept_name is NULL;
+SELECT * FROM EMP_TEST where dept_name=' ';
+
+
+
+
+
+
+
+5 페이지=====================================================================
+
+
+DELETE FROM EMP_TEST
+WHERE TITLE = '장군';
+
+SELECT * FROM EMP_TEST;
+commit;
+
+
+DELETE FROM EMP_TEST
+WHERE id>=6;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+DELETE FROM EMP_TEST
+WHERE id>=5 and id<=6;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+DELETE FROM EMP_TEST
+WHERE id=5 or id=6;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+
+
+DELETE FROM EMP_TEST
+WHERE id=2 or id=3;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+
+DELETE FROM EMP_TEST
+WHERE id=2 and id=3;
+
+SELECT * FROM EMP_TEST;
+rollback;
+
+
+
+
+DELETE FROM EMP_TEST;
+SELECT * FROM EMP_TEST;
+rollback;
+SELECT * FROM EMP_TEST;
+
+
+
+
+
+
+
+
+
+
+6 페이지=====================================================================
+
+select name||' '||title from emp_test;
+
+
+select dept_name 부서 from emp_test;
+
+
+select distinct dept_name 부서명 from emp_test;
+
+
+select distinct dept_name, name 부서명 from emp_test;
+
+
+insert into emp_test (name, dept_name) values('홍길동','관리부');
+
+
+select dept_name, name 부서명 from emp_test;
+
+select distinct dept_name, name 부서명 from emp_test;
+
+
+
+
+3.keyword :: order by (정렬, sort)
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 desc;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12;
+
+
+
+3. keyword nulls first / nulls last
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc nulls first;
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12 asc nulls last;
+
+
+
+
+
+
+7 페이지=====================================================================
+
+select name 이름,  salary*12 연봉 from emp_test  order by salary*12;
+
+select name 이름,  salary*12 연봉 from emp_test  order by salary;
+
+select name 이름,  salary*12 연봉 from emp_test  order by 연봉;
+
+select name 이름,  salary*12 연봉 from emp_test  order by 2;
+
+
+
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by dept_name;
+select name 이름,  salary*12 연봉 from emp_test  order by dept_name;
+
+
+
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by salary;
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by salary, 부서;
+select name 이름,  salary*12 연봉, dept_name 부서 from emp_test  order by 부서, salary;
+
+
+
+
+
+
+
+
+8 페이지=====================================================================
+
+
+
+
+
+
+
+
+

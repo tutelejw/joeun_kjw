@@ -1,0 +1,90 @@
+//========================================================//
+//==> JOIN : 하나 이상의 테이블로 부터 연관된 Data 조회
+//==> 4가지 경우 : EQUI JOIN / NON-EQUI JOIN / SELF JOIN / OUTER JOIN
+
+
+
+//========================================================//
+//==> 1. EQUI JOIN :  PK 와 FK로 관계의 무결성 보장 필요
+
+//==> c_emp table 생성
+CREATE TABLE c_emp(
+	id		            NUMBER(5)		      CONSTRAINT	c_emp_id_pk		                PRIMARY KEY,
+	name	      CHAR(15)		          CONSTRAINT	c_emp_name_nn		        NOT NULL,
+	salary	      NUMBER(7,2),
+	phone	    CHAR(15)		          CONSTRAINT	c_emp_phone_ch		      CHECK(phone LIKE '3429-%'),
+	dept_id	  NUMBER(7)		      CONSTRAINT	c_emp_s_dept_id_fk	    REFERENCES   s_dept( id )
+);
+
+==> c_emp table  생성시 ERROR 발생 ???
+
+
+//==> s_dept table 생성
+CREATE TABLE s_dept(
+	id			                 NUMBER(7)		        CONSTRAINT   s_dept_id_pk		        PRIMARY KEY,
+	dept_name	  VARCHAR2(12)	    CONSTRAINT   c_dept_name_uk	  UNIQUE
+);
+
+
+==> RECORD 입력
+INSERT INTO c_emp VALUES(101,'김사장',1000,'3429-0001',1);
+
+//==> ERROR 발생 ???
+
+
+DELETE FROM s_dept;
+
+INSERT INTO s_dept VALUES (1,'총무부');
+INSERT INTO s_dept VALUES (2,'개발부');
+INSERT INTO s_dept VALUES (3,'영업부');
+INSERT INTO s_dept VALUES (4,'인사부');
+INSERT INTO s_dept VALUES (5,'자재부');
+INSERT INTO s_dept VALUES (6,'회계부');
+
+COMMIT;
+
+
+DELETE FROM c_emp;
+
+INSERT INTO c_emp VALUES(101,'김사장',1000,'3429-0001',1);
+INSERT INTO c_emp VALUES(102,'홍길동',2000,'3429-0002',1);
+INSERT INTO c_emp VALUES(103,'홍길순',3000,'3429-0003',1);
+INSERT INTO c_emp VALUES(104,'이순신',4000,'3429-0004',2);
+INSERT INTO c_emp VALUES(105,'강감찬',5000,'3429-0005',2);
+INSERT INTO c_emp VALUES(106,'류시원',1100,'3429-0006',2);
+INSERT INTO c_emp VALUES(107,'이문세',1200,'3429-0007',3);
+INSERT INTO c_emp VALUES(108,'강호동',1300,'3429-0008',3);
+INSERT INTO c_emp VALUES(109,'강문영',1400,'3429-0009',3);
+INSERT INTO c_emp VALUES(110,'추현재',1500,'3429-0010',4);
+INSERT INTO c_emp VALUES(111,'박상민',2500,'3429-0011',4);
+INSERT INTO c_emp VALUES(112,'박상면',3500,'3429-0012',4);
+INSERT INTO c_emp VALUES(113,'유재석',4500,'3429-0013',5);
+INSERT INTO c_emp VALUES(114,'노무현',5500,'3429-0014',5);
+INSERT INTO c_emp VALUES(115,'전두환',1000,'3429-0015',5);
+INSERT INTO c_emp VALUES(116,'김일성',2000,'3429-0016',6);
+INSERT INTO c_emp VALUES(117,'김정일',3000,'3429-0017',6);
+
+COMMIT;
+ 
+
+
+
+//==============================================//
+//================== 실   습 1  ====================//
+//==============================================//
+
+1.  김씨성 직원의  이름 / 부서명 /연봉  조회
+     ==> 연봉:  \250,000 형식 , 연봉높은순 
+
+
+2.  월급이 2000이상 직원 부서명 / 이름 /일당 조회
+      ==> 부서별 :: 오름차순
+      ==> 이    름 :: 오름차순
+      ==> 일    당 :: 30일기준, 소수점 0자리 버림, \250,000형식, 높은순 
+
+
+3. 부서별 평균 월급  부서번호/부서명/평균월급 조회
+     ==> 부서번호 :: 오름차순
+
+
+4. 총무부 평균 월급  부서번호/부서명/평균월급 조회

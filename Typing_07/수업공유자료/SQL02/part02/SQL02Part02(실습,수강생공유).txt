@@ -1,0 +1,244 @@
+//==============================================
+# FUNCTION => 내부적으로 제공되는 함수
+	:: SINGLE ROW FUNCTION		=> 1개의 record에서 사용 단일행함수
+  :: MULTI ROW FUNCTION		  => 여러개의 record에서 사용 다중행 함수
+
+
+//==============================================
+1. 단일행 함수 ::  문자 함수 CONCAT/SUBSTR/LENGTH
+
+//==>CONCAT(문자,문자) => || 비교 이해
+SELECT 
+name  ||  '님의 월급은 '  ||  salary  ||  '원' "사원월급"
+FROM emp_test;
+
+//==> 위와 비교
+SELECT
+CONCAT( CONCAT(name,'님의 월급은 ')  ,  CONCAT(salary,'원')  ) "사원월급"
+FROM emp_test;
+
+//==> 월금 NULL => 0 처리
+SELECT
+CONCAT( CONCAT(name,'님의 월급은 ')  ,  CONCAT(NVL(salary,0),'원')  ) "사원월급"
+FROM emp_test;
+
+
+
+//==>SUBSTR(문자,시작위치,잘라낼갯수) 
+//==> 2001년도에 입사자 이름, 입사년  조회
+SELECT 
+name 이름 , in_date 입사연도
+FROM emp_test
+WHERE  in_date  LIKE  '01%';
+
+//==> 위와 비교
+SELECT 
+name 이름 , in_date 입사연도
+FROM emp_test
+WHERE  SUBSTR( in_date , 1 , 2 ) = '01';
+
+//==> 위와 비교
+SELECT 
+name 이름 , in_date 입사연도
+FROM emp_test
+WHERE SUBSTR( in_date , -8 , 2 ) = '01';
+
+
+
+//==>LENGTH(문자) => 문자의 갯수 리턴
+SELECT 
+TITLE   두자직책
+FROM emp_test
+WHERE LENGTH( TITLE ) = 2;
+
+
+
+//==> 결 과 확 인
+SELECT name, REPLACE(name,'김사','XY') FROM  
+emp_test;
+
+SELECT name, TRANSLATE(name,'김사','XY') FROM 
+emp_test;
+
+SELECT  salary, TRANSLATE(salary,'0123456789','영일이삼사오육칠팔구') 
+FROM  emp_test;
+
+SELECT  salary, LPAD(TRANSLATE(salary,'0123456789','영일이삼사오육칠팔구') , 10  , '*')
+FROM  emp_test;
+
+SELECT  salary, LPAD(TRANSLATE(NVL(salary,0),'0123456789','영일이삼사오육칠팔구') , 10  , '*')
+FROM  emp_test;
+
+SELECT  salary, RPAD(TRANSLATE(NVL(salary,0),'0123456789','영일이삼사오육칠팔구') , 10  , '*')
+FROM  emp_test;
+
+SELECT name FROM  emp_test
+ WHERE LENGTH(name) = 3;
+/*  WHERE LENGTH(name) != 3;   */
+/*  WHERE LENGTH(name) <> 3;  */
+
+
+
+//== > 이름에 '1 한번 만 나오는 사원이름 조회.
+SELECT 
+name 
+FROM  emp_test
+WHERE  name LIKE '%1%'  AND name NOT LIKE '%1%1%';
+
+//==>INSTR(컬럼명, 찾고자하는 문자, 시작Index, 찾고자하는 문자순서)
+SELECT 
+name 
+FROM  emp_test
+WHERE	INSTR(name,'1',1,1)  > 0  AND  INSTR(name,'1',1,2) = 0 ;
+
+//==> 아래의 Query로 의미 확인
+SELECT 
+name , 
+INSTR(name,'1',1,1) "1번째 출발 1번째index", 
+INSTR(name,'1',5,1) "5번째 출발 1번째index",
+INSTR(name,'1',1,2) "1번째 출발 2번째index", 
+INSTR(name,'1',5,2) "5번째 출발 2번째index" 
+FROM  emp_test;
+
+
+
+//==============================================
+2. 단일행 함수 ::  숫자 함수 ROUND/TRUNC/MOD
+
+//==> ROUND( 숫자 ,  자리수 ) / TRUNC( 숫자 , 자리수 )
+//==>이름, 일당를 반올림/버림   조회
+SELECT 
+name 이름 , ROUND( salary / 30 , 1) 일당반올림 ,  TRUNC( salary/30 , 1 ) 일당버림
+FROM emp_test;
+
+//==>MOD(숫자,나누기 할 수) 
+//==>직원 아이디 홀수 조회
+SELECT 
+id  홀수아이디  ,  name  이름
+FROM emp_test
+WHERE MOD( id  ,  2) = 1;
+
+
+
+//==============================================
+3. 단일행 함수 ::  날짜  함수  MONTHS_BETWEEN / ADD_MONTHS
+
+
+//==> MONTHS_BETWEEN(현재날짜, 과거날짜)
+//==> 이름 / 근무개월수 / 월급 /현재까지의 퇴직금 조회 (퇴직금이 높은순) 
+//==> 입사일로부터 현재까지 근무개월 (개월수 반올림)
+//==> 1개월당 월급의 30% 퇴직금 
+//==>  일당기준은 월 30일
+SELECT 
+name 이름, ROUND( MONTHS_BETWEEN(SYSDATE,in_date) , 0 )   근무개월,
+salary 월급, ROUND( MONTHS_BETWEEN(SYSDATE,in_date) , 0 ) * NVL(salary,0) * 0.3 퇴직금
+FROM emp_test
+ORDER  BY  퇴직금  DESC;
+
+
+//==> 재직기간 :: 단위 일 /  개월( 1달 28일 ,30일 , 31일 ??)
+//==> 각각의 계산결과 확인 :: 난짜는  일(DAY) 기준
+SELECT
+name  ,SYSDATE - in_date || ' 일 재직' 
+/*  name  , (SYSDATE - in_date)/30 || ' 월 재직'   */
+/*  name  , (SYSDATE - in_date)/31 || ' 월 재직'  */
+FROM emp_test;
+
+==> 위의 QUERY 와 비교
+SELECT
+name ,MONTHS_BETWEEN(SYSDATE, in_date) || ' 월 재직'
+FROM emp_test;
+ 
+ //==> 마지막일
+SELECT LAST_DAY(SYSDATE) FROM DUAL;
+
+
+
+//==============================================
+4. 단일행 함수 ::  변환형 함수   TO_CHAR  TO_NUMBER  TO_DATE
+
+//==>  아래의 결과 확인
+SELECT 
+SYSDATE,
+TO_DATE('2077','YYYY') , 
+TO_DATE('207703','YYYYMM') , 
+LAST_DAY(TO_DATE('207707','YYYYMM') ) ,
+TO_DATE('20770703','YYYYMMDD') 
+FROM DUAL;
+ 
+ //==> 2022년 12월27일은 년, 월 일조회
+SELECT
+TO_DATE('2077-07-07','YYYY-MM-DD') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'YEAR') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'YYYY') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'YY') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'MONTH') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'MM') ,
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'DAY'),
+TO_CHAR(TO_DATE('2077-07-03','YYYY-MM-DD'), 'DD')
+FROM DUAL;
+
+
+
+//==> 각각의 계산결과 확인 :: 난짜는  일(DAY) 기준
+//==> 5일 더하기
+SELECT
+SYSDATE , SYSDATE + 5 ,
+TO_CHAR(SYSDATE , 'YYYY-MM-DD-HH24:MI:SS' ) ,
+TO_CHAR(SYSDATE+5 , 'YYYY-MM-DD-HH24:MI:SS' )
+FROM DUAL;
+
+//==> 1 시간 (60분) 더하기
+SELECT
+SYSDATE , SYSDATE + (1 / 24),
+TO_CHAR(SYSDATE , 'YYYY-MM-DD-HH24:MI:SS' ) ,
+TO_CHAR(SYSDATE + (1 / 24) , 'YYYY-MM-DD-HH24:MI:SS' )
+FROM DUAL;
+
+//==> 12개월 더하기 ???
+SELECT
+SYSDATE , SYSDATE + (30 * 12) ,
+TO_CHAR(SYSDATE , 'YYYY-MM-DD-HH24:MI:SS' ) ,
+TO_CHAR(SYSDATE+ (30 * 12) , 'YYYY-MM-DD-HH24:MI:SS' )
+FROM DUAL;
+
+//==>  위의 결과와 비교
+SELECT
+SYSDATE , ADD_MONTHS(SYSDATE,12) ,
+TO_CHAR(SYSDATE , 'YYYY-MM-DD-HH24:MI:SS' ) ,
+TO_CHAR( ADD_MONTHS(SYSDATE,12) , 'YYYY-MM-DD-HH24:MI:SS' )
+FROM DUAL;
+
+
+
+//==> 7월입사자 이름, 입사일 조회
+SELECT 
+name, in_date
+FROM emp_test
+/*  WHERE SUBSTR(in_date,4,2) = '07';   */
+WHERE TO_CHAR(in_date,'MM') = '07';
+
+//==> 월요일 입사자.
+SELECT 
+name
+FROM emp_test 
+/*   WHERE TO_CHAR(in_date, 'DAY') ='월요일';   */
+/*   WHERE TO_CHAR(in_date, 'DY') ='월';   */
+WHERE TO_CHAR(in_date, 'D') =2; 
+
+==> 아래의 QUERY 이해
+SELECT 
+name, TO_CHAR(in_date, 'DAY'), TO_CHAR(in_date, 'DY'), TO_CHAR(in_date, 'D') 
+FROM emp_test; 
+
+
+
+//==> 이름,연봉을 \999,999.99형식으로  출력
+SELECT 
+name 이름 , TO_CHAR( NVL(salary,0)*12 , 'L999,999.99' ) 연봉
+FROM emp_test
+ORDER BY NVL(salary,0)  DESC;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+==> 첨부의 SingleRowFunction실습.doc를 참조할것...
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
