@@ -1,5 +1,6 @@
 package kjw.hw.m07.d16.academy;
 
+// java.lang.Integer  , String  API 연습
 public class Prob {
 	public static void main(String[] args) {
 		String value = "홍길동";

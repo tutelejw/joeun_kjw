@@ -56,6 +56,7 @@ COMMIT;
 1.  salary가 null 이고 title가 null인 직원 검색		:: SELECT
 
 select * from emp_test where salary is null and title is null;
+select title,name,salary from emp_test where salary is null and title is null;
 
 2.  title이 null인 직원 title 계약직 변경				:: UPDATE
 update emp_test set title='계약직' where title is null;
