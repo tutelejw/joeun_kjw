@@ -20,18 +20,24 @@ public class FileCompareUtil {
 		while (fstLine != null) {
 			lineNum++;
 			if(!fstLine.equals(scdLine)) {
-				resultList.add("LINE" + lineNum + ":" + scdLine);
+				resultList.add("LINE" + lineNum + ":" + scdLine + "\n");
 			}
 			fstLine = fstBr.readLine();
 			scdLine = scdBr.readLine();
 			
 		}
+		fstBr.close();
+		scdBr.close();
 		return resultList;
 	}
 	
 	public static void main(String[] args) throws Exception{
 		FileCompareUtil util = new FileCompareUtil();
-		System.out.println(util.compareFile("./files/fstFile1.txt", "./files/scdFile1.txt"));
+		//System.out.println(util.compareFile("./files/fstFile1.txt", "./files/scdFile1.txt"));
+		ArrayList<String> diffLine = util.compareFile("./files/fstFile1.txt", "./files/scdFile1.txt");
+		for (int i=0; i< diffLine.size();i++) {
+			System.out.print(diffLine.get(i)+"\n");
+		}
 		System.out.println("Successful!!!");
 	}//end of main
 	
