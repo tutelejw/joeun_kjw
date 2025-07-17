@@ -8,6 +8,8 @@ public class Prob {
 		//System.out.println("str :  " + str);
 		for (int i = 0; i < str.length(); i++) {
 			String oneStr=str.substring(i,i+1);
+			//char c=str.charAt(i);   ->> 강사님 방식 아래에 String로 형변환 방식 참고
+			//String temp=c+"";  char를 String로 형변환 쉽게 참고. 추후 예제로 
 			byte[] temp = oneStr.getBytes();
 			//System.out.println("oneStr : " + oneStr + " oneStr.length() : " + oneStr.length() + " temp : " + temp.length);
 			if(temp.length == 3) {
