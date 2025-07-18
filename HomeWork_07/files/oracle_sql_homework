@@ -1,0 +1,53 @@
+
+문제 2.
+
+select * from (
+select 
+rank() over(order by salary desc) ranking
+, last_name, first_name,salary 
+from employees)
+where ranking between 6 and 10 ;
+
+   RANKING LAST_NAME     FIRST_NAME    SALARY
+---------- ------------- --------------------
+         6 Hartstein     Michael        13000
+         7 Greenberg     Nancy          12000
+         7 Errazuriz     Alberto        12000
+         7 Higgins       Shelley        12000
+        10 Ozer          Lisa           11500
+
+SQL>
+        
+        
+        
+문제 3.직책이 Sales Manager 사원들 
+입사년도와 입사년도별 평균 급여 출력 
+출력시 년도 기준 오름차순
+
+jobs
+JOB_ID   -
+JOB_TITLE
+
+employees
+JOB_ID   - 
+HIRE_DATE
+SALARY
+
+where JOB_TITLE='Sales Manager'
+group by HIRE_DATE
+order by 1;
+
+
+jobs 테이블
+JOB_ID	JOB_TITLE	MIN_SALARY	MAX_SALARY
+SA_MAN	Sales Manager	10000	20000
+
+select EMPLOYEE_ID, JOB_ID, SALARY, hire_date from employees where job_id='SA_MAN';
+
+EMPLOYEE_ID JOB_ID                   SALARY HIRE_DAT
+----------- -------------------- ---------- --------
+        145 SA_MAN                    14000 96/10/01
+        146 SA_MAN                    13500 97/01/05
+        147 SA_MAN                    12000 97/03/10
+        148 SA_MAN                    11000 99/10/15
+        149 SA_MAN                    10500 00/01/29

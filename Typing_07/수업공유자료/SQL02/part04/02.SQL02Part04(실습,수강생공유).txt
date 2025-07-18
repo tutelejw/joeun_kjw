@@ -3,12 +3,30 @@
 //==============================================//
 
 1. 부서명 / 부서salary 평균 / 합 /인원수 조회 (부서명 null / 대기발령  제외)
-
+ select dept_name, avg(salary), sum(salary), count(dept_name) from emp_test where dept_name is not null and dept_name != '대기발령' group by dept_name;
+ 
+DEPT_NAME                      AVG(SALARY) SUM(SALARY) COUNT(DEPT_NAME)
+------------------------------ ----------- ----------- ----------------
+관리부                              5042.6       25213                5
+영업팀                                2500        2500                1
+개발부                                 600         600                1
+영업부                              2777.5       11110                6
+기획부                              8883.5       17767                2
 
 2. 부서명 / 부서salary 평균 / 합 /인원수 조회 (부서명 null / 대기발령  제외)
     ==> 인원수가 5이상만 출력
-
+select dept_name, avg(salary), sum(salary), count(dept_name) from emp_test where dept_name is not null and dept_name != '대기발령' group by dept_name having count(*) >= 5;
+DEPT_NAME                      AVG(SALARY) SUM(SALARY) COUNT(DEPT_NAME)
+------------------------------ ----------- ----------- ----------------
+관리부                              5042.6       25213                5
+영업부                              2777.5       11110                6
 
 3. 부서명 / 부서salary 평균 / 합 /인원수 조회 (부서명 null / 대기발령  제외)
      ==> 인원수가 5이상만 출력
      ==>  평균급여가 5000이상
+select dept_name, avg(salary), sum(salary), count(dept_name) from emp_test where dept_name is not null and dept_name != '대기발령' group by dept_name having count(*) >= 5 and avg(salary) >= 5000;
+
+DEPT_NAME                      AVG(SALARY) SUM(SALARY) COUNT(DEPT_NAME)
+------------------------------ ----------- ----------- ----------------
+관리부                              5042.6       25213                5
+

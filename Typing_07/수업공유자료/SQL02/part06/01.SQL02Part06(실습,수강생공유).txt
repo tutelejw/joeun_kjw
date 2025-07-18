@@ -67,7 +67,26 @@ INSERT INTO c_emp VALUES(117,'김정일',3000,'3429-0017',6);
 COMMIT;
  
 
+//==> c_emp
+c.id
+c.name
+c.salary
+c.phone
+c.dept_id
 
+
+
+//==> s_dept table
+s.id
+s.ept_name
+
+
+
+ select c_emp.name,c_emp.dept_id, s_dept.id, s_dept.dept_name   from c_emp, s_dept where c_emp.dept_id=s_dept.id;
+ 
+ select c_emp.name,c_emp.dept_id, s_dept.id, s_dept.dept_name   from c_emp, s_dept where c_emp.dept_id=s_dept.id and s_dept.dept_name = '총무부';
+ 
+ select c.name,c.dept_id, s.id, s.dept_name   from c_emp c, s_dept s where c.dept_id=s.id and s.dept_name = '총무부';
 
 //==============================================//
 //================== 실   습 1  ====================//
@@ -75,16 +94,46 @@ COMMIT;
 
 1.  김씨성 직원의  이름 / 부서명 /연봉  조회
      ==> 연봉:  \250,000 형식 , 연봉높은순 
-
+	 select c.name, s.dept_name, TO_CHAR( NVL(c.salary,0)*12 , 'L999,999' ) 연봉 	
+	 from c_emp c, s_dept s 
+	 where c.dept_id=s.id and c.name like '김%' 
+	 order by 3 desc;
 
 2.  월급이 2000이상 직원 부서명 / 이름 /일당 조회
       ==> 부서별 :: 오름차순
       ==> 이    름 :: 오름차순
       ==> 일    당 :: 30일기준, 소수점 0자리 버림, \250,000형식, 높은순 
+	select  s.dept_name, c.name, TO_CHAR(TRUNC(c.salary/30 , 0),'L999,999') 연봉
+	from c_emp c, s_dept s 
+	where c.dept_id=s.id
+	and c.salary > 2000
+	order by 2 asc;
+	
 
 
 3. 부서별 평균 월급  부서번호/부서명/평균월급 조회
      ==> 부서번호 :: 오름차순
-
+	select  c.dept_id, s.dept_name, TRUNC(avg(c.salary), 0)
+	from c_emp c, s_dept s 
+	where c.dept_id=s.id 
+	group by c.dept_id, s.dept_name
+	order by c.dept_id asc;
 
 4. 총무부 평균 월급  부서번호/부서명/평균월급 조회
+	select  c.dept_id, s.dept_name, TRUNC(avg(c.salary), 0)
+	from c_emp c, s_dept s 
+	where c.dept_id=s.id 
+	and s.dept_name = '총무부'
+	group by c.dept_id, s.dept_name;
+
+
+
+
+
+
+
+
+
+
+
+

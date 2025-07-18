@@ -122,3 +122,40 @@ INSERT INTO SALGRADE VALUES (5, 3001, 9999);
 
 
 COMMIT;
+
+select
+empno 사번, ename 이름, mgr 관리자사번
+from emp
+order by empno;
+
+
+select
+e1.empno 사번, e1.ename 이름, e1.mgr 관리자사번, e1.ename
+from emp e1, emp e2
+where e1.mgr=e2.empno
+order by e1.empno;
+
+
+select
+e1.empno 사번, e1.ename 이름, e1.mgr 관리자사번, e2.ename
+from emp e1, emp e2
+where e1.mgr=e2.empno
+order by e1.empno;
+
+select
+e1.empno 사번, e1.ename 이름, e2.mgr 관리자사번, e2.ename
+from emp e1, emp e2
+where e1.mgr=e2.empno
+order by e1.empno;
+
+select
+e1.empno 사번, e1.ename 이름, e2.mgr 관리자사번, e2.ename
+from emp e1, emp e2
+where e1.mgr=e2.empno(+)
+order by e1.empno;
+
+select
+e1.empno 사번, e1.ename 이름, e1.mgr 관리자사번, e1.ename
+from emp e1, emp e2
+where e1.mgr(+)=e2.empno
+order by e1.empno;
