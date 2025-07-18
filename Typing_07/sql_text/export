@@ -1,0 +1,10 @@
+
+
+cmd 창에서 진행 
+
+expdp.exe scott/tiger SCHEMAS=scott dumpfile=scott_full_db.dmp logfile=export.log
+
+
+C:\oraclexe\app\oracle\admin\XE\dpdump   아래에 생김
+
+impdp scott/tiger SCHEMAS=scott DUMPFILE=scott_full_db.dmp LOGFILE=import.log DIRECTORY=export_dir
