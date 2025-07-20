@@ -1,0 +1,15 @@
+		List<String> arrStr = new Vector<>();
+		arrStr.add("사과");
+		arrStr.add("바나나");
+		vcStrList.remove(1);
+		
+		method () 설정
+		get()
+		set()
+		size()
+		remove() 
+				
+		System.out.println("vc값 : " + i + " " + arrStr.get(i));
+		System.out.println("Vector 크기 : " + vcIntList.size());
+		System.out.println("엔덱스 2의 값 : " + vcIntList.get(2));
+		System.out.println(vcStrList);
