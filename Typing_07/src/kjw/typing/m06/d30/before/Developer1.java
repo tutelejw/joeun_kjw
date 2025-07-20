@@ -1,3 +1,4 @@
+package kjw.typing.m06.d30.before;
 public class Developer1
 {
 	String name = "홍길동";
