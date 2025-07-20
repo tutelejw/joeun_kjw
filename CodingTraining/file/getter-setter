@@ -3,7 +3,7 @@
 https://gemini.google.com/share/c8810715c5be
 
 public 타입 get return
-public void setter 타입 변수 
+public void setter (타입 변수)
 
 public class Person {
   private int age = 25;
