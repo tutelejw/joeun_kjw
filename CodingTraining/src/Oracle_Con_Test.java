@@ -19,7 +19,15 @@ public class Oracle_Con_Test {
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
             // 4. Oracle DB에 접속
-            conn = DriverManager.getConnection(url, user, pass);
+            //conn = DriverManager.getConnection(url, user, pass);
+            try {
+                conn = DriverManager.getConnection(url, user, pass);
+
+            } catch (SQLException e) {
+                System.out.println("❌ DB 연결 실패: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
             System.out.println("\n==============================");
             System.out.println("log -------- Oracle 연결 성공!");
             System.out.println("==============================\n");
