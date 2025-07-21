@@ -157,6 +157,11 @@ SELECT LAST_DAY(SYSDATE) FROM DUAL;
 //==============================================
 4. 단일행 함수 ::  변환형 함수   TO_CHAR  TO_NUMBER  TO_DATE
 
+SELECT
+    TO_CHAR(hire_date, 'YYYY')
+from employees;
+1996
+
 //==>  아래의 결과 확인
 SELECT 
 SYSDATE,

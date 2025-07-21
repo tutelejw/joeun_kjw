@@ -1,5 +1,34 @@
 
+문제 1. 
+컬럼 alias 지정 출력
+부서평균 연봉은 반올림하여 정수로 출력.
+부서평균연봉이 많은 사람부터 출력
+결과 화면과 동일하게
+select e1.employee_id 사번, e1.department_id 부서번호, e1.salary * 12 연봉, e2.dept_salary_avg 부서평균연봉
+from EMPLOYEES e1, (select department_id, round(avg(salary),0) dept_salary_avg from EMPLOYEES group by department_id) e2
+where e1.department_id=e2.department_id
+order by e2.dept_salary_avg desc
+;
+
+
+      사번   부서번호       연봉 부서평균연봉
+---------- ---------- ---------- ------------
+       100         90     288000        19333
+       102         90     204000        19333
+       101         90     204000        19333
+       205        110     144000        10150
+       206        110      99600        10150
+       204         70     120000        10000
+       202         20      72000         9500
+       201         20     156000         9500
+       167         80      74400         8956
+       168         80     138000         8956
+       169         80     120000         8956
+       170         80     115200         8956
+
 문제 2.
+employees 테이블에서 급여를 많이 받는 순서대로 조회(많은순->적은순)
+6번째 ~ 10분째까지의 5명의 ,last_name , first_name, salary 조회
 
 select * from (
 select 
@@ -20,34 +49,214 @@ SQL>
         
         
         
-문제 3.직책이 Sales Manager 사원들 
+문제 3.직책이(job title) Sales Manager 사원들 
 입사년도와 입사년도별 평균 급여 출력 
 출력시 년도 기준 오름차순
 
-jobs
-JOB_ID   -
-JOB_TITLE
+SELECT
+    TO_CHAR(hire_date, 'YYYY') 년도,
+    avg(salary) 평균급여
+FROM
+    employees 
+where job_id = (select job_id from jobs where JOB_TITLE='Sales Manager')
+group by TO_CHAR(hire_date, 'YYYY')
+order by 1 
+;
 
-employees
-JOB_ID   - 
-HIRE_DATE
-SALARY
+년도       평균급여
+-------- ----------
+1996          14000
+1997          12750
+1999          11000
+2000          10500
 
-where JOB_TITLE='Sales Manager'
-group by HIRE_DATE
+
+
+문제 4. 사원의 부서가 속한 도시(city)가 'Seattle' 인 
+사원의 이름, 해당사원의 매니저 이름, 사원의 부서이름 출력
+이때 매니저가 없으면 없음 이라고 출력
+이름은 last_name만 출력 
+사원의 이름 오름차순 정렬
+
+select 
+e1.last_name
+,NVL(e2.LAST_NAME, '없음') 매니저이름
+,d.department_name
+from employees e1, employees e2, departments d, LOCATIONS l
+where e1.manager_id=e2.employee_id(+)
+and e1.department_id=d.department_id(+)
+and d.location_id=l.location_id
+and l.city='Seattle' 
 order by 1;
 
 
-jobs 테이블
-JOB_ID	JOB_TITLE	MIN_SALARY	MAX_SALARY
-SA_MAN	Sales Manager	10000	20000
+LAST_NAME          매니저이름        DEPARTMENT_NAME
+------------------ ----------------- --------------- 
+Baida              Raphaely          Purchasing
+Chen               Greenberg         Finance
+Colmenares         Raphaely          Purchasing
+De Haan            King              Executive
+Faviet             Greenberg         Finance
+Gietz              Higgins           Accounting
+Greenberg          Kochhar           Finance
+Higgins            Kochhar           Accounting
+Himuro             Raphaely          Purchasing
+Khoo               Raphaely          Purchasing
+King               없음              Executive
+Kochhar            King              Executive
+Popp               Greenberg         Finance
+Raphaely           King              Purchasing
+Sciarra            Greenberg         Finance
+Tobias             Raphaely          Purchasing
+Urman              Greenberg         Finance
+Whalen             Kochhar           Administration
 
-select EMPLOYEE_ID, JOB_ID, SALARY, hire_date from employees where job_id='SA_MAN';
+18 개의 행이 선택되었습니다.
 
-EMPLOYEE_ID JOB_ID                   SALARY HIRE_DAT
------------ -------------------- ---------- --------
-        145 SA_MAN                    14000 96/10/01
-        146 SA_MAN                    13500 97/01/05
-        147 SA_MAN                    12000 97/03/10
-        148 SA_MAN                    11000 99/10/15
-        149 SA_MAN                    10500 00/01/29
+사원 - employees.last_name
+사원 부서id - employees.department_id
+사원 manager_id - employees.manager_id
+
+부서ID  - departments.department_id
+부서이름 - departments.department_name
+부서지역 - departments.location_id
+
+
+부서가 속한 도시    - LOCATIONS.city            Seattle 기준
+부서가 속한 도시 ID - LOCATIONS.location_id
+
+
+문제5. 부서별로 가장 적은 급여를 받고 있는 
+직원이름(last_name), 부서이름, 급여 출력
+부서이름 오름차순 정렬, 부서같을경우 이름 기준 오름차순
+
+select
+e.last_name ,d.department_name ,e.salary
+from employees e, departments d
+where e.department_id=d.department_id
+and (e.department_id, e.salary) in (select 
+department_id
+,min(salary)
+from employees 
+group by department_id)
+order by d.department_name,e.last_name;
+
+LAST_NAME            DEPARTMENT_NAME        SALARY
+-------------------- -------------------- --------
+Gietz                Accounting               8300
+Whalen               Administration           4400
+De Haan              Executive               17000
+Kochhar              Executive               17000
+Popp                 Finance                  6900
+Mavris               Human Resources          6500
+Lorentz              IT                       4200
+Fay                  Marketing                6000
+Baer                 Public Relations        10000
+Colmenares           Purchasing               2500
+Kumar                Sales                    6100
+Olson                Shipping                 2100
+
+12 개의 행이 선택되었습니다.
+
+사원       - employees e.last_name
+사원 부서id - employees e.department_id
+사원 급여   - employees e.salary
+
+부서ID  - departments  d.department_id
+부서이름 - departments  d.department_name
+
+
+
+문제6.각 도시city에 있는 모든 부서직원들의 평균급여를 조회 - 도시별 평균급여
+도시명과 평균연봉, 해당도시의 직원수 출력
+도시근무 직원이 10명 이상은 제외
+평균 급여가 가장 낮은 도시부터  - 낮은급여 -> 높은급여 오름차순
+
+select 
+l.city 도시이름, avg(e.salary) 평균급여, count(l.city) 직원수
+from employees e, departments d, LOCATIONS l
+where d.location_id = l.location_id
+and e.department_id = d.department_id
+group by l.city
+having count(l.city) <=10 
+order by avg(e.salary) ;
+
+도시이름        평균급여     직원수
+---------- ---------- ----------
+Southlake        5760          5
+London           6500          1
+Toronto          9500          2
+Munich          10000          1
+
+사원       - employees   e.last_name
+사원 급여   - employees   e.salary
+사원 부서id - employees   e.department_id
+
+부서ID  - departments    d.department_id
+부서지역 - departments    d.location_id
+
+
+부서가 속한 도시    - LOCATIONS    l.city 
+부서가 속한 도시 ID - LOCATIONS    l.location_id
+
+
+
+문제7. dept30 뷰를 다음 조건 정보 조회 하도록 작성
+30번 부서에 근무 사원 직책(job_title)별 평균급여가 2000 이상인 직책
+직책  / 평균급여 출력
+create view dept30 as
+select j.job_title 직책, avg(e.salary) 평균급여
+from employees e , jobs j
+where e.job_id = j.job_id
+and e.department_id =30 and e.salary >=2000
+group by j.job_title;
+
+select * from dept30;
+
+SQL> select * from dept30;
+직책                    평균급여
+-------------------   --------
+Purchasing Clerk          2780
+Purchasing Manager       11000
+
+employees   e.department_id =30  --6명
+employees   e.salary
+employees   e.job_id
+select e.job_id from employees e where e.department_id =30 and e.salary >=2000; --6명
+
+jobs 	j.job_id    //직책ID
+jobs 	j.job_title  //직책명
+select j.job_id, j.job_title from jobs j;
+
+
+
+문제8. 'public accountant' 의 직책으로 과거에 근무한적 있는 
+모든 사원 사번과 이름  
+이름은 first_name과 last_name 모두 출력 --> concat & || 선택
+EMPLOYEE_ID 이름
+----------- -------------------
+        101 Neena Kochhar      
+        200 Jennifer Whalen
+
+select
+e.employee_id, e.first_name ||' '|| e.last_name AS 이름
+from employees e, jobs j, job_history jh
+where j.job_id = jh.job_id
+and e.employee_id = jh.employee_id
+and j.job_title = 'Public Accountant'
+and e.employee_id in (select e.employee_id 
+from employees e, jobs j
+where j.job_id = e.job_id
+and j.job_title != 'Public Accountant');
+
+
+employees	 e.employee_id
+employees    e.job_id
+employees    e.first_name ||' '|| e.last_name AS 이름
+
+jobs 		j.job_id
+jobs 		j.job_title   <- 'Public Accountant'
+
+job_history jh.employee_id 
+job_history jh.job_id
+

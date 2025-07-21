@@ -1,0 +1,183 @@
+
+//이순신과
+//같은 부서 근무 직원
+//사번/이름/월급
+select id, name, salary, dept_id
+from c_emp 
+where dept_id = (select dept_id from c_emp where name = '이순신')
+;
+
+전체 평균급여보다 낮은 급여를 받는 직원이 사번 이름 급여를
+select id, name, salary, dept_id
+from c_emp 
+where salary < (select avg(salary) from c_emp )
+;
+
+
+select name, dept_id
+from c_emp 
+where dept_id = (select id from s_dept where dept_name in ('총무부','영업부'))
+;
+SQL> select name, dept_id
+  2  from c_emp
+  3  where dept_id = (select id from s_dept where dept_name in ('총무부','영업부'))
+  4  ;
+where dept_id = (select id from s_dept where dept_name in ('총무부','영업부'))
+                 *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row
+
+select name, dept_id
+from c_emp 
+where dept_id in (select id from s_dept where dept_name in ('총무부','영업부'))
+;
+
+
+각 부서에서 최소 월급을 받는 직원 이름 월급 부서번호 조회
+select name, salary, dept_id
+from c_emp 
+where salary in (select min(salary) from c_emp group by dept_id )
+;
+//해당 쿼리는 부서별 최소 월급을 받는 전체 직원 대상으로 조회
+//부서별 최소 월급은 
+NAME                               SALARY    DEPT_ID
+------------------------------ ---------- ----------
+전두환                               1000          5
+김사장                               1000          1
+신입2                                1500
+신입1                                1500
+추현재                               1500          4
+김일성                               2000          6
+홍길동                               2000          1
+류시원                               1100          2
+이문세                               1200          3
+
+9 rows selected.
+SQL> select min(salary), dept_id from c_emp group by dept_id;
+
+MIN(SALARY)    DEPT_ID
+----------- ----------
+       1000          1
+       1500
+       2000          6
+       1100          2
+       1500          4
+       1000          5
+       1200          3
+
+7 rows selected.
+
+
+select name, salary, dept_id
+from c_emp 
+where (salary, dept_id) in (select min(salary), dept_id from c_emp group by dept_id )
+;
+
+
+-- line view multi column subquery
+select c.name, c.salary, c.dept_id
+from c_emp c, (select min(salary) min, dept_id from c_emp group by dept_id) vt
+where c.dept_id = vt.dept_id
+and
+c.salary=vt.min
+;
+NAME                               SALARY    DEPT_ID
+------------------------------ ---------- ----------
+김사장                               1000          1
+류시원                               1100          2
+이문세                               1200          3
+추현재                               1500          4
+전두환                               1000          5
+김일성                               2000          6
+
+6 rows selected.
+
+
+
+
+
+
+
+//==============================================//
+//================== 실   습 1  ====================//
+//==============================================//
+
+1. 이순신과 같은 부서에 근무하는 직원  이름 ,부서명 조회
+
+select
+c.name, s.dept_name
+from c_emp c, s_dept s
+where c.dept_id = s.id 
+and c.dept_id = (select dept_id from c_emp where name='이순신');
+
+NAME                           DEPT_NAME
+------------------------------ ------------------------
+이순신                         개발부
+강감찬                         개발부
+류시원                         개발부
+
+2. 전체평균금액 보다 낮은 급여를 받는직원  이름 , 부서명 ,급여 , 급여등급 조회
+select
+c.name, s.dept_name, c.salary, sg.grade
+from c_emp c, s_dept s, sal_grade sg
+where c.dept_id = s.id 
+and c.salary between sg.losal and sg.hisal
+and c.salary < (select avg(SALARY) from c_emp);
+
+NAME                           DEPT_NAME                    SALARY GR
+------------------------------ ------------------------ ---------- --
+김사장                         총무부                         1000 D
+홍길동                         총무부                         2000 C
+류시원                         개발부                         1100 D
+이문세                         영업부                         1200 D
+강호동                         영업부                         1300 D
+강문영                         영업부                         1400 D
+추현재                         인사부                         1500 D
+전두환                         자재부                         1000 D
+김일성                         회계부                         2000 C
+
+9 rows selected.
+
+3. 홍길동과 월급등급이 같은 직원   이름, 부서명 , 월급 ,월급등급  조회
+
+
+1. 이순신과 같은 부서에 근무하는 직원  이름 ,부서명 조회
+select dept_id from c_emp where name='이순신'
+직원 이름 c_emp.name
+부서명 s_dept.DEPT_NAME  
+부서ID c_emp.DEPT_ID = s_dept.id
+
+select
+c.name, s.dept_name
+from c_emp c, s_dept s
+where c.dept_id = s.id 
+and c.dept_id = (select dept_id from c_emp where name='이순신');
+
+2. 전체평균금액 보다 낮은 급여를 받는직원  이름 , 부서명 ,급여 , 급여등급 조회
+전체 평균 금액
+select avg(SALARY) from c_emp;
+
+이름 , 부서명 ,급여 , 급여등급
+select
+c.name, s.dept_name, c.salary, sg.grade
+from c_emp c, s_dept s, sal_grade sg
+where c.dept_id = s.id 
+and c.salary between sg.losal and sg.hisal
+and c.salary < (select avg(SALARY) from c_emp);
+
+
+3. 홍길동과 월급등급이 같은 직원   이름, 부서명 , 월급 ,월급등급  조회
+select
+c.name, s.dept_name, c.salary, sg.grade
+from c_emp c, s_dept s, sal_grade sg
+where c.dept_id = s.id 
+and c.salary between sg.losal and sg.hisal
+and c.salary < (select avg(SALARY) from c_emp);
+
+홍길동의 월급등급
+select 
+c.name, s.dept_name, c.salary, sg.grade
+from c_emp c, s_dept s, sal_grade sg
+where c.dept_id = s.id 
+and c.salary between sg.losal and sg.hisal
+and ;
