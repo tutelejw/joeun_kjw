@@ -1,0 +1,63 @@
+
+
+chapter 3.
+문제 1.
+자신의 매니저보다 연봉을 많이 받는 직원
+lastname, salary 출력
+
+
+
+select e1.last_name, e1.salary
+from employees e1, employees e2
+where e1.manager_id = e2.employee_id
+and e1.salary  > e2.salary
+;
+LAST_NAME    SALARY
+----------- -------
+Ozer          11500
+Abel          11000
+
+select employee_id, last_name, salary, manager_id
+from employees;
+
+select e1.employee_id, e1.last_name, e1.salary, e1.manager_id, e2.salary
+from employees e1, employees e2
+where e1.manager_id = e2.employee_id
+and e1.salary  > e2.salary
+;
+
+
+
+
+
+
+
+문제 2. 문제4??? 번호가 이상해..
+업무명(job_title)이 'Sales Representative' 인 직원중
+연봉(salary)이 9,000 이상 10,000 이하인 직원들
+이름(first_name), 성(last_name), 연봉(salary) 출력
+
+select 
+ e.first_name, e.last_name, e.salary
+from employees e, jobs j
+where e.job_id = j.job_id
+and j.job_title = 'Sales Representative'
+and e.salary between 9000 and 10000;
+
+
+jobs    j.job_title    = 'Sales Representative'
+jobs    j.job_id 
+
+employees    e.salary
+employees    e.first_name
+employees    e.last_name
+employees    e.job_id
+
+select 
+e.job_id, e.first_name, e.last_name, e.salary
+, j.job_id , j.job_title
+from employees e, jobs j
+where e.job_id = j.job_id
+and j.job_title = 'Sales Representative'
+and e.salary between 9000 and 10000;
+
