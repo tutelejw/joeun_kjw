@@ -1,0 +1,150 @@
+
+
+chapter 4.
+문제 1.
+각 업무 job 별로 연봉 salary 의 총합을 구한다.
+
+연봉 총합이 가장 높은 업무부터 업무명 job_title 과 연봉 총합을 조회
+단 연봉총합이 30,000 보다 큰 업무만 출력
+
+job_title 별로 급여총액을 뽑는다.
+
+job_title, sum(salary)
+
+jobs    j.job_title
+jobs    j.job_id 
+
+employees    e.salary
+employees    e.first_name
+employees    e.last_name
+employees    e.job_id
+
+
+select j.job_title, sum(e.salary)
+from employees e, jobs j
+where e.job_id = j.job_id
+group by j.job_title
+having sum(e.salary) > 30000;
+
+
+JOB_TITLE                            SUM(E.SALARY)
+------------------------------------ -------------
+Sales Representative                        250500
+Administration Vice President                34000
+Stock Manager                                36400
+Accountant                                   39600
+Stock Clerk                                  55700
+Shipping Clerk                               64300
+Sales Manager                                61000
+								
+7 개의 행이 선택되었습니다.         
+
+
+
+
+
+문제 2. 
+사번 employees   , 이름 first_name  ,  업무명 job_title  ,   부서명  department_name   
+단 도시명 city 가   Seattle 인 지역location 의 부서 department에 근무하는
+
+select e.employee_id, e.first_name, j.job_title, d.department_name
+from  employees e, jobs j , departments d, locations l
+where e.job_id = j.job_id 
+and e.department_id = d.department_id
+and d.location_id = l.location_id 
+and l.city = 'Seattle';
+
+
+employees    employee_id,
+employees    first_name,
+employees    department_id
+employees    job_id
+ 
+jobs    j.job_title
+jobs    j.job_id 
+ 
+departments    department_id,
+departments    department_name,
+departments    location_id
+    
+
+       
+locations    location_id,
+locations    city   
+
+
+EMPLOYEE_ID FIRST_NAME      JOB_TITLE                         DEPARTMENT_NAME   
+----------- --------------- --------------------------------- ------------------
+        200 Jennifer        Administration Assistant          Administration    
+        114 Den             Purchasing Manager                Purchasing        
+        115 Alexander       Purchasing Clerk                  Purchasing        
+        116 Shelli          Purchasing Clerk                  Purchasing        
+        117 Sigal           Purchasing Clerk                  Purchasing        
+        118 Guy             Purchasing Clerk                  Purchasing        
+        119 Karen           Purchasing Clerk                  Purchasing        
+        100 Steven          President                         Executive         
+        101 Neena           Administration Vice President     Executive         
+        102 Lex             Administration Vice President     Executive         
+        108 Nancy           Finance Manager                   Finance           
+        109 Daniel          Accountant                        Finance           
+        110 John            Accountant                        Finance           
+        111 Ismael          Accountant                        Finance           
+        112 Jose Manuel     Accountant                        Finance           
+        113 Luis            Accountant                        Finance           
+        205 Shelley         Accounting Manager                Accounting        
+        206 William         Public Accountant                 Accounting        
+
+18 개의 행이 선택되었습니다.
+
+    
+	
+	
+
+문제 3. 
+입력받은 두개의 업무명 job_title 에 종사하는 사원들의 사번  employee_id 이름 first_name 연봉 salary
+
+
+employees    employee_id,
+employees    first_name,
+employees    department_id
+employees    job_id
+ 
+jobs    j.job_title
+jobs    j.job_id 
+
+select
+e.employee_id, e.first_name, e.salary, j.job_title
+from employees e, jobs j
+where e.job_id= j.job_id
+and j.job_title in ('Accountant','Stock Clerk')
+order by e.employee_id;
+
+EMPLOYEE_ID FIRST_NAME                                   SALARY JOB_TITLE
+----------- ---------------------------------------- ---------- ----------------------------------------------------------------------
+        109 Daniel                                         9000 Accountant
+        110 John                                           8200 Accountant
+        111 Ismael                                         7700 Accountant
+        112 Jose Manuel                                    7800 Accountant
+        113 Luis                                           6900 Accountant
+        125 Julia                                          3200 Stock Clerk
+        126 Irene                                          2700 Stock Clerk
+        127 James                                          2400 Stock Clerk
+        128 Steven                                         2200 Stock Clerk
+        129 Laura                                          3300 Stock Clerk
+        130 Mozhe                                          2800 Stock Clerk
+        131 James                                          2500 Stock Clerk
+        132 TJ                                             2100 Stock Clerk
+        133 Jason                                          3300 Stock Clerk
+        134 Michael                                        2900 Stock Clerk
+        135 Ki                                             2400 Stock Clerk
+        136 Hazel                                          2200 Stock Clerk
+        137 Renske                                         3600 Stock Clerk
+        138 Stephen                                        3200 Stock Clerk
+        139 John                                           2700 Stock Clerk
+        140 Joshua                                         2500 Stock Clerk
+        141 Trenna                                         3500 Stock Clerk
+        142 Curtis                                         3100 Stock Clerk
+        143 Randall                                        2600 Stock Clerk
+        144 Peter                                          2500 Stock Clerk
+
+25 개의 행이 선택되었습니다.
