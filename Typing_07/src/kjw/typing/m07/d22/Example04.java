@@ -1,30 +1,33 @@
-package kjw.typing.m07.d22;
 import java.sql.*;
 
-public class Example04 {
-    public static void main(String[] args) throws Exception {
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String user = "scott";
-        String password = "tiger";
+public class Example04{
 
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection con = DriverManager.getConnection(url, user, password);
-        Statement stmt = con.createStatement();
+    ///Main Method    
+	public static void main(String[] args) throws Exception {
+		
+		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 
-        String sql = "SELECT no, id, pwd FROM member ORDER BY no";
+		//1단계 : Connection 
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection(url,"scott","tiger");
+		
+		//2단계 : Statement 
+		Statement stmt = con.createStatement();
+		
+		//3단계 : Query문 전송 및 결과 
+		ResultSet rs = stmt.executeQuery("SELECT * FROM member");
 
-        ResultSet rs = stmt.executeQuery(sql);
-
-        while (rs.next()) {
-            int no = rs.getInt("no");
-            String id = rs.getString("id");
-            String pwd = rs.getString("pwd");
-
-            System.out.println("회원정보 => 번호:" + no + " , ID:" + id + ", pwd:" + pwd);
-        }
-
-        rs.close();
-        stmt.close();
-        con.close();
-    }
-}
+		while (rs.next()){
+			int no = rs.getInt("no");
+			String id = rs.getString("id");
+			String pwd = rs.getString(3);
+			System.out.println("회원정보 ==> no:"+no+",id:"+id+",pwd:"+pwd+"");
+		}
+		
+		if(rs != null)				rs.close();
+	    if (stmt != null) 		stmt.close();
+	    if (con != null)			con.close();
+	    
+	}//end of main
+	
+}//end of class

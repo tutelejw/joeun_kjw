@@ -1,35 +1,39 @@
-package kjw.typing.m07.d22;
 import java.sql.*;
 
-public class Example03 {
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.out.println("사용법: java Example03 <id>");
-            return;
-        }
+public class Example03{
+    
+	///Main Method    
+	public static void main(String[] args) throws Exception {
+		
+	    // 입력 Data Validation  check
+		if( args.length !=1 ){
+			System.out.println("실행방법 java Example1 [id값]");
+			System.exit(0);
+		}
 
-        String id = args[0];
+		String id = args[0];
+  
+		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String user = "scott";
-        String password = "tiger";
+		//1단계 : Connection 
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection con = DriverManager.getConnection(url,"scott","tiger");
+		
+		//2단계 : Statement 
+		Statement stmt = con.createStatement();
+		
+		//3단계 : Query문 전송 및 결과
+		String deleteSql = "DELETE FROM member WHERE id ='"+id+"'";
+		
+		if( stmt.executeUpdate(deleteSql) == 1 ){
+			System.out.println( "number TABLE RECORD DELETE 완료" );
+		}else{
+			System.out.println( "number TABLE RECORD DELETE  실패" );
+		}
 
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection con = DriverManager.getConnection(url, user, password);
-        Statement stmt = con.createStatement();
-
-        // SQL 문자열 직접 조립 (주의: SQL Injection 취약)
-        String sql = "DELETE FROM member WHERE id = '" + id + "'";
-
-        int result = stmt.executeUpdate(sql);
-
-        if (result > 0) {
-            System.out.println("ID '" + id + "'에 해당하는 회원이 삭제되었습니다.");
-        } else {
-            System.out.println("ID '" + id + "'에 해당하는 회원이 없습니다.");
-        }
-
-        stmt.close();
-        con.close();
-    }
-}
+	    if (stmt != null) 		stmt.close();
+	    if (con != null)			con.close();
+	    
+	}//end of main
+	
+}//end of class
