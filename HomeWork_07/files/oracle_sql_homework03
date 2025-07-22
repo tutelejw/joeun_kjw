@@ -61,3 +61,36 @@ where e.job_id = j.job_id
 and j.job_title = 'Sales Representative'
 and e.salary between 9000 and 10000;
 
+
+
+
+
+문제3. 문자열과 금액을 입력 받아
+입력 문자열은   first_name   like '%문자열%' 대소문자 구분안함
+입력 금액 은    보다 큰 salary 
+
+select employee_id, first_name, salary from employees 
+where lower(first_name) like '%al%' 
+and salary > 4000 ;
+
+
+사번 employee_id
+이름 first_name 
+연봉 salary
+
+
+입력문자 예시 al
+입력금액 예시 4000
+
+
+EMPLOYEE_ID FIRST_NAME                                   SALARY
+----------- ---------------------------------------- ----------
+        103 Alexander                                      9000
+        106 Valli                                          4800
+        147 Alberto                                       12000
+        148 Gerald                                        11000
+        158 Allan                                          9000
+        175 Alyssa                                         8800
+        185 Alexis                                         4100
+
+7 개의 행이 선택되었습니다.
