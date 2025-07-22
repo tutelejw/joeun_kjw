@@ -2,6 +2,9 @@
 //=============   SQL Review  =================//
 //==========================================//
 
+
+// scott / tiger 계정에 생성
+
 1) DDL(Data Definition Language)
 
 ==> TABLE CREATE
