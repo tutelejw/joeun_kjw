@@ -37,3 +37,28 @@ Marketing 부서만 조회
 
 select * from employees where DEPARTMENT_ID in (
 select department_id from departments where department_name='Marketing');
+
+
+
+
+
+문제3. 
+select j.job_title, avg(e.salary)
+from EMPLOYEES e , jobs j
+where e.job_id=j.job_id
+and e.salary > 10000
+group by j.job_title
+order by avg(e.salary) desc;
+
+JOB_TITLE                                                              AVG(E.SALARY)
+---------------------------------------------------------------------- -------------
+President                                                                      24000
+Administration Vice President                                                  17000
+Marketing Manager                                                              13000
+Sales Manager                                                                  12200
+Accounting Manager                                                             12000
+Finance Manager                                                                12000
+Purchasing Manager                                                             11000
+Sales Representative                                                           11000
+
+8 개의 행이 선택되었습니다.
