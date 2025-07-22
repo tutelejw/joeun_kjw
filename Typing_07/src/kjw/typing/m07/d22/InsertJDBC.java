@@ -5,7 +5,7 @@ public class InsertJDBC{
    
 	///Main Method
 	public static void main(String[] args) throws Exception{
-		
+		 
 		//DB에 로그인 접속정보
 		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 		String driver = "oracle.jdbc.driver.OracleDriver";
