@@ -1,7 +1,7 @@
 package kjw.typing.m07.d22;
 import java.sql.*;
  
-public class Example01_jw {
+public class Example01_jw1 {
     public static void main(String[] args) throws Exception {
         // 1. DB 접속 정보
         String url = "jdbc:oracle:thin:@localhost:1521:xe";

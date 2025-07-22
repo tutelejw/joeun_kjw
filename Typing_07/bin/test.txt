@@ -1,2 +1,0 @@
-test   텍트트 파일 내부 글자 입니다.
-test  txt file 
