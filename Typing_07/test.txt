@@ -1,4 +1,79 @@
-하하하하하하하하하
-ghghghghghghghghgh
-바바바바바바바바바
-ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
+https://youtu.be/pbgYmRPtqmE   M1 맥에서 오라클데이터 베이스 사용하는 법 (ORA-12514 해결법)
+도커 : https://www.docker.com
+디비버 : https://dbeaver.io/
+홈브루 다운로드 코드(터미널) : /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+콜리마 다운로드 코드(터미널) : brew install colima
+
+콜리마 진입 코드 : colima start —arch x86_64 —memory 2
+docker info   (architecture  aarch64 ->  x86/64  확인   콜리마 기동 후 확인 )
+오라클18버전 이미지 다운로드 코드 : docker pull pvargacl/oracle-xe-18.4.0
+컨테이너 만들기 코드 : docker run —name oraclexe18 -e ORACLE_PASSWORD=system -p 1521:1521 -d pvargacl/oracle-xe-18.4.0
+
+docker logs -f oraclexe18 (시간걸림)
+
+
+
+
+
+
+[출처] MAC ORACLE Colima 실행|작성자 허그래
+
+docker run --restart unless-stopped --name oraclestudy -e ORACLE_PASSWORD=pass -p 1521:1521 -d gvenzl/oracle-xe
+
+
+
+docker pull container-registry.oracle.com/database/free:latest
+
+docker run -d --name oracle19c \
+-p 1521:1521 \
+-e ORACLE_SID=orcl \
+-e ORACLE_PWD=system \
+-v ~/oradata:/opt/oracle/oradata \
+gilsonfonsaca/oracle19c-ee-arm64:latest
+
+docker exec -it oracle19c bash
+su - oracle
+sqlplus system/system as sysdba
+
+
+TIP: Docker 명령어
+# 버전 확인
+$ docker -v
+
+# 이미지 다운로드
+$ docker pull [이미지 명]
+
+# 다운로드된 이미지 목록
+$ docker images
+
+# 컨테이너 생성
+$ docker create [옵션] [이미지 명]
+
+# 컨테이너 생성 및 실행
+$ docker run [옵션] [이미지 명]
+
+# 컨테이너 실행
+$ docker start [컨테이너명]
+
+# 컨테이너 재실행
+$ docker restart [컨테이너명]
+
+# 컨테이너 접속
+$ docker attach [컨테이너명]
+
+# 컨테이너 정지
+$ docker stop [컨테이너명]
+
+# 실행중인 컨테이너 목록
+$ docker ps
+
+# 정지된 컨테이너 목록
+$ docker ps -a
+
+# 컨테이너 명 변경
+$ docker rename [기존 컨테이너명] [새로운 컨테이너명]
+
+# 컨테이너 삭제
+$ docker rm [컨테이너명]
+$ docker rm -f [컨테이너명]
