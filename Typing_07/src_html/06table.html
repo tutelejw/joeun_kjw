@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<title>06table.html</title>
+	</head>
+	
+	<body>
+		<TABLE BORDER="1">
+		<tr>   <!-- tr: Table Row -->
+			<th>no</th>  <!-- th: Table header -->
+			<th>이름</th>
+			<th>성별</th>
+			<th>비고</th>
+		</tr>
+		<tr>
+		<td>1</td>   <!-- td: Table Data -->
+		<td>홍길동</td> <!-- default 왼쪽 정렬 -->
+		<td>남</td>
+		<td>&nbsp;</td>
+		</tr>
+		
+		<tr align="right">
+		<td>2</td>   <!-- td: Table Data -->
+		<td>홍길순</td> <!-- align 정렬 right 오른쪽 정렬 -->
+		<td>여</td>
+		</tr>
+
+		<tr align="center">
+		<td>3</td>   <!-- td: Table Data -->
+		<td>이순신</td> <!-- align 정렬 right 오른쪽 정렬 -->
+		<td>남</td>
+		<td>장군</td>
+		</tr>
+		
+		<tr>
+		<td colspan="4"> column 합치기(셀병합?)</td>
+		</tr>
+		<tr align="center">
+		<td colspan="4"> column 합치기(셀병합?)</td>
+		</tr>
+	</table>
+	
+	<br/><hr/><hr size="10"/><hr size="2"/><br/>
+	
+	<table border="1">
+		<tr>
+			<th colspan="3"> column 셀병합<?> 3개</th>
+			<th rowspan="2"> row 셀병합<?> 2개</th>
+		</tr>
+		
+		<tr>
+			<td>row 2 / column1 </td>
+			<td>row 2 / column2 </td>
+			<td>row 2 / column3 </td>
+		</tr>
+		<tr>
+			<td>row 3 / column1 </td>
+			<td>row 3 / column2 </td>
+			<td>row 3 / column3 </td>
+			<td>row 3 / column4 </td>
+		</tr>
+		<tr>
+			<td>row 4 / column1 </td>
+			<td rowspan="2">rows 4/ column2 </td>
+			<td>row 4 / column3 </td>
+			<td>row 4 / column4 </td>
+		</tr>
+		<tr>
+			<td>row 5 / column1 </td>
+			<td>row 5 / column3 </td>
+			<td>row 5 / column4 </td>
+		</tr>
+		<tr>
+			<td style="background: yellow">row 6 / column1 </td>
+			<td>row 6 / column2 </td>
+			<td>row 6 / column3 </td>
+			<td style="background: red">row 6 / column4 </td>
+		</tr>
+		<tr style=" background: green">
+			<td>row 7 / column1 </td>
+			<td>row 7 / column2 </td>
+			<td>row 7 / column3 </td>
+			<td>row 7 / column4 </td>
+		</tr>
+	</table>
+	</body>
+
+</html>
+
+
+	
