@@ -1,0 +1,68 @@
+
+
+chapter 7.  3page
+문제 1.  chapter 7.  3page
+커미션  commission_pct  별 직원수 조회
+커미션 소수점 2자리 버림,  없는 직원<커미션없음> 출력  nvl
+
+select 
+nvl(to_char(trunc(commission_pct * 100) / 100, '0.0'), '<커미션없음>') 커미션, count(employee_id) 직원수
+from employees
+group by to_char(trunc(commission_pct * 100) / 100, '0.0')
+order by 커미션;
+커미션                                 직원수
+---------------------------------- ----------
+ 0.1                                        6
+ 0.2                                       12
+ 0.3                                       13
+ 0.4                                        4
+<커미션없음>                               72
+
+
+문제 2. chapter 7.  2page
+커미션  commission_pct 를 가장 많이 받는 상위 4명의 부서명  department_name
+직원명  first_name   급여  salary   커미션  commission_pct   조회
+커미션 많이 받는 순서, 동일커미션 급여높은사람이 먼저 출력
+select 부서명, 직원명, 급여, 커미션
+from (
+    select  d.department_name 부서명, e.first_name 직원명, e.salary 급여, e.commission_pct 커미션,
+    rank() over (order by e.commission_pct desc, e.salary desc) as rnking
+    from employees e, departments d
+    where e.department_id = d.department_id
+      and e.commission_pct is not null)
+where rnking <= 4
+order by rnking;
+
+
+부서명         직원명            급여     커미션
+------------------------- ---------- ----------
+Sales          John             14000         .4
+Sales          Janette          10000        .35
+Sales          Patrick           9500        .35
+Sales          Allan             9000        .35
+
+
+
+문제 3.  chapter 7.  2page
+매개변수로 받은 도시면  cityName 과 부서이름 departmentName  에 해당하는 직원 목록을 출력 
+대소문자 구분 없이, 이름의 일부만 입력되도 조회 되게
+
+도시명  south  와 부서이름 it  에 해당하는 직원 목록을 출력 
+대소문자 구분 없이, 이름의 일부만 입력되도 조회 되게
+
+select  l.city, d.department_name, e.first_name, e.salary
+from employees e, departments d, locations l
+where e.department_id = d.department_id
+and d.location_id = l.location_id
+and lower(l.city) like '%south%'
+and lower(d.department_name) like '%it%'
+order by e.employee_id;
+
+
+CITY                   DEPARTMENT_NAME         FIRST_NAME            SALARY
+---------------- ------------------------------------ ---------------- ----------
+Southlake                 IT                                   Alexander                 9000
+Southlake                 IT                                   Bruce                        6000
+Southlake                 IT                                   David                        4800
+Southlake                 IT                                   Valli                          4800
+Southlake                 IT                                   Diana                        4200
