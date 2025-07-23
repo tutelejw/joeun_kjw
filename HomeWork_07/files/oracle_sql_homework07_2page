@@ -1,0 +1,112 @@
+
+
+chapter 7.  2page
+문제 1.  chapter 7.  2page
+부서별 입사월별 직원 수
+단 직원수 5명 이상 부서
+출력결과 부서 이름 순 asc
+
+select d.department_name 부서명, to_char(e.hire_date, 'mm') 입사월, count(d.department_name) 직원수
+from employees e, departments d
+where e.department_id = d.department_id
+and e.department_id in (
+      select department_id
+      from employees
+      group by department_id)
+group by d.department_name,to_char(e.hire_date, 'mm')
+having count(d.department_name) >= 5
+order by d.department_name;
+
+부서명         입사     직원수
+------------- ---- ----------
+Sales             01            7
+Sales             03           12
+Shipping       01            5
+Shipping       02            8
+Shipping       06            5
+Shipping       07            6
+
+
+문제 2. chapter 7.  2page
+국가별 country_name 도시별 city  직원수 조회
+부서정보 없는 직원 도시명 대신 <부서없음> 출력
+
+select nvl(c.country_name, '<부서없음>') 국가명, nvl(l.city, '<부서없음>') 도시명, count(e.employee_id) 직원수
+from employees e, departments d, locations l, countries c
+where e.department_id = d.department_id(+) 
+and d.location_id = l.location_id(+)
+and l.country_id = c.country_id(+)
+group by c.country_name, l.city
+order by country_name, city;
+
+국가명                                            도시명                              직원수
+---------------------------- -------------------------------- ----------
+Canada                                       Toronto                                  2
+Germany                                     Munich                                  1
+United Kingdom                         London                                  1 
+United Kingdom                         Oxford                                 34
+United States of America           Seattle                                18
+United States of America           South San Francisco           45
+United States of America           Southlake                             5
+<부서없음>                                <부서없음>                            1
+
+문제 3.  chapter 7.  2page
+각 부서별 최대 급여자의 아이디 employee_id    이름   first_name     급여  salary 출력    속한 부서의 평균 급여 출력
+
+select  e.employee_id, e.first_name, e.salary, d.department_name, avg_sal.avg_salary
+from employees e, departments d,
+    (select department_id, round(avg(salary), 2) as avg_salary from employees group by department_id) avg_sal
+where e.department_id = d.department_id
+and e.department_id = avg_sal.department_id
+and e.salary = (
+	select max(salary) 
+	from employees e2
+	where e2.department_id = e.department_id)
+order by e.employee_id;
+
+
+EMPLOYEE_ID FIRST_NAME            SALARY                   DEPARTMENT_NAME                                 AVG_SALARY
+----------- ------------------------- ---------- ------------------------------------------------------------ ----------
+        100 Steven                                   24000 				Executive                                                      19333.33
+        103 Alexander                                9000 				IT                                                                    5760
+        108 Nancy                                   12000  				Finance                                                           8600
+        114 Den                                     11000 					Purchasing                                                      4150
+        121 Adam                                     8200 					Shipping                                                       3475.56
+        145 John                                    14000 					Sales                                                           8955.88
+        200 Jennifer                                 4400 					Administration                                                4400
+        201 Michael                                 13000 					Marketing                                                        9500
+        203 Susan                                    6500					Human Resources                                            6500
+        204 Hermann                                 10000 				Public Relations                                               10000
+        205 Shelley                                 12000      			    Accounting                                                       10150
+
+
+문제4.  chapter 7.  2page
+
+salgrade 테이블 생성 
+
+create table salgrade (
+    grade number(2) primary key,
+    losal number(5) not null,
+    hisal number(5) not null
+);
+
+insert into salgrade values (1,1000,5000);
+insert into salgrade values (2,5001,10000);
+insert into salgrade values (3,10001,20000);
+insert into salgrade values (4,20001,30000);
+
+
+select s.grade||'등급' 급여등급, count(e.employee_id) 직원수
+from employees e, salgrade s
+where e.salary between s.losal and s.hisal
+group by s.grade
+order by s.grade;
+
+급여등급         직원수
+-----------------------
+1등급                49
+2등급                43
+3등급                14
+4등급                 1
+
+
