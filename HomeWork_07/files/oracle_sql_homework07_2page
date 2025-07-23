@@ -5,7 +5,7 @@ chapter 7.  2page
 부서별 입사월별 직원 수
 단 직원수 5명 이상 부서
 출력결과 부서 이름 순 asc
-
+ 
 select d.department_name 부서명, to_char(e.hire_date, 'mm') 입사월, count(d.department_name) 직원수
 from employees e, departments d
 where e.department_id = d.department_id
