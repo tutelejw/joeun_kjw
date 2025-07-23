@@ -1,0 +1,4 @@
+
+[출처] MAC ORACLE Colima 실행|작성자 허그래
+
+docker run --restart unless-stopped --name oraclestudy -e ORACLE_PASSWORD=pass -p 1521:1521 -d gvenzl/oracle-xe
