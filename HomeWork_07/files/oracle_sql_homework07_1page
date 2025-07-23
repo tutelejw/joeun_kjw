@@ -1,0 +1,113 @@
+
+
+chapter 7.
+문제 1.
+employees 테이블에서 입사한달 hire_date 별로 인원수 조회
+
+select 
+to_char(hire_date, 'mm') || '월' 월, count(*) 직원수
+from employees
+group by to_char(hire_date, 'mm')
+order by to_char(hire_date, 'mm');
+
+월             직원수
+---------- ----------
+01월               14
+02월               13
+03월               17
+04월                7
+05월                6
+06월               11
+07월                7
+08월                9
+09월                5
+10월                6
+11월                5
+12월                7
+
+12 개의 행이 선택되었습니다.
+
+
+문제 2.
+각 부셔별로 가장 많은 급여 salary를 받는 직원의 부서명 department_name  이름 first_name  급여 salary 정보를 출력 
+select d.department_name, e.first_name, e.salary
+from employees e, departments d
+where  e.department_id = d.department_id
+and e.salary = (
+	select max(e2.salary)
+	from employees e2
+	where e2.department_id = e.department_id );
+
+DEPARTMENT_NAME        FIRST_NAME                                   SALARY
+------------------------------ ---------------------------------------- ----------
+Finance                                Nancy                                         12000
+Purchasing                            Den                                           11000
+Executive                             Steven                                        24000
+Marketing                          Michael                                       13000
+Public Relations              Hermann                                       10000
+Accounting                       Shelley                                       12000
+Shipping                          Adam                                           8200
+Sales                                 John                                          14000
+Human Resources              Susan                                          6500
+IT                                     Alexander                                      9000
+Administration                   Jennifer                                       4400
+
+11 개의 행이 선택되었습니다.
+
+
+문제 3.
+부서별 직원들 최대, 최소  평균급여 조회
+평균급여가 IT 부서의 평균급여 보다 많고 Sales 부서의 평균보다 적은 부서정보 출력
+
+
+select d.department_name 부서명, max(e.salary) 최대급여,  min(e.salary) 최소급여, round(avg(e.salary), 2) 평균급여
+from employees e, departments d
+where e.department_id = d.department_id
+group by d.department_name
+having 
+avg(e.salary) > (
+	select avg(e2.salary)
+	from employees e2, departments d2
+	where e2.department_id = d2.department_id
+	and d2.department_name = 'IT')
+and avg(e.salary) < (
+	select avg(e2.salary)
+	from employees e2, departments d2
+	where e2.department_id = d2.department_id
+	and d2.department_name = 'Sales')
+;
+
+
+부서명                            최대급여   최소급여   평균급여
+-------------------------- ---------- ---------- ----------
+Human Resources               6500       6500       6500
+Finance                              12000       6900       8600
+
+
+문제4.
+각 부서별 직원이 한명만 있는 부서만 조회
+-- 단 직원이 없는 부서는 <신생부서> 라는 문자열 출력되게   <--- 결과가 안 맞음..
+단 부서가 없는 직원는 <신생부서> 라는 문자열 출력되게    <-결과치는 표현이 이게 맞는거 같은데..흠.
+부서명 기준 내림차순 desc
+
+
+select nvl(d.department_name, '<신생부서>') 부서명, count(e.employee_id) 직원수
+from employees e, departments d
+where e.department_id = d.department_id(+)
+group by d.department_name
+having count(e.employee_id) = 1
+order by department_name;
+
+부서명                         직원수
+---------------------- ----------
+Administration                    1
+Human Resources               1
+Public Relations                   1
+<신생부서>                          1
+
+
+
+
+
+
+

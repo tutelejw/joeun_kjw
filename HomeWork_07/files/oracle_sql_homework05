@@ -1,0 +1,66 @@
+
+
+chapter 5.
+문제 1.
+부서명, 부서별 최소급여, 최대급여, 평균급여를 나타내는 뷰 작성
+뷰 이름 dept_view
+뷰생성 컬럼 name    minsal   maxsal  avgsal
+기준 테이블 departments    employees
+
+CREATE VIEW dept_view AS
+select d.department_name name, min(e.salary) minsal, max(e.salary) maxsal, round(avg(e.salary),3) avgsal
+from employees e , departments d
+where e.department_id=d.department_id
+group by d.department_name;
+
+select * from dept_view;
+
+
+NAME                                 MINSAL     MAXSAL     AVGSAL
+--------------------------------- ---------- ---------- ----------
+Administration                          4400       4400       4400
+Accounting                               8300      12000      10150
+Executive                                 17000      24000  19333.333
+IT                                               4200       9000       5760
+Purchasing                                2500      11000       4150
+Human Resources                      6500       6500       6500
+Public Relations                        10000      10000      10000
+Shipping                                     2100       8200   3475.556
+Finance                                       6900      12000       8600
+Sales                                           6100      14000   8955.882
+Marketing                                  6000      13000       9500
+
+11 개의 행이 선택되었습니다.
+
+
+
+
+문제2. 자신이 속한 팀의 평균연봉보다 많은 연봉을 받는 사원
+아이디   /   부서아이디    /    연봉    /    팀의 평균연봉 
+
+select e1.employee_id, e1.department_id, e1.salary, e2.avg_salary
+from employees e1, 
+	(select department_id, round(avg(salary),0) avg_salary 
+	from employees 
+	group by department_id) e2
+where e1.department_id = e2.department_id
+and e1.salary > e2.avg_salary
+;
+
+
+문제3.
+입력받은 부서의 아이디를 가진 사원들
+아이디 부서이름   연봉  팀내평균연봉
+
+
+select e1.employee_id, d.department_name, e1.salary, e2.avg_salary
+from employees e1, 
+	(select department_id, round(avg(salary),0) avg_salary 
+	from employees 
+    where department_id=30    -- 입력받은 값 변수 처리 필요
+	group by department_id) e2,
+    departments d
+where e1.department_id = e2.department_id
+and e1.department_id = d.department_id
+;
+
