@@ -1,3 +1,4 @@
+package kjw.typing.m07.d22;
 import java.sql.*;
 
 public class Example02{
