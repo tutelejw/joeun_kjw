@@ -1,7 +1,7 @@
 package kjw.hw.m07.d18_oracle;
 import java.sql.*;
 
-public class EmpStatistics3{
+public class EmpStatistics_priv{
 	private static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 	private static final String user = "hr";
@@ -44,8 +44,8 @@ public class EmpStatistics3{
 
 	/// Main
 	public static void main(String[] args) throws SQLException {
-		new EmpStatistics3().printStatistics(10000);
-		new EmpStatistics3().printStatistics(15000);
+		new EmpStatistics_priv().printStatistics(10000);
+		new EmpStatistics_priv().printStatistics(15000);
 	    
 	}//end of main
 }//end of class

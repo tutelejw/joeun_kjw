@@ -47,7 +47,7 @@ public class EmpStatistics{
 
 	/// Main
     public static void main(String[] args) throws SQLException {
-        EmpStatistics3 stat = new EmpStatistics3();
+        EmpStatistics_priv stat = new EmpStatistics_priv();
 
         int maxSalary = 10000;
         stat.printStatistics(maxSalary);
