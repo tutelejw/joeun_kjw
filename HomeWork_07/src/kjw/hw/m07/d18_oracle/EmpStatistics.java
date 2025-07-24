@@ -25,7 +25,7 @@ public class EmpStatistics{
 		System.out.println("Max Salary: " + maxSalary);
 		System.out.println("=================================");
 		
-		//1단계 : Connection
+		// 1단계: DB 연결(Connection 생성)
 		Connection con = DriverManager.getConnection(url,user,pass);
 
 		String sql = "SELECT j.job_title, ROUND(AVG(NVL(e.salary, 0)), 0) 평균급여 FROM employees e, jobs j "
@@ -33,10 +33,10 @@ public class EmpStatistics{
 				+ "GROUP BY j.job_title "
 				+ "ORDER BY ROUND(AVG(NVL(e.salary, 0)), 0) DESC";
 		
-		//2단계 : Statement 
-		//3단계 : Query문 전송 및 결과 return
+		// 2단계: PreparedStatement 생성 (SQL 준비)
 		PreparedStatement pstmt = con.prepareStatement(sql);
-
+		
+		// 3단계: SQL 실행 및 결과(ResultSet) 반환
 		pstmt.setInt(1, maxSalary);
 		ResultSet rs = pstmt.executeQuery();
 
@@ -49,14 +49,14 @@ public class EmpStatistics{
 		if (con != null) con.close();
 	}
 
-	/// Main
+	// Main
     public static void main(String[] args) throws SQLException {
-        EmpStatistics_priv stat = new EmpStatistics_priv();
-
+        
         int maxSalary = 10000;
-        stat.printStatistics(maxSalary);
+        new EmpStatistics().printStatistics(maxSalary);
 
         maxSalary = 15000;
-        stat.printStatistics(maxSalary);
+        new EmpStatistics().printStatistics(maxSalary);
+        
 	}//end of main
 }//end of class

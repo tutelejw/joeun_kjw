@@ -1,0 +1,24 @@
+
+
+	
+span {
+    background-color: yellow ; 
+    font-size: 12pt;
+}
+
+.abc{
+    background-color: green ;
+    font-size: 15pt;
+}
+div { background-color: blue; };
+#uniqueId01{
+    background-color: red ;
+    font-size: 17pt;
+}
+
+#uniqueId02{
+    background-color: orange ;
+    font-size: 20pt;
+}
+
+div { background-color: blue; };
