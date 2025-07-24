@@ -1,0 +1,49 @@
+/*
+	■ CSS(Cascading Style Sheets) 작성 필요성 ?
+	   01beforeCSS.html 
+	   02afterCSS_one_file.html
+	   03agterCss_two_file.html  /  test.css
+	   진행하며, 화면 구성은 동일하나, 
+	   html 과 design  디커플링 방법이해.
+
+	■ 02afterCSS_one_file.html 내부의
+	   : <style> tag 에서 Html(static contents) 찾아(?)가서 Design 한
+	      부분을	test.css 파일로 구성 Html 외부로 이동(?)
+	   : test.css 파일은 html 에서  <link> 사용
+         <link rel="stylesheet" type="text/css" href="test.css">
+	     어디서나 참조 사용 될 수 있다.
+*/
+
+
+/*	 
+	■ HTML(static contents) / style(Design) 분리
+	■ Html tag 를 찾아(?)가서 Design 함.
+	■ html 을 찾아가는 방법 / 접근하는 Syntax 
+	 : CSS Selector 라 함. 
+	 - HTML name 접근 		: span{~~}
+	 - class attribute 접근 	: .abc{~~}
+	 - id attribute 접근			: #uniqueId{~~}
+*/
+
+
+/* Tag selector */
+span {
+    background-color: yellow;
+    font-size: 12pt;
+}
+
+/* Class selector */
+.abc {
+    background-color: green;
+    font-size: 15pt;
+}
+
+/* ID selectors */
+#uniqueId01 {
+    background-color: red;
+    font-size: 17pt;
+}
+#uniqueId02 {
+    background-color: orange;
+    font-size: 20pt;
+}
