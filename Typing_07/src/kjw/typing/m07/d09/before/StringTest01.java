@@ -1,4 +1,4 @@
-//package jp01.part03;
+package kjw.typing.m07.d09.before;
 
 /*
 	FileName : StringTest01.java

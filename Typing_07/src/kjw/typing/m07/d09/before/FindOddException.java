@@ -1,3 +1,4 @@
+package kjw.typing.m07.d09.before;
 public class FindOddException extends Exception { // Exception 클래스를 상속받아 사용자 정의 예외 클래스를 정의합니다.
                                                  // Exception을 상속받으므로 이 예외는 Checked Exception이 됩니다.
 

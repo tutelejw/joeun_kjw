@@ -1,4 +1,5 @@
-package jp01.part05;
+package kjw.typing.m07.d09.before;
+
 
 /*
 *	FileName : CalendarTest.java  

@@ -1,3 +1,4 @@
+package kjw.typing.m07.d09.before;
 class A {
     public void def(String message) {
         System.out.println("def(String message) " + this.getClass().getName() + " start " + message);

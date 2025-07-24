@@ -1,3 +1,4 @@
+package kjw.typing.m07.d09.before;
 import java.util.Hashtable;
 import java.util.Map;
 

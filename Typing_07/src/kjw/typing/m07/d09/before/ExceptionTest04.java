@@ -1,3 +1,4 @@
+package kjw.typing.m07.d09.before;
 public class ExceptionTest04 {
 
 	//Field
