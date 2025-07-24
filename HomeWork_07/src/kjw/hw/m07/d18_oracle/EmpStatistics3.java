@@ -1,25 +1,20 @@
 package kjw.hw.m07.d18_oracle;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+public class EmpStatistics3{
+	private static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+	private static final String user = "hr";
+	private static final String pass = "hr";
 
-public class EmpStatistics{
- 
-    String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-    String user = "hr";
-    String pass = "hr";
-	//1단계 : Connection
-    static {
-	        try {
-	            Class.forName("oracle.jdbc.driver.OracleDriver");
-	        } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
+	//1단계 : Connection 
+	static {
+		try {
+			Class.forName(ORACLE_DRIVER);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	public void printStatistics(int maxSalary) throws SQLException {
 		System.out.println("=================================");
 		System.out.println("Max Salary: " + maxSalary);
@@ -41,18 +36,16 @@ public class EmpStatistics{
 		}
 
 		if (rs != null) rs.close();
+
 		if (pstmt != null) pstmt.close();
+
 		if (con != null) con.close();
 	}
 
 	/// Main
-    public static void main(String[] args) throws SQLException {
-        EmpStatistics3 stat = new EmpStatistics3();
-
-        int maxSalary = 10000;
-        stat.printStatistics(maxSalary);
-
-        maxSalary = 15000;
-        stat.printStatistics(maxSalary);
+	public static void main(String[] args) throws SQLException {
+		new EmpStatistics3().printStatistics(10000);
+		new EmpStatistics3().printStatistics(15000);
+	    
 	}//end of main
 }//end of class
