@@ -11,7 +11,7 @@ public class EmpStatistics{
     String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
     String user = "hr";
     String pass = "hr";
-	//1단계 : Connection
+
     static {
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -24,13 +24,17 @@ public class EmpStatistics{
 		System.out.println("=================================");
 		System.out.println("Max Salary: " + maxSalary);
 		System.out.println("=================================");
-
+		
+		//1단계 : Connection
 		Connection con = DriverManager.getConnection(url,user,pass);
 
 		String sql = "SELECT j.job_title, ROUND(AVG(NVL(e.salary, 0)), 0) 평균급여 FROM employees e, jobs j "
 				+ "WHERE e.job_id = j.job_id AND e.salary >= ? "
 				+ "GROUP BY j.job_title "
 				+ "ORDER BY ROUND(AVG(NVL(e.salary, 0)), 0) DESC";
+		
+		//2단계 : Statement 
+		//3단계 : Query문 전송 및 결과 return
 		PreparedStatement pstmt = con.prepareStatement(sql);
 
 		pstmt.setInt(1, maxSalary);
