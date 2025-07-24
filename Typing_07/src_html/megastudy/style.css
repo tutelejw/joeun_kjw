@@ -1,0 +1,35 @@
+/* style.css */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f8;
+}
+
+header {
+  background: #007bff;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+nav a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}

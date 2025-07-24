@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>메모 게시판</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>메모 게시판</h1></header>
+  <nav>
+    <a href="index.html">📸 사진 앨범</a>
+    <a href="intro.html">👥 우리 반 소개</a>
+    <a href="calendar.html">📅 추억 캘린더</a>
+    <a href="board.html">📝 메모 게시판</a>
+  </nav>
+
+  <div class="container">
+    <h2>📝 메모 남기기</h2>
+    <textarea id="memoInput" rows="3" style="width:100%; padding:10px;"></textarea>
+    <button onclick="addMemo()" style="margin-top: 10px;">메모 추가</button>
+    <ul id="memoList" style="margin-top: 1rem;"></ul>
+  </div>
+
+  <script>
+    const memoList = document.getElementById("memoList");
+    let memos = JSON.parse(localStorage.getItem("memos")) || [];
+
+    function saveMemos() {
+      localStorage.setItem("memos", JSON.stringify(memos));
+    }
+
+    function renderMemos() {
+      memoList.innerHTML = "";
+      memos.forEach((text, index) => {
+        const li = document.createElement("li");
+        li.textContent = text;
+
+        const btn = document.createElement("button");
+        btn.textContent = "삭제";
+        btn.style.marginLeft = "10px";
+        btn.onclick = () => {
+          memos.splice(index, 1);
+          saveMemos();
+          renderMemos();
+        };
+
+        li.appendChild(btn);
+        memoList.appendChild(li);
+      });
+    }
+
+    function addMemo() {
+      const input = document.getElementById("memoInput");
+      const text = input.value.trim();
+      if (text === "") return;
+      memos.push(text);
+      input.value = "";
+      saveMemos();
+      renderMemos();
+    }
+
+    renderMemos();
+  </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>우리반 사진 앨범</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f8;
+    }
+
+    header {
+      background: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    nav a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .upload-section {
+      margin-bottom: 2rem;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .photo-card {
+      position: relative;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>우리반 사진 앨범</h1>
+  </header>
+
+  <nav>
+    <a href="#">사진 앨범</a>
+    <a href="#">우리 반 소개</a>
+    <a href="#">추억 캘린더</a>
+    <a href="#">메모 게시판</a>
+  </nav>
+
+  <div class="container">
+    <div class="upload-section">
+      <h2>📷 사진 등록</h2>
+      <input type="file" id="imageUpload" accept="image/*" multiple />
+    </div>
+
+    <div class="gallery" id="gallery">
+      <!-- 사진이 추가되는 영역 -->
+    </div>
+  </div>
+
+  <script>
+    const imageUpload = document.getElementById("imageUpload");
+    const gallery = document.getElementById("gallery");
+
+    imageUpload.addEventListener("change", (e) => {
+      const files = e.target.files;
+
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = document.createElement("img");
+          img.src = event.target.result;
+
+          const card = document.createElement("div");
+          card.className = "photo-card";
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.innerText = "삭제";
+          deleteBtn.onclick = () => card.remove();
+
+          card.appendChild(img);
+          card.appendChild(deleteBtn);
+          gallery.appendChild(card);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
