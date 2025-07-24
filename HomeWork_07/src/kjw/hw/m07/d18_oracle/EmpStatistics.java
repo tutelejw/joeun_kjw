@@ -34,18 +34,18 @@ public class EmpStatistics{
 				+ "ORDER BY ROUND(AVG(NVL(e.salary, 0)), 0) DESC";
 		
 		// 2단계: PreparedStatement 생성 (SQL 준비)
-		PreparedStatement pstmt = con.prepareStatement(sql);
+		PreparedStatement psmt = con.prepareStatement(sql);
 		
 		// 3단계: SQL 실행 및 결과(ResultSet) 반환
-		pstmt.setInt(1, maxSalary);
-		ResultSet rs = pstmt.executeQuery();
+		psmt.setInt(1, maxSalary);
+		ResultSet rs = psmt.executeQuery();
 
 		while (rs.next()) {
 			System.out.println("[" + rs.getString("job_title") + "] " + rs.getInt("평균급여"));
 		}
 
 		if (rs != null) rs.close();
-		if (pstmt != null) pstmt.close();
+		if (psmt != null) psmt.close();
 		if (con != null) con.close();
 	}
 
