@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmpStatistics{
+public class Part02_EmpStatistics{
  
     String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
     String user = "hr";
@@ -19,6 +19,7 @@ public class EmpStatistics{
 	            e.printStackTrace();
 	        }
 	    }
+ 
 
 	public void printStatistics(int maxSalary) throws SQLException {
 		System.out.println("=================================");
@@ -53,10 +54,10 @@ public class EmpStatistics{
     public static void main(String[] args) throws SQLException {
         
         int maxSalary = 10000;
-        new EmpStatistics().printStatistics(maxSalary);
+        new Part02_EmpStatistics().printStatistics(maxSalary);
 
         maxSalary = 15000;
-        new EmpStatistics().printStatistics(maxSalary);
+        new Part02_EmpStatistics().printStatistics(maxSalary);
         
 	}//end of main
 }//end of class

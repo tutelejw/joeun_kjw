@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmpManager_Part04 {
+public class Part04_EmpManager {
     static {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -57,7 +57,7 @@ public void printEmployee(String jobs[])throws SQLException{
     public static void main(String[] args) throws SQLException{
     	//String jobs = "Accountant";
     	String[] jobs = {"Accountant", "Stock Clerk"};
-    	new EmpManager_Part04().printEmployee(jobs);
+    	new Part04_EmpManager().printEmployee(jobs);
     }
 }//out of class
 

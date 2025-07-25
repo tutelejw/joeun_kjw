@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmpManager_Part03 {
+public class Part03_EmpManager {
 
     static {
 	        try {
@@ -49,7 +49,7 @@ public class EmpManager_Part03 {
     }
     
     public static void main(String[] args) throws SQLException{
-    	new EmpManager_Part03().printEmployee("al", 4000);
+    	new Part03_EmpManager().printEmployee("al", 4000);
     }
     
     
