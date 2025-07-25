@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmpManager {
+public class EmpManager_Part03 {
 
     static {
 	        try {
@@ -43,10 +43,13 @@ public class EmpManager {
 		if (!hasResult) {
 			System.out.println("조건이 맞는 사람 없음");
 		}
+		if (rs != null) rs.close();
+		if (psmt != null) psmt.close();
+		if (conn != null) conn.close();
     }
     
     public static void main(String[] args) throws SQLException{
-    	new EmpManager().printEmployee("al", 4000);
+    	new EmpManager_Part03().printEmployee("al", 4000);
     }
     
     
