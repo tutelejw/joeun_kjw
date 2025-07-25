@@ -16,22 +16,35 @@ public class EmpManager_Part04 {
     }
     
 //public void printEmployee(String jobs[])throws SQLException{
-public void printEmployee(String jobs)throws SQLException{
+public void printEmployee(String jobs[])throws SQLException{
     	String dburl = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
     	Connection conn=DriverManager.getConnection(dburl,"hr","hr");
         
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < jobs.length; i++) {
+            placeholders.append("?");
+            if (i < jobs.length - 1) {
+                placeholders.append(", ");
+            }
+        }
     	String sql="select 	e.employee_id, e.first_name, e.salary, j.job_title"
         		+ "    		from employees e, jobs j"
         		+ "    		where e.job_id= j.job_id"
-        		+ "    		and j.job_title in (?) "
+        		+ "    		and j.job_title in (" + placeholders + ") "
         		//+ "    		and j.job_title in ('Accountant','Stock Clerk')"
         		+ "    		order by e.employee_id";
-        System.out.println("jobs : " + jobs + " / sql : " + sql);
+    	
+    	System.out.println("jobs.length = " + jobs.length);
+        System.out.println("sql : " + sql);
 
         PreparedStatement  psmt = conn.prepareStatement(sql);
-        //psmt.setString(1, jobs);
-        
+        for (int i = 0; i < jobs.length; i++) {
+            psmt.setString(i + 1, jobs[i]);
+            System.out.println("jobs : " + jobs[i]);
+        }
+       
         ResultSet rs=psmt.executeQuery();
+        
         while(rs.next()) {
         	int eid=rs.getInt("employee_id");
         	String fname=rs.getString("first_name");
@@ -42,8 +55,8 @@ public void printEmployee(String jobs)throws SQLException{
     }//out of printEmployee
     		
     public static void main(String[] args) throws SQLException{
-    	String jobs = "Accounntant";
-    	//String[] jobs = {"Accounntant", "Stock Clerk"};
+    	//String jobs = "Accountant";
+    	String[] jobs = {"Accountant", "Stock Clerk"};
     	new EmpManager_Part04().printEmployee(jobs);
     }
 }//out of class
