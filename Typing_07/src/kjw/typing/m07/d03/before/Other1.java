@@ -1,4 +1,4 @@
-package jb04.part08.outer;
+package kjw.typing.m07.d03.before;  
 //package jb04.part08; //이러면 protected 까지는 되고.  package
 
 
@@ -18,7 +18,7 @@ public class Other1{
 	
 	///Field
 	//==> jb04.part07.Father를 이해할것. 
-	jb04.part08.Father unknown = new jb04.part08.Father();	//==> Father 인스턴스 생성
+	kjw.typing.m07.d03.before.Father unknown = new kjw.typing.m07.d03.before.Father();	//==> Father 인스턴스 생성
 
 	///Constructor
 	public Other1(){

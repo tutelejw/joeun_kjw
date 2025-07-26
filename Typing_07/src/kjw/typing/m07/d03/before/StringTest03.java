@@ -1,8 +1,10 @@
+package kjw.typing.m07.d03.before;  
+
 public class StringTest03{
 	public static void main(String[] args){
 	
-		String name = '012ABCdef';
-		String hi = "Hi!";
+		String name = "012ABCdef";
+		String hi = "Hi!11111";
 
 		String s1 = hi.concat(name);
 		System.out.println(s1);

@@ -1,4 +1,4 @@
-//package jb04.part04;
+package kjw.typing.m07.d03.before;  
 
 /*
 	FileName : OverRidingTest.java

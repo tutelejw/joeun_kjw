@@ -1,4 +1,4 @@
-//package jb05.part02;
+package kjw.typing.m07.d03.before;  
 
 /*
   FileName : ObjectTest.java 

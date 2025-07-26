@@ -1,4 +1,4 @@
-package jb04.part08.outer;
+package kjw.typing.m07.d03.before;  
 
 /*
 	FileName : Son1,java
@@ -11,7 +11,7 @@ package jb04.part08.outer;
 	      ==> Compile 시 error 를 확인하고, error 의 의미 이해
 	      ==> 각 Access Modifier 의 접근범위를 확인할 것  
 */
-public class Son1 extends jb04.part08.Father{
+public class Son1 extends kjw.typing.m07.d03.before.Father{
 	
 	///Field
 	
