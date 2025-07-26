@@ -54,8 +54,8 @@ select  l.city, d.department_name, e.first_name, e.salary
 from employees e, departments d, locations l
 where e.department_id = d.department_id
 and d.location_id = l.location_id
-and lower(l.city) like '%south%'
-and lower(d.department_name) like '%it%'
+and lower(l.city) like '%south%'             -- 도시명  south  
+and lower(d.department_name) like '%it%'     -- 부서이름 it 해당하는 직원 목록을 출력 
 order by e.employee_id;
 
 
