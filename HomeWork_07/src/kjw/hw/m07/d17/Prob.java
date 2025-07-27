@@ -1,6 +1,5 @@
 package kjw.hw.m07.d17;
 
-import java.io.FileNotFoundException;
 import java.util.Vector;
 
 class Score{
@@ -52,7 +51,7 @@ class Score{
 
 public class Prob {
 	public Vector getScore(String filename) throws Exception {
-		Vector<Score> scoresVector = new Vector<>();
+		Vector scoresVector = new Vector<>();
 		java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(filename));
 		String str;
 		while ((str = br.readLine()) != null) {
@@ -67,6 +66,7 @@ public class Prob {
 				System.out.println("요효하지 않은 데이터 : " + str);
 			}
 	    }
+		br.close();
 		return scoresVector;
 	}
 	
