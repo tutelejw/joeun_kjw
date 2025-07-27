@@ -27,16 +27,6 @@ public class Part05_Prob5 {
 		    
 		    con = DriverManager.getConnection(url,user,pass);
 		    
-//		    String sql="select e1.employee_id, d.department_name, e1.salary, e2.avg_salary "
-//		    		+ " from employees e1, "
-//		    		+ "	(select department_id, round(avg(salary),0) avg_salary "
-//		    		+ "	from employees "
-//		    		+ "    where department_id= ?    "  // 입력받은 값 변수 처리 필요
-//		    		+ "	group by department_id) e2, "
-//		    		+ "    departments d "
-//		    		+ " where e1.department_id = e2.department_id "
-//		    		+ " and e1.department_id = d.department_id ";
-		    
 		   String sql="select e1.employee_id, d.department_name, e1.salary, e2.avg_salary \r\n"
 		    		+ " from employees e1, \r\n"
 		    		+ "	(select department_id, round(avg(salary),0) avg_salary \r\n"
