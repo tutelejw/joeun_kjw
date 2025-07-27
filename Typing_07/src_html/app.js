@@ -1,0 +1,293 @@
+//2. JavaScript 기능 (app.js)
+
+// 사용자 데이터 저장 (LocalStorage 사용)
+const users = JSON.parse(localStorage.getItem('users')) || [];
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+// 상품 데이터 저장
+const products = JSON.parse(localStorage.getItem('products')) || [
+    {
+        id: 1,
+        name: "에어팟 프로 2세대",
+        price: 329000,
+        category: "전자제품",
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df",
+        description: "노이즈 캔슬링이 적용된 프리미엄 무선 이어폰"
+    },
+    {
+        id: 2,
+        name: "아이폰 14 프로",
+        price: 1550000,
+        category: "스마트폰",
+        image: "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1",
+        description: "Apple의 최신 플래그십 스마트폰"
+    },
+    {
+        id: 3,
+        name: "맥북 프로 14인치",
+        price: 2690000,
+        category: "노트북",
+        image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9",
+        description: "M2 프로 칩이 탑재된 고성능 노트북"
+    },
+    {
+        id: 4,
+        name: "아이패드 프로",
+        price: 1249000,
+        category: "태블릿",
+        image: "https://images.unsplash.com/photo-1585771724684-382ae1f5f0e7",
+        description: "M2 칩이 탑재된 프로급 태블릿"
+    }
+];
+
+// 초기 데이터 저장
+if (!localStorage.getItem('products')) {
+    localStorage.setItem('products', JSON.stringify(products));
+}
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', () => {
+    renderNavigation();
+    loadPage('home');
+});
+
+// 페이지 로드 함수
+function loadPage(page) {
+    const contentDiv = document.getElementById('content');
+    
+    switch(page) {
+        case 'home':
+            renderHomePage();
+            break;
+        case 'login':
+            renderLoginPage();
+            break;
+        case 'register':
+            renderRegisterPage();
+            break;
+        case 'profile':
+            renderProfilePage();
+            break;
+        case 'product-list':
+            renderProductList();
+            break;
+        case 'product-add':
+            renderProductAdd();
+            break;
+        case 'product-edit':
+            renderProductEdit();
+            break;
+        case 'user-list':
+            renderUserList();
+            break;
+        default:
+            renderHomePage();
+    }
+}
+
+// 네비게이션 렌더링
+function renderNavigation() {
+    const mainMenu = document.getElementById('mainMenu');
+    const userMenu = document.getElementById('userMenu');
+    
+    // 메인 메뉴
+    let mainMenuHtml = '';
+    if (currentUser) {
+        mainMenuHtml = `
+            <a href="#" onclick="loadPage('product-list')" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-box-open mr-1"></i> 상품 목록
+            </a>
+        `;
+    } else {
+        mainMenuHtml = `
+            <a href="#" onclick="loadPage('product-list')" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-box-open mr-1"></i> 상품 목록
+            </a>
+        `;
+    }
+    mainMenu.innerHTML = mainMenuHtml;
+    
+    // 사용자 메뉴
+    let userMenuHtml = '';
+    if (currentUser) {
+        userMenuHtml = `
+            <div class="ml-4 flex items-center md:ml-6">
+                <div class="ml-3 relative">
+                    <div>
+                        <button type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="sr-only">Open user menu</span>
+                            <span class="px-3 py-2 rounded-md text-sm font-medium text-gray-700">${currentUser.username}님</span>
+                            <i class="fas fa-caret-down ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" id="user-dropdown">
+                        ${currentUser.isAdmin ? `
+                            <a href="#" onclick="loadPage('user-list')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <i class="fas fa-users mr-2"></i> 회원 목록
+                            </a>
+                            <a href="#" onclick="loadPage('product-add')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <i class="fas fa-plus-circle mr-2"></i> 상품 등록
+                            </a>
+                        ` : ''}
+                        <a href="#" onclick="loadPage('profile')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                            <i class="fas fa-user mr-2"></i> 내 정보 보기
+                        </a>
+                        <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                            <i class="fas fa-sign-out-alt mr-2"></i> 로그아웃
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        userMenuHtml = `
+            <div class="flex space-x-4">
+                <a href="#" onclick="loadPage('login')" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <i class="fas fa-sign-in-alt mr-1"></i> 로그인
+                </a>
+                <a href="#" onclick="loadPage('register')" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <i class="fas fa-user-plus mr-1"></i> 회원가입
+                </a>
+            </div>
+        `;
+    }
+    userMenu.innerHTML = userMenuHtml;
+    
+    // 드롭다운 토글 이벤트 추가
+    const userMenuButton = document.getElementById('user-menu-button');
+    if (userMenuButton) {
+        userMenuButton.addEventListener('click', () => {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.toggle('hidden');
+        });
+    }
+}
+
+// 홈 페이지 렌더링
+function renderHomePage() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">MyWebApp에 오신 것을 환영합니다!</h2>
+            <p class="text-gray-600 mb-4">최신 상품을 확인하고 편리하게 쇼핑하세요.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                ${products.slice(0, 4).map(product => `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
+                            <p class="text-gray-600 text-sm mt-1">${product.price.toLocaleString()}원</p>
+                            <button onclick="viewProductDetail(${product.id})" class="mt-3 bg-indigo-600 text-white py-1 px-3 rounded-md text-sm hover:bg-indigo-700 transition-colors">
+                                상세 보기
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+// 로그인 페이지 렌더링
+function renderLoginPage() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">로그인</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">아이디</label>
+                    <input type="text" id="username" name="username" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+                    <input type="password" id="password" name="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="flex items-center">
+                    <input id="isAdmin" name="isAdmin" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                    <label for="isAdmin" class="ml-2 block text-sm text-gray-700">관리자 로그인</label>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        로그인
+                    </button>
+                </div>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">아직 회원이 아니신가요? <a href="#" onclick="loadPage('register')" class="text-indigo-600 hover:text-indigo-500">회원가입</a></p>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        login();
+    });
+}
+
+// 회원가입 페이지 렌더링
+function renderRegisterPage() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">회원가입</h2>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="regUsername" class="block text-sm font-medium text-gray-700">아이디</label>
+                    <input type="text" id="regUsername" name="regUsername" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="regPassword" class="block text-sm font-medium text-gray-700">비밀번호</label>
+                    <input type="password" id="regPassword" name="regPassword" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="regPasswordConfirm" class="block text-sm font-medium text-gray-700">비밀번호 확인</label>
+                    <input type="password" id="regPasswordConfirm" name="regPasswordConfirm" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="regEmail" class="block text-sm font-medium text-gray-700">이메일</label>
+                    <input type="email" id="regEmail" name="regEmail" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        회원가입
+                    </button>
+                </div>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">이미 회원이신가요? <a href="#" onclick="loadPage('login')" class="text-indigo-600 hover:text-indigo-500">로그인</a></p>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        register();
+    });
+}
+
+// 상품 목록 페이지 렌더링
+function renderProductList() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <div class="bg-white shadow rounded-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">상품 목록</h2>
+                <div class="relative">
+                    <input type="text" id="productSearch" placeholder="상품 검색..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
+                ${products.map(product => `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
+                            <p class="text-gray-600 text-sm mt-1">${product.price.toLocaleString()}원</p>
+                            <p class="text-gray-500 text-xs mt-2">${product.description}</p>
+                            <div class="mt-4 flex justify-between">
+                                <button onclick="viewProductDetail(${product.id})" class="bg-indigo-600 text-white py-1 px-3 rounded-md text-sm hover:
