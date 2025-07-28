@@ -85,7 +85,7 @@
 
 
 4. http://127.0.0.1:8080/edu  요청시 index 구조  나오게 설정
-	ㅇ [TOMCAT_HOME]/conf/web.xml  122 line  true 설정
+	ㅇ [TOMCAT_HOME]/conf/web.xml  122line  true 설정
 		<init-param>
 	            <param-name>listings</param-name>
 	            <param-value>true</param-value>
