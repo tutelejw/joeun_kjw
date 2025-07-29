@@ -36,3 +36,13 @@ public class GetData extends HttpServlet {
         out.println("</body></html>");
     }
 }
+
+// gpt ai prompt 날려서 java 작성
+//java GetData.java 구현
+//1.Html 에서 Form 에서 Get 방식 submit
+//2.name 과 addr 입력됨 
+//3.HttpServelt 상속 GetData.java 구현
+//4.DoGet() Method 오버라이딩
+//5.Client의 Form Data를 받아 처리
+//6. 서버콘솔에 name, addr 출력하고
+//5. 입력하신 이름과 주소는 ~~ 입니다. 브라우저 화면 출력

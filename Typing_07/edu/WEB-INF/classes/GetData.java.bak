@@ -16,7 +16,7 @@ public class GetData extends HttpServlet {
             throws ServletException, IOException {
 
         // 클라이언트에서 보낸 name, addr 받기 (한글 깨짐 방지용)
-        //request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         String name = request.getParameter("name");
         String addr = request.getParameter("addr");
