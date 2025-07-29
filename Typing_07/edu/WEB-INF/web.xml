@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+  version="4.0"
+  metadata-complete="true">
+
+	<servlet>
+		<servlet-name>FirstServlet</servlet-name>
+		<servlet-class>FirstServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletTest</servlet-name>
+		<servlet-class>ServletTest</servlet-class>
+	</servlet>
+	
+	    <servlet>
+        <servlet-name>HelloServletService</servlet-name> 
+		<servlet-class>HelloServletService</servlet-class> 
+		</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ServletTest</servlet-name>
+		<url-pattern>/ServletTest</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FirstServlet</servlet-name>
+		<url-pattern>/FirstServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+        <servlet-name>HelloServletService</servlet-name> 
+		<servlet-class>HelloServletService</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>HelloServletService</servlet-name> 
+		<url-pattern>/HelloServletService</url-pattern> 
+	</servlet-mapping>
+		
+
+	<servlet>
+		<servlet-name>HelloServletdoGet</servlet-name> 
+		<servlet-class>HelloServletdoGet</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>HelloServletdoGet</servlet-name> 
+		<url-pattern>/HelloServletdoGet</url-pattern> 
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>HelloServletdoPost</servlet-name> 
+		<servlet-class>HelloServletdoPost</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>HelloServletdoPost</servlet-name> 
+		<url-pattern>/HelloServletdoPost</url-pattern> 
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>HelloServletdoPostOverGet</servlet-name> 
+		<servlet-class>HelloServletdoPostOverGet</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>HelloServletdoPostOverGet</servlet-name> 
+		<url-pattern>/HelloServletdoPostOverGet</url-pattern> 
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GetData</servlet-name> 
+		<servlet-class>GetData</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>GetData</servlet-name> 
+		<url-pattern>/GetData</url-pattern> 
+	</servlet-mapping>
+
+		<servlet>
+		<servlet-name>PostData</servlet-name> 
+		<servlet-class>PostData</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>PostData</servlet-name> 
+		<url-pattern>/PostData</url-pattern> 
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GetDataKr</servlet-name> 
+		<servlet-class>GetDataKr</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>GetDataKr</servlet-name> 
+		<url-pattern>/GetDataKr</url-pattern> 
+	</servlet-mapping>
+	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
+
+
+
+ 
+                                
+
+</web-app>
