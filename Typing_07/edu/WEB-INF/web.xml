@@ -95,7 +95,28 @@
         <servlet-name>GetDataKr</servlet-name> 
 		<url-pattern>/GetDataKr</url-pattern> 
 	</servlet-mapping>
-	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
+	
+
+	<servlet>
+		<servlet-name>GetDataKrATagServletMapping</servlet-name>
+		<servlet-class>jw02.GetDataKrATagServletMapping</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>PostDataATagServletMapping</servlet-name>
+		<servlet-class>jw02.PostDataATagServletMapping</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>PostDataATagServletMapping</servlet-name>
+		<url-pattern>/PostDataATagServletMapping</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>GetDataKrATagServletMapping</servlet-name>
+		<url-pattern>/GetDataKrATagServletMapping</url-pattern>
+	</servlet-mapping>
 
 
 
