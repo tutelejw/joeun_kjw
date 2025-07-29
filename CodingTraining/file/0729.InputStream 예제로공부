@@ -1,0 +1,24 @@
+
+
+java 입문자 공부 중이야. 
+예제 문제를 수준에 맞게 10문제 내줘
+InputStream 관련으로
+따라할수 있게 답안도 제공해줘
+문제, 답안 순서로 내줘
+아래의 문제 요구사항 샘플을 분석해서 detail 하게 문제를 내줘 
+
+요구사항 샘플
+Pizza 클래스 (Bean)
+필드: String type (종류), int size (사이즈, 인치)
+생성자 (오버로딩):
+기본 생성자: "치즈 피자", 10인치로 초기화
+type과 size를 파라미터로 받는 생성자
+메소드 (오버로딩):
+addTopping(String topping): 토핑을 추가하고 메시지를 출력합니다. (void)
+addTopping(String topping1, String topping2): 두 개의 토핑을 추가하고 메시지를 출력합니다. (void)
+메소드:
+printPizzaInfo(): "주문하신 피자는 [사이즈]인치 [종류] 피자입니다." 형식으로 출력합니다.
+PizzaApp 클래스 (Application)
+bean class의 기본 생성자로 피자 객체(pizza1)를 생성하고 정보를 출력하세요.
+bean class의 파라미터가 있는 생성자로 type "페퍼로니 피자", size 12인치로 피자 객체(pizza2)를 생성하세요.
+pizza2에 "올리브" 토핑을 하나 추가하고, "베이컨"과 "파인애플" 토핑을 동시에 추가한 후 최종 정보를 출력하세요.
