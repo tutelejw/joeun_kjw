@@ -54,6 +54,7 @@ public class HelloServletService extends HttpServlet {
     }
 }
 
+//gpt ai prompt 날려서 java 작성
 //HelloServletService.java 구현
 //1. httpServlet상속
 //2.service() method OverRding
