@@ -1,0 +1,39 @@
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////  javax.sql.DataSource 등록하기 ////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.  javax.sql.DataSource 는 J2SE API 에서  ConnectionPool SPEC. 으로 Vendor 구현
+
+
+2. WAS(Vendor) 가 구현 할 수 있도록 설정
+==> [Tomcat_Home]/webapps/docs/index.html의 documnet참조하면.....
+
+ㅇ server.xml 
+
+		<Context  docBase="~~~~~"   path="~~~~~"  reloadable="true">
+		          <Resource
+		            name="jdbc/ora"
+		            type="javax.sql.DataSource"
+		            driverClassName="oracle.jdbc.driver.OracleDriver"
+		            password="tiger"
+		            maxIdle="10"
+		            maxWait="5000"
+		            validationQuery="select * from tab"
+		            username="scott"
+		            url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
+		            maxActive="100"/>
+		</Context> 
+
+		
+3. WebApplication 설정
+
+==> [Tomcat_Home]/webapps/docs/index.html의 documnet참조하면.....
+
+ㅇ web.xml
+		<resource-ref>
+			<res-ref-name>jdbc/ora</res-ref-name>
+			<res-type>javax.sql.DataSource</res-type>
+			 <res-auth>Container</res-auth>
+		</resource-ref>
+		

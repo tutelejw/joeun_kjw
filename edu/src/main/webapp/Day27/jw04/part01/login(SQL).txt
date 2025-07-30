@@ -1,0 +1,14 @@
+
+CREATE TABLE users(
+	no		NUMBER		PRIMARY KEY ,
+	id		VARCHAR2(10)	NOT NULL ,
+	pwd		VARCHAR2(10)	NOT NULL
+);
+
+INSERT INTO  users VALUES(1,'홍길동','1111');
+INSERT INTO  users VALUES(2,'홍길순','2222');
+INSERT INTO  users VALUES(3,'이순신','3333');
+
+SELECT * FROM users;
+
+COMMIT;

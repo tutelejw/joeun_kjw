@@ -101,6 +101,14 @@
 		<url-pattern>/Login</url-pattern> 
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>LoginBean</servlet-name> 
+		<servlet-class>jw04.LoginBean</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>LoginBean</servlet-name> 
+		<url-pattern>/LoginBean</url-pattern> 
+	</servlet-mapping>
 	
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
 

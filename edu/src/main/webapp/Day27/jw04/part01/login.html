@@ -1,0 +1,41 @@
+//DB 테이블 구조
+CREATE TABLE users(
+	no		NUMBER		PRIMARY KEY ,
+	id		VARCHAR2(10)	NOT NULL ,
+	pwd		VARCHAR2(10)	NOT NULL
+);
+
+//login.html
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+
+	<center><h2>Login Test </h2></center>
+	
+	<form method='Post' action='/edu/Login'>
+	
+		Id &nbsp;&nbsp;&nbsp;<input type='text' name='id'><br/>
+		pwd <input type='text' name='pwd'><br/><p/>
+		
+		<input type='submit' value='로그인' />
+		<input type='reset' value='취소' />
+	
+	</form>
+
+</body>
+</html>
+
+login.html 페이지를 통해서 oracle database 테이블 데이터로 로그인하는 login java servlet 파일 작성해줘.
+oracle 정보 127.0.0.1:1521:xe    /  id:scott / pw:tiger
+id 확인과 pwd 확인은 각각 해주고 두개 데이터가 정확하면 로그인 하고 응답해줘
+로그인 정상시 "ID" 님 환영합니다.
+로그인 실패시 "ID"가 잘못되었습니다. "PW"가 잘못되었습니다. 
+서버에도 로그 가 남도록 해줘
+
+
+
+
