@@ -13,9 +13,9 @@ public class InputExample8 {
 //	그냥 텍스트 파일이고 인코딩 신경 안 씀	new FileReader()
 //	UTF-8, MS949 등 인코딩 신경 써야 함	new InputStreamReader(new FileInputStream(...), "UTF-8")
 	public static void main(String[] args) {
-		FileInputStream fls = null;
+		BufferedReader reader = null;
 		try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("file/test"),"UTF-8"));
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream("file/test"),"UTF-8"));
 				String line;
 				while((line = reader.readLine()) != null ) {
 					System.out.println(line);
