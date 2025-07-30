@@ -53,6 +53,9 @@ public class LoginBean extends HttpServlet {
                     System.out.println("로그인 성공: " + inputId);
                 }
             }
+            out.println("<p><p><a href='../loginBean.html'> 뒤로 </a>");
+            //out.println("<p><p><a href='jw04/loginBean.html'> 뒤로 </a>");
+            //out.println("<p><p><a href='/edu/jw04/loginBean.html'> 뒤로 </a>");
             out.println("</body></html>");
 
         } catch (Exception e) {
@@ -65,3 +68,9 @@ public class LoginBean extends HttpServlet {
         }
     }
 }
+
+
+//위 소스를 분석해서 servlet과 jdbc 연결을 분리해줘
+//servlet 은 LoginBean.java 로
+// jdbc 연결은 DbBean.java 로 작성해줘
+//LoginBean.java 에서 폼 요청 처리까지 해야해
