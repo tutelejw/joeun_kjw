@@ -2,7 +2,7 @@ package InputStream;
 
 import java.io.IOException;
 
-public class InputExample1002 {
+public class InputExample1020 {
 	public static void main(String[] args)  {
 		int i=0;
 		while (i!=3) {

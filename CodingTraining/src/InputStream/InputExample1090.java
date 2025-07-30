@@ -3,7 +3,7 @@ package InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class InputExample1009 {
+public class InputExample1090 {
 //	public static void main(String[] args) {
 //		try(FileInputStream fis = new FileInputStream("file/test")){
 //			int ch;

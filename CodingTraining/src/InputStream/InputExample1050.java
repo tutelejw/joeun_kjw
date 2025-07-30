@@ -3,7 +3,7 @@ package InputStream;
 
 import java.io.IOException;
 
-public class InputExample1005 {
+public class InputExample1050 {
 	public static void main(String[] args) {
 		System.out.print("한글자 씩 입력 : ");
 		int ch;

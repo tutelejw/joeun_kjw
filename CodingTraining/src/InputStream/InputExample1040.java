@@ -2,7 +2,7 @@ package InputStream;
 
 import java.io.IOException;
 
-public class InputExample1004 {
+public class InputExample1040 {
 	public static void main(String[] args) {
 		//Filed
 		byte[] buffer = new byte[10];

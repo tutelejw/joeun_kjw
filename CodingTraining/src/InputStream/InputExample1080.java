@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class InputExample1008 {
+public class InputExample1080 {
 	
 //줄단위로 읽기 줄단위로 읽을때는 BufferedReader 로 InputStreamReader과 FileInputStream 을감싸서 사용
 //BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("file/test"),"UTF-8")).
