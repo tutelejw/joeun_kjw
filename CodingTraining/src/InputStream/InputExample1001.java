@@ -1,7 +1,7 @@
 package InputStream;
 
 
-public class InputExample1 {
+public class InputExample1001 {
 	public static void main(String[] args) throws Exception { // main 에서 throws Exception 처리 해야 하네..
 		System.out.println("한글자씩 입럭 : ");
 		int input = System.in.read();

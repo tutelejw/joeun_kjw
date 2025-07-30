@@ -2,7 +2,7 @@ package InputStream;
 
 import java.io.IOException;
 
-public class InputExample7 {
+public class InputExample1007 {
 	public static void main(String[] args) {
 		byte[] buffer = new byte[20];
 		System.out.print("입력 ㅣ(exit입력종료): ");

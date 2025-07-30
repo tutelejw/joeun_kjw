@@ -2,7 +2,7 @@ package InputStream;
 
 import java.io.IOException;
 
-public class InputExample3 {
+public class InputExample1003 {
 	public static void main(String[] args) {
 		System.out.print("글자 입력 : ");
 		
