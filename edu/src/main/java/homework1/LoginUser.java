@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //@WebServlet("/edu/loginBeanPool")
-public class AddUser extends HttpServlet {
+public class LoginUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -17,7 +17,7 @@ public class AddUser extends HttpServlet {
         String id = request.getParameter("id");
         String pwd = request.getParameter("pwd");
 
-        UserAddPoolDAO userDAO = new UserAddPoolDAO();
+        UserLoginPoolDAO userDAO = new UserLoginPoolDAO();
         UserVO userVO = userDAO.login(id, pwd);
 
         out.println("<html><body>");
