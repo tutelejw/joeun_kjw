@@ -20,7 +20,7 @@ PRD : Product Requirement Document : 제품요구서 작성 : ???
 
 2. Clinet 의 Form Data 를 처리
 
-4. id, pwd 서버 콘솔에 출력 : 디버징용
+4. id, pwd 서버 콘솔에 출력 : 디버깅용
 
 5. Client Form data id / pwd 값이용
    RDBMS 에 회원유무 확인
