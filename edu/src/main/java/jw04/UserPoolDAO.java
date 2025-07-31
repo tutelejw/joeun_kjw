@@ -15,7 +15,7 @@ public class UserPoolDAO {
         UserVO vo = null;
 
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            //Class.forName("oracle.jdbc.driver.OracleDriver");
             //conn = DriverManager.getConnection(URL, USER, PASSWORD);
             conn=OracleConnectionPool.getInstance().getConnection();
 
