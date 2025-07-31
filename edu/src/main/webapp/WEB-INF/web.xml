@@ -118,7 +118,14 @@
         <servlet-name>LoginBeanVODao</servlet-name> 
 		<url-pattern>/LoginBeanVODao</url-pattern> 
 	</servlet-mapping>
-	
+			<servlet>
+		<servlet-name>LoginBeanPool</servlet-name> 
+		<servlet-class>jw04.LoginBeanPool</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>LoginBeanPool</servlet-name> 
+		<url-pattern>/LoginBeanPool</url-pattern> 
+	</servlet-mapping>
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
 
 

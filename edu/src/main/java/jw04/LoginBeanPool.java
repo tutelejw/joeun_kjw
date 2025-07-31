@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-//@WebServlet("/edu/LoginBeanVODao")
+//@WebServlet("/edu/loginBeanPool")
 public class LoginBeanPool extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,12 +23,14 @@ public class LoginBeanPool extends HttpServlet {
         out.println("<html><body>");
         if (userVO == null) {
             out.println("<h3>로그인 실패: ID 또는 비밀번호가 잘못되었습니다.</h3>");
+            System.out.println("로그인 실패: " + id +"또는 비밀번호가 잘못되었습니다.");
         } else if (!"Y".equals(userVO.getActive())) {
             out.println("<h3>로그인 실패: 비활성화된 계정입니다.</h3>");
         } else {
             out.println("<h3>" + userVO.getId() + " 님, 환영합니다!</h3>");
+            System.out.println("로그인 성공: " + id + " / " + pwd +"님, 환영합니다!.");
         }
-        out.println("<p><a href='/edu/jw04/loginBean.html'>뒤로</a>");
+        out.println("<p><a href='/edu/jw04/loginBeanPool.html'>뒤로</a>");
         out.println("</body></html>");
     }
 }
