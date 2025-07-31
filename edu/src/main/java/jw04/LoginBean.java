@@ -53,9 +53,7 @@ public class LoginBean extends HttpServlet {
                     System.out.println("로그인 성공: " + inputId);
                 }
             }
-            out.println("<p><p><a href='../loginBean.html'> 뒤로 </a>");
-            //out.println("<p><p><a href='jw04/loginBean.html'> 뒤로 </a>");
-            //out.println("<p><p><a href='/edu/jw04/loginBean.html'> 뒤로 </a>");
+            out.println("<p><p><a href='/edu/jw04/loginBean.html'> 뒤로 </a>");
             out.println("</body></html>");
 
         } catch (Exception e) {

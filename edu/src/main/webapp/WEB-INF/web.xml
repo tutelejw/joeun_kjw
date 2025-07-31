@@ -110,6 +110,15 @@
 		<url-pattern>/LoginBean</url-pattern> 
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>LoginBeanDAO01</servlet-name> 
+		<servlet-class>jw04.LoginBeanDAO01</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>LoginBeanDAO01</servlet-name> 
+		<url-pattern>/LoginBeanDAO01</url-pattern> 
+	</servlet-mapping>
+	
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
 
 
