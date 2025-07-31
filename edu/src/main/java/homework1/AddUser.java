@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //@WebServlet("/edu/loginBeanPool")
-public class LoginBeanPool extends HttpServlet {
+public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
