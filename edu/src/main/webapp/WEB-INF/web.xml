@@ -127,17 +127,22 @@
 		<url-pattern>/LoginBeanPool</url-pattern> 
 	</servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>AddUser</servlet-name> 
-		<url-pattern>/AddUser</url-pattern> 
-	</servlet-mapping>
-			<servlet>
-		<servlet-name>AddUser</servlet-name> 
-		<servlet-class>homework1.AddUserl</servlet-class> 
+
+	<servlet>
+		<servlet-name>CookieReaderToServer</servlet-name> 
+		<servlet-class>jw05.CookieReaderToServer</servlet-class> 
 	</servlet>
     <servlet-mapping>
-        <servlet-name>LoginBeanPool</servlet-name> 
-		<url-pattern>/LoginBeanPool</url-pattern> 
+        <servlet-name>CookieReaderToServer</servlet-name> 
+		<url-pattern>/CookieReaderToServer</url-pattern> 
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CookieWriterToClient</servlet-name> 
+		<servlet-class>jw05.CookieWriterToClient</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>CookieWriterToClient</servlet-name> 
+		<url-pattern>/CookieWriterToClient</url-pattern> 
 	</servlet-mapping>
 	
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
