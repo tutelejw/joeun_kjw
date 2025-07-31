@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>homework1-addUser</title>
+</head>
+<body>
+    <h2>로그인</h2>
+    <form  method="post" action="/homework1/AddUser">
+        이름: <input type="text" name="id" required><br><br>
+        비밀번호: <input type="password" name="pwd" required><br><br>
+
+        성별:
+        <input type="radio" name="gender" value="M" checked> 남자
+        <input type="radio" name="gender" value="F"> 여자
+        <br><br>
+
+        결혼 여부:
+        <select name="married">
+            <option value="N" selected>미혼</option>
+            <option value="Y">기혼</option>
+        </select>
+        <br><br>
+
+        <input type="submit" value="회원가입">
+		
+		
+<br><br><br>	
+
+
+<br>  1.  Business Logic Layer
+<br>       ㅇ UserVO.java 
+<br>       ㅇ UserDAO 
+<br>             public void addUser(UserVO userVO) Method 구현
+<br>       ㅇ OracleConnectionPool 강사님거
+<br><br>
+ <br> 2. Presentation Layer
+<br>       ㅇ AddUser.java (Servlet/Servlet mapping 하기..)
+<br>       ㅇ addUser.html
+<br><br>	   
+	   
+	   
+form  method="post" action="/homework1/AddUser"
+<br><br>
+<br>이름:            input type="text" name="id"
+<br>비밀번호:     input type="password" name="pwd"
+<br>성별:            input type="radio" name="gender" value="M"  or "F"
+<br>결혼 여부:    select name="married"  option value="N"  or "Y"
+<br><br>
+<br>CREATE TABLE SCOTT.ADDUSER_TEST (
+<br>    no       VARCHAR2(10),     -- 사용자 번호 (PK 없이 일반 문자열로 처리)
+<br>    id       VARCHAR2(50),     -- 이름 또는 ID
+<br>    pwd      VARCHAR2(100),    -- 비밀번호
+<br>    gender   VARCHAR2(10),     -- 성별 (예: 'M', 'F', 또는 '남자', '여자')
+<br>    married  VARCHAR2(10)      -- 결혼 여부 (예: 'Y', 'N', 또는 '기혼', '미혼')
+<br>);
+
+    </form>
+</body>
+</html>
+
