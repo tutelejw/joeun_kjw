@@ -23,7 +23,7 @@ public class LoginBeanPool extends HttpServlet {
         out.println("<html><body>");
         if (userVO == null) {
             out.println("<h3>로그인 실패: ID 또는 비밀번호가 잘못되었습니다.</h3>");
-            System.out.println("로그인 실패: " + id +"또는 비밀번호가 잘못되었습니다.");
+            System.out.println("로그인 실패: " + id + " / " + pwd +"또는 비밀번호가 잘못되었습니다.");
         } else if (!"Y".equals(userVO.getActive())) {
             out.println("<h3>로그인 실패: 비활성화된 계정입니다.</h3>");
         } else {
