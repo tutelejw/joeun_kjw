@@ -111,18 +111,37 @@
 	</servlet-mapping>
 	
 		<servlet>
-		<servlet-name>LoginBeanDAO01</servlet-name> 
-		<servlet-class>jw04.LoginBeanDAO01</servlet-class> 
+		<servlet-name>LoginBeanVODao</servlet-name> 
+		<servlet-class>jw04.LoginBeanVODao</servlet-class> 
 	</servlet>
     <servlet-mapping>
-        <servlet-name>LoginBeanDAO01</servlet-name> 
-		<url-pattern>/LoginBeanDAO01</url-pattern> 
+        <servlet-name>LoginBeanVODao</servlet-name> 
+		<url-pattern>/LoginBeanVODao</url-pattern> 
 	</servlet-mapping>
 	
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
 
 
-
+  <servlet>
+		<servlet-name>LoginBeanInitParam</servlet-name>
+		<servlet-class>jw04.LoginBeanInitParam</servlet-class>
+		<init-param>
+			<param-name>jdbcDriver</param-name>
+			<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jdbcURL</param-name>
+			<param-value>jdbc:oracle:thin:@127.0.0.1:1521:xe</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jdbcUser</param-name>
+			<param-value>scott</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jdbcPasswd</param-name>
+			<param-value>tiger</param-value>
+		</init-param>
+  </servlet>
  
                                 
 

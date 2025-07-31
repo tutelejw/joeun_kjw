@@ -3,15 +3,7 @@ package jw04;
 public class UserVO {
     private String id;
     private String pwd;
-    private boolean active;
-
-    public UserVO() {}
-
-    public UserVO(String id, String pwd, boolean active) {
-        this.id = id;
-        this.pwd = pwd;
-        this.active = active;
-    }
+    private String active; // 'Y' or 'N'
 
     public String getId() {
         return id;
@@ -29,11 +21,11 @@ public class UserVO {
         this.pwd = pwd;
     }
 
-    public boolean isActive() {
+    public String getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(String active) {
         this.active = active;
     }
 }
