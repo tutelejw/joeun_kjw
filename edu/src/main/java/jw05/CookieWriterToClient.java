@@ -3,6 +3,7 @@ package jw05;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,7 @@ public class CookieWriterToClient extends HttpServlet{
 		PrintWriter out = res.getWriter();
 
 		//Cookie 생성(name=value) :: 한글 인코딩 후 저장
-		Cookie cookie = new Cookie("name",URLEncoder.encode("홍길동"));
+		Cookie cookie = new Cookie("name",URLEncoder.encode("홍길동", StandardCharsets.UTF_8));
 
         cookie.setMaxAge(60*60);	//cookie 유효기간(초)
 		//cookie.setMaxAge(-1);		//cookie memory 저장 :: ??	 ==> API확인 

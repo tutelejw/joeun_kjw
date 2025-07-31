@@ -3,6 +3,7 @@ package jw05;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +37,7 @@ public class CookieReaderToServer extends HttpServlet{
 			for(int i=0;i<cookies.length;i++){
 				//name=value 형식의 저장값 중 name 추출
 				String name = cookies[i].getName();
-				String value = URLDecoder.decode(cookies[i].getValue());
+				String value = URLDecoder.decode(cookies[i].getValue(), StandardCharsets.UTF_8);
 				System.out.println("client로 부터 전송된 cookie : "+name+"="+value);
 				
 				if(name.equals("name")){
