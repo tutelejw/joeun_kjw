@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class IOAdvanced3 {
+public class IOAdvanced1030 {
 	public static void main(String[] args) {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("여러줄 입력 : ");
