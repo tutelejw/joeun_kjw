@@ -144,24 +144,16 @@
         <servlet-name>CookieWriterToClient</servlet-name> 
 		<url-pattern>/CookieWriterToClient</url-pattern> 
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>LoginBeanDataSourceSession</servlet-name> 
+		<servlet-class>jw05.LoginBeanDataSourceSession</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>LoginBeanDataSourceSession</servlet-name> 
+		<url-pattern>/LoginBeanDataSourceSession</url-pattern> 
+	</servlet-mapping>
 	
-		<servlet>
-		<servlet-name>AddUser</servlet-name> 
-		<servlet-class>homework1.AddUser</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>AddUser</servlet-name> 
-		<url-pattern>/AddUser</url-pattern> 
-	</servlet-mapping>
-
-		<servlet>
-		<servlet-name>LoginUser</servlet-name> 
-		<servlet-class>homework1.LoginUser</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>LoginUser</servlet-name> 
-		<url-pattern>/LoginUser</url-pattern> 
-	</servlet-mapping>
+	
 	
 	<!-- http://217.0.0.1:8080/edu/FirstServlet -->
 
