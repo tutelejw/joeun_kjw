@@ -24,6 +24,14 @@
     <servlet-mapping>
         <servlet-name>LoginUser</servlet-name> 
 		<url-pattern>/LoginUser</url-pattern> 
-	</servlet-mapping>        
-
+	</servlet-mapping>
+	        
+		<servlet>
+		<servlet-name>UserSelect</servlet-name> 
+		<servlet-class>homework01.UserSelect</servlet-class> 
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>UserSelect</servlet-name> 
+		<url-pattern>/UserSelect</url-pattern> 
+	</servlet-mapping>   
 </web-app>

@@ -1,9 +1,9 @@
-package homework01;
+package homework1;
 
 import java.sql.*;
 import jw.common.pool.OracleConnectionPool;
 
-public class UserAddPoolDAO {
+public class UserLoginPoolDAO {
 
     public UserVO login(String id, String pwd) {
         Connection conn = null;
@@ -19,15 +19,20 @@ public class UserAddPoolDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
             rs = pstmt.executeQuery();
-
+            
+            
+            
             if (rs.next()) {
                 String dbPwd = rs.getString("pwd");
+                System.out.println("사용자 조회됐습니다. ID : " + id);
                 if (dbPwd.equals(pwd)) {
                     vo = new UserVO();
                     vo.setId(rs.getString("id"));
                     vo.setPwd(dbPwd);
-                    vo.setActive(rs.getString("active"));
+                System.out.println(" id : " + id + " / dbPwd : " + dbPwd);
                 }
+            }else {
+            	System.out.println("[사용자 없음] ID: " + id);
             }
         } catch (Exception e) {
             e.printStackTrace();

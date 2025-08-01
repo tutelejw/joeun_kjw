@@ -5,14 +5,13 @@
     <title>homework1-addUser</title>
 </head>
 <body>
-    <br><br><br><br>
-    
-    <p><a href='http://127.0.0.1:8080/homework01/addUser.html'> 메인페이지 이동 </a>
-        <br><br><br><br>
-
+    <h2>사용자 조회</h2>
+		<form method='post' action='/homework1/UserSelect'>
+		<input type='submit' value='등록사용자조회' />
+	</form>
+	
     <h2>로그인</h2>
-		<form method='post' action='/homework01/LoginUser'>
-		<!-- <form method='post' action='./LoginUser'> -->
+		<form method='post' action='/homework1/LoginUser'>
 	
 		Id &nbsp;&nbsp;&nbsp;<input type='text' name='id'><br/>
 		pwd <input type='text' name='pwd'><br/><p/>
@@ -23,7 +22,7 @@
 	</form>
 	
 	<h2>회원가입</h2>
-    <form  method="post" action="/homework01/AddUser">
+    <form  method="post" action="/homework1/AddUser">
         이름: <input type="text" name="id" required><br><br>
         비밀번호: <input type="password" name="pwd" required><br><br>
 
@@ -40,7 +39,9 @@
         <br><br>
 
         <input type="submit" value="회원가입">
-		
+    </form>
+</body>
+</html>		
 		
 <br><br><br>	
 
@@ -57,7 +58,7 @@
 <br><br>	   
 	   
 	   
-form  method="post" action="/homework01/AddUser"
+form  method="post" action="/homework1/AddUser"
 <br><br>
 <br>이름:            input type="text" name="id"
 <br>비밀번호:     input type="password" name="pwd"
@@ -65,11 +66,11 @@ form  method="post" action="/homework01/AddUser"
 <br>결혼 여부:    select name="married"  option value="N"  or "Y"
 <br><br>
 <br>CREATE TABLE SCOTT.ADDUSER_TEST (
-<br>    no       VARCHAR2(10),     -- 사용자 번호 (PK 없이 일반 문자열로 처리)
-<br>    id       VARCHAR2(50),     -- 이름 또는 ID
-<br>    pwd      VARCHAR2(100),    -- 비밀번호
-<br>    gender   VARCHAR2(10),     -- 성별 (예: 'M', 'F', 또는 '남자', '여자')
-<br>    married  VARCHAR2(10)      -- 결혼 여부 (예: 'Y', 'N', 또는 '기혼', '미혼')
+<br>    no      VARCHAR2(8) PRIMARY KEY,
+<br>    id      VARCHAR2(10) NOT NULL,
+<br>    pwd     VARCHAR2(10) NOT NULL,
+<br>    gender  VARCHAR2(5),
+<br>    married VARCHAR2(5)
 <br>);
 
     </form>
