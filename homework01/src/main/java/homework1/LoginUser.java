@@ -28,7 +28,7 @@ public class LoginUser extends HttpServlet {
             out.println("<h3>" + userVO.getId() + " 님, 환영합니다!</h3>");
             System.out.println("로그인 성공: " + id + " / " + pwd +"님, 환영합니다!.");
         }
-        out.println("<p><a href='/homework01/addUser.html'>뒤로</a>");
+        out.println("<p><a href='addUser.html'>뒤로</a>");
         out.println("</body></html>");
     }
 }

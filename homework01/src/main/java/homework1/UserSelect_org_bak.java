@@ -8,38 +8,21 @@ import java.io.PrintWriter;
 import java.util.List;
 
 //@WebServlet("/UserSelect")
-public class UserSelect extends HttpServlet {
+public class UserSelect_org_bak extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    //protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void service(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String id = request.getParameter("id"); // ID 값이 비어 있으면 전체 조회
-
         UserDAO dao = new UserDAO();
-        List<UserVO> users;
-
-        if (id == null || id.trim().isEmpty()) {
-            // 전체 사용자 조회
-            users = dao.getAllUsers();
-            out.println("<h2>전체 사용자 목록</h2>");
-        } else {
-            // 특정 사용자 조회
-            UserVO user = dao.getUserById(id);
-            if (user != null) {
-                users = List.of(user);
-                out.println("<h2>사용자 조회 결과</h2>");
-            } else {
-                users = null;
-                out.println("<h2>해당 ID의 사용자가 존재하지 않습니다.</h2>");
-            }
-        }
+        List<UserVO> users = dao.getAllUsers();
 
         out.println("<html><body>");
+        out.println("<h2>사용자 목록</h2>");
 
         if (users == null || users.isEmpty()) {
             out.println("<p>사용자가 없습니다.</p>");

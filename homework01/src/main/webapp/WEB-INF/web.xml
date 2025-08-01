@@ -10,7 +10,7 @@
 	
 	<servlet>
 		<servlet-name>AddUser</servlet-name> 
-		<servlet-class>homework01.AddUser</servlet-class> 
+		<servlet-class>homework1.AddUser</servlet-class> 
 	</servlet>
     <servlet-mapping>
         <servlet-name>AddUser</servlet-name> 
@@ -19,7 +19,7 @@
 
 		<servlet>
 		<servlet-name>LoginUser</servlet-name> 
-		<servlet-class>homework01.LoginUser</servlet-class> 
+		<servlet-class>homework1.LoginUser</servlet-class> 
 	</servlet>
     <servlet-mapping>
         <servlet-name>LoginUser</servlet-name> 
@@ -28,7 +28,7 @@
 	        
 		<servlet>
 		<servlet-name>UserSelect</servlet-name> 
-		<servlet-class>homework01.UserSelect</servlet-class> 
+		<servlet-class>homework1.UserSelect</servlet-class> 
 	</servlet>
     <servlet-mapping>
         <servlet-name>UserSelect</servlet-name> 

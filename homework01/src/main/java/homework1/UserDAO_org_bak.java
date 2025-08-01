@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO_org_bak {
     private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private final String user = "scott";
     private final String password = "tiger";
@@ -15,7 +15,7 @@ public class UserDAO {
     private Connection conn;
     private PreparedStatement pstmt;
 
-    public UserDAO() {
+    public UserDAO_org_bak() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url, user, password);
@@ -109,31 +109,5 @@ public class UserDAO {
         }
 
         return userList;
-    }
-    
-    public UserVO getUserById(String id) {
-        UserVO user = null;
-        try {
-            String sql = "SELECT * FROM ADDUSER_TEST WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                user = new UserVO();
-                user.setNo(rs.getString("no"));
-                user.setId(rs.getString("id"));
-                user.setPwd(rs.getString("pwd"));
-                user.setGender(rs.getString("gender"));
-                user.setMarried(rs.getString("married"));
-            }
-
-            rs.close();
-            pstmt.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return user;
     }
 }

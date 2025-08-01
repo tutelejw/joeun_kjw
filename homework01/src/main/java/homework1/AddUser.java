@@ -34,7 +34,7 @@ public class AddUser extends HttpServlet {
         out.println("<html><body>");
         out.println("<h2>회원가입 완료</h2>");
         out.println("<p><a href='addUser.html'>다시 가입하기</a></p>");
-        out.println("<p><a href='/homework01/addUser.html'>메인페이지</a></p>");
+        out.println("<p><a href='addUser.html'>메인페이지</a></p>");
         out.println("</body></html>");
     }
 }

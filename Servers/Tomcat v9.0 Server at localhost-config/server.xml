@@ -154,8 +154,8 @@
 
 		
       <Context docBase="edu" path="/edu" reloadable="true" source="org.eclipse.jst.jee.server:edu"/>
-      <Context docBase="homework01" path="/homework01" reloadable="true" source="org.eclipse.jst.jee.server:homework01"/>
-      </Host>
+      
+      <Context docBase="homework1" path="/homework1" reloadable="true" source="org.eclipse.jst.jee.server:homework1"/></Host>
     </Engine>
   </Service>
 </Server>
