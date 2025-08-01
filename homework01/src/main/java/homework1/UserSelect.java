@@ -20,7 +20,7 @@ public class UserSelect extends HttpServlet {
 
         String id = request.getParameter("id"); // ID 값이 비어 있으면 전체 조회
 
-        UserDAO dao = new UserDAO();
+        UserLoginPoolDAO dao = new UserLoginPoolDAO();
         List<UserVO> users;
 
         if (id == null || id.trim().isEmpty()) {

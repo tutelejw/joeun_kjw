@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO_ {
     private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private final String user = "scott";
     private final String password = "tiger";
@@ -15,7 +15,7 @@ public class UserDAO {
     private Connection conn;
     private PreparedStatement pstmt;
 
-    public UserDAO() {
+    public UserDAO_() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url, user, password);
@@ -33,21 +33,17 @@ public class UserDAO {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url, user, password);
 
-            //String sql = "SELECT id, pwd, 'Y' active FROM users WHERE id = ?";
             String sql = "SELECT id, pwd FROM ADDUSER_TEST WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                //String dbPwd = rs.getString("pwd");
             	System.out.println("rs.next : true---------");
                 if (rs.getString("pwd").equals(pwd)) {
                     vo = new UserVO();
                     vo.setId(rs.getString("id"));
                     vo.setPwd(rs.getString("pwd"));
-                    //vo.setActive(rs.getString("active"));
-                    //System.out.println("id 값 : " + rs.getString("id")  + "/ active 값 : " +rs.getString("active") );
                     System.out.println("id 값 : " + rs.getString("id") );
                 }
                 System.out.println("rs.next : false---------");

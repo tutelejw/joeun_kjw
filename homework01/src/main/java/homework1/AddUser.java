@@ -25,7 +25,7 @@ public class AddUser extends HttpServlet {
         user.setGender(gender);
         user.setMarried(married);
 
-        UserDAO dao = new UserDAO();
+        UserLoginPoolDAO dao = new UserLoginPoolDAO();
         dao.addUser(user);
 
         response.setContentType("text/html;charset=UTF-8");

@@ -16,8 +16,7 @@ public class LoginUser extends HttpServlet {
         String id = request.getParameter("id");
         String pwd = request.getParameter("pwd");
 
-//        UserLoginPoolDAO userDAO = new UserLoginPoolDAO();
-        UserDAO userDAO = new UserDAO();
+        UserLoginPoolDAO userDAO = new UserLoginPoolDAO();
         UserVO userVO = userDAO.login(id, pwd);
 
         out.println("<html><body>");
