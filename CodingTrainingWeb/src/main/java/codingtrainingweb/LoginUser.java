@@ -17,7 +17,9 @@ public class LoginUser extends HttpServlet {
         if (session != null && session.getAttribute("user") != null) {
             // 이미 로그인된 상태라면 로그인 절차를 건너뛰고, 로그인 상태로 처리
             out.println("<html><body>");
-            out.println("<h3>이미 로그인된 사용자입니다.</h3>");
+            UserVO userVO = (UserVO)session.getAttribute("user");
+        	System.out.println("<h3> "+ userVO.getId() +" 이미 로그인된 사용자입니다.</h3>");
+        	out.println("<h3> "+ userVO.getId() +" 이미 로그인된 사용자입니다.</h3>");
             out.println("<p><a href='viewUserInfo.jsp'>내 정보 보기</a></p>");
             out.println("<p><a href='logoutServlet'>로그아웃</a></p>");
             out.println("</body></html>");
