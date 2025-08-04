@@ -4,8 +4,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import jw.services.user.vo.UserVO;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,6 +11,10 @@ import java.util.List;
 //@WebServlet("/UserSelect")
 public class UserSelect extends HttpServlet {
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
+	}
+	
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -21,7 +23,7 @@ public class UserSelect extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String id = request.getParameter("id"); // ID 값이 비어 있으면 전체 조회
+        String id = request.getParameter("id"); 
 
 		if(id == null){
 			HttpSession session = request.getSession(true);
@@ -29,44 +31,20 @@ public class UserSelect extends HttpServlet {
 		}
         
         UserLoginPoolDAO dao = new UserLoginPoolDAO();
-        List<UserVO> users;
-
-        if (id == null || id.trim().isEmpty()) {
-            // 전체 사용자 조회
-            users = dao.getAllUsers();
-            out.println("<h2>전체 사용자 목록</h2>");
-        } else {
-            // 특정 사용자 조회
-            UserVO user = dao.getUserById(id);
-            if (user != null) {
-                users = List.of(user);
-                out.println("<h2>사용자 조회 결과</h2>");
-            } else {
-                users = null;
-                out.println("<h2>해당 ID의 사용자가 존재하지 않습니다.</h2>");
-            }
-        }
-
+        UserVO userVO = dao.getUserById(id);
+        
         out.println("<html><body>");
-
-        if (users == null || users.isEmpty()) {
-            out.println("<p>사용자가 없습니다.</p>");
+        
+        if (userVO == null ) {
+        	out.println(id +"에 해당하는 id data는 없습니다.<br/>");
         } else {
-            out.println("<table border='2'>");
-            out.println("<tr><th>번호</th><th>ID</th><th>비밀번호</th><th>성별</th><th>결혼여부</th></tr>");
-            for (UserVO user : users) {
-                out.println("<tr>");
-                out.println("<td>" + user.getNo() + "</td>");
-                out.println("<td>" + user.getId() + "</td>");
-                out.println("<td>" + user.getPwd() + "</td>");
-                out.println("<td>" + user.getGender() + "</td>");
-                out.println("<td>" + user.getMarried() + "</td>");
-                out.println("</tr>");
-            }
-            out.println("</table>");
+          out.println("no  : "+ userVO.getNo()+" <br/>");
+          out.println("id   : "+ userVO.getId()+" <br/>");
+          out.println("pwd : "+ userVO.getPwd()+" <br/>");
+          out.println("Gender : "+ userVO.getGender()+" <br/>");
+          out.println("Married : "+ userVO.getMarried()+" <br/>");
         }
-
-        out.println("<br><a href='addUser.html'>메인 페이지로</a>");
+        out.println("<br><a href='findUser.html'>이전 페이지로</a>");
         out.println("</body></html>");
     }
 }

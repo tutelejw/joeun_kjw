@@ -57,8 +57,8 @@ public class AddUser extends HttpServlet {
             out.println("다시가입해 주세요.<br/>");
         }
 
-		out.println("<p><p><a href='/homework02/servlet/findUser.html'>내정보보기(id 입력)</a>");
-		out.println("<p><p><a href='/homework02/FindUser'>내정보보기2(session사용)</a>");
+		out.println("<p><p><a href='/homework02_teacher/servlet/findUser.html'>내정보보기(id 입력)</a>");
+		out.println("<p><p><a href='/homework02_teacher/FindUser'>내정보보기2(session사용)</a>");
 		out.println("</boyd>");
 		out.println("</html>");
 	}

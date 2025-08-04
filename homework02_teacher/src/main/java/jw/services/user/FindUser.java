@@ -35,6 +35,7 @@ public class FindUser extends HttpServlet {
 		if(id == null){
 			//==>  Session에 저장된 userVO instance 의 id 사용
 			HttpSession session = req.getSession(true);
+			System.out.println("findUser.java   - id is null session");
 			id =  ( (UserVO)session.getAttribute("userVO")).getId();
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
