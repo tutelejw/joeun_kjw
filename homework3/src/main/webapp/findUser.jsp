@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
-<%@ page import="homework4.*" %>
+<%@ page import="homework3.*" %>
 
 <%
     request.setCharacterEncoding("UTF-8");
