@@ -23,43 +23,30 @@ public class SessionUseCookieOne extends HttpServlet{
 
 	public void service(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException{
 		
+		HttpSession session = req.getSession(true);
+		
+		if(session.isNew()) {
+			session.setAttribute("name",  new String("홍길동"));
+		}
+		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
-		// Client 로 부터 전송된 Cookie 처리
-		Cookie[] cookies = req.getCookies();
-
-		//Cookie 의 존재유무 및 name=value 처리
-		if(cookies != null) {
-			System.out.println("Client에서 전송된 Cookie 있습니다.<br/>");
-			out.println("Client에서 전송된 Cookie 있습니다.<br/>");
-			//Array 로 return  :: Array 갯수만큼 처리
-			for(int i=0;i<cookies.length;i++){
-				//name=value 형식의 저장값 중 name 추출
-				String name = cookies[i].getName();
-				String value = URLDecoder.decode(cookies[i].getValue(), StandardCharsets.UTF_8);
-				System.out.println("client로 부터 전송된 cookie : "+name+"="+value);
-				System.out.println("");
-			}
-		}else{
-			System.out.println("Client에서 전송된 cookie가 없습니다.");
-            out.println("Client에서 전송된 cookie가 없습니다.<br/>");
-        }
-				
-		HttpSession session = req.getSession(false);
-		
         out.println("<html><head></head>");
         out.println("<body>");
-        out.println("<h2> SessionUseCookieTwo </h2>");
+        out.println("<h2> SessionUseCookieOne </h2>");
 
-        if(session != null) {
-        	out.println("<hr> jsessionid = "+ session.getId() + "<hr>");
-        	String name = (String)session.getAttribute("name");
-        	out.println("이름 : " + name);
+    	out.println("<hr> jsessionid = "+ session.getId() + "<hr>");
+    	System.out.println("jsessionid = "+ session.getId());
+        
+        if(session.isNew()) {
+        	out.println("세션이 새로 생성됨 <br>");
         }else {
-        	out.println("처음임다");
+        	out.println("<hr> jsessionid = "+ session.getId() + "<hr>");
         }
+        out.println("<hr>");
+        out.println("<a href='/edu/SessionUseCookieTwo'> 링크 </a>");
         out.println("</body></html>");
 	}
 
