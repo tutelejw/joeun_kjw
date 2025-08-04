@@ -30,10 +30,15 @@ public class AddUser extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("userVO", user);  // 전체 사용자 객체 저장
+        //session.setAttribute("id", user.getId());  // 또는 id만 따로 저장해도 됨
+        System.out.println(" jsessionid = "+ session.getId() );
 
         out.println("<html><body>");
         out.println("<h2>회원가입 완료</h2>");
-        out.println("<p><a href='addUser.html'>다시 가입하기</a></p>");
+        out.println("<p><a href='findUser.html'>사용자 조회 하기</a></p>");
         out.println("<p><a href='addUser.html'>메인페이지</a></p>");
         out.println("</body></html>");
     }

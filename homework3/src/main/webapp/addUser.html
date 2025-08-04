@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>homework1-addUser</title>
+</head>
+<body>
+	<h2>회원가입</h2>
+    <form  method="post" action="/homework3/addUser.jsp">
+        이름: <input type="text" name="id" required><br><br>
+        비밀번호: <input type="password" name="pwd" required><br><br>
+
+        성별:
+        <input type="radio" name="gender" value="M" checked> 남자
+        <input type="radio" name="gender" value="F"> 여자
+        <br><br>
+
+        결혼 여부:
+        <select name="married">
+            <option value="N" selected>미혼</option>
+            <option value="Y">기혼</option>
+        </select>
+        <br><br>
+
+        <input type="submit" value="회원가입">
+    </form>
+    <br><br>
+    <p><a href='findUser.html'>사용자조회 페이지 이동</a></p>
+
+<br><br><br>	
+
+
+<br>  1.  Business Logic Layer
+<br>       ㅇ UserVO.java 
+<br>       ㅇ UserDAO 
+<br>             public void addUser(UserVO userVO) Method 구현
+<br>       ㅇ OracleConnectionPool 강사님거
+<br><br>
+ <br> 2. Presentation Layer
+<br>       ㅇ AddUser.java (Servlet/Servlet mapping 하기..)
+<br>       ㅇ addUser.html
+<br><br>	   
+	   
+	   
+form  method="post" action="/homework2/AddUser"
+<br><br>
+<br>이름:            input type="text" name="id"
+<br>비밀번호:     input type="password" name="pwd"
+<br>성별:            input type="radio" name="gender" value="M"  or "F"
+<br>결혼 여부:    select name="married"  option value="N"  or "Y"
+<br><br>
+<br>CREATE TABLE SCOTT.ADDUSER_TEST (
+<br>    no      VARCHAR2(8) ,
+<br>    id      VARCHAR2(10) ,
+<br>    pwd     VARCHAR2(10) ,
+<br>    gender  VARCHAR2(5),
+<br>    married VARCHAR2(5)
+<br>);
+
+
+</body>
+</html>
+

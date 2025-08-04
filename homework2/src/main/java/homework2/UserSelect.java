@@ -25,9 +25,11 @@ public class UserSelect extends HttpServlet {
 
         String id = request.getParameter("id"); 
 
+        HttpSession session = request.getSession(true);
+        
 		if(id == null){
-			HttpSession session = request.getSession(true);
 			id =  ( (UserVO)session.getAttribute("userVO")).getId();
+			System.out.println(" jsessionid = "+ session.getId() );
 		}
         
         UserLoginPoolDAO dao = new UserLoginPoolDAO();
