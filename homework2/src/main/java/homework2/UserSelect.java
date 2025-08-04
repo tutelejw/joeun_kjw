@@ -3,6 +3,9 @@ package homework2;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import jw.services.user.vo.UserVO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,6 +23,11 @@ public class UserSelect extends HttpServlet {
 
         String id = request.getParameter("id"); // ID 값이 비어 있으면 전체 조회
 
+		if(id == null){
+			HttpSession session = request.getSession(true);
+			id =  ( (UserVO)session.getAttribute("userVO")).getId();
+		}
+        
         UserLoginPoolDAO dao = new UserLoginPoolDAO();
         List<UserVO> users;
 
