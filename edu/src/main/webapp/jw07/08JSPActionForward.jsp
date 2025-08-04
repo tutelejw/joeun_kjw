@@ -5,7 +5,7 @@
 <meta charset="UTF-8"></head>
 <body>
 	::08JSPActionForward.jsp 시작 <br/>
-	<% request.setAttribute("aaa", new String("연결됨")); %>
+	<% request.setAttribute("aaa", new String("연결됨11111111111")); %>
 	
 	<jsp:forward page="09JSPActionForward.jsp" />
 	
