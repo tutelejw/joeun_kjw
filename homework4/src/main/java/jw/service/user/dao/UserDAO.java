@@ -106,6 +106,7 @@ public class UserDAO extends AbstractDao{
         return userList;
     }
 
+    
     public UserVO getUserById(String id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -137,5 +138,32 @@ public class UserDAO extends AbstractDao{
         }
 
         return user;
+    }
+    
+    public boolean updateUser(UserVO user) {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        //ResultSet rs = null;
+        //UserVO user = null;
+        
+        try {
+        	conn = DBUtil.getConnection();
+            String sql = "UPDATE ADDUSER_TEST SET pwd = ?, gender = ?, married = ? WHERE id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getPwd());
+            pstmt.setString(2, user.getGender());
+            pstmt.setString(3, user.getMarried());
+            pstmt.setString(4, user.getId());
+
+           // rs = pstmt.executeUpdate();
+            int rows = pstmt.executeUpdate();
+            result = rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            close(conn, pstmt, null);
+        }
+        return result;
     }
 }

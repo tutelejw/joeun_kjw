@@ -10,6 +10,7 @@
 	//client에서 넘어온 값을 받자.
 	String id = request.getParameter("id");
 	String pwd = request.getParameter("pwd");
+	//int no = Integer.parseInt(request.getParameter("no"));
 	int no = Integer.parseInt(request.getParameter("no"));
 	
 	//Client에 받은 data로 UserVO instance 생성 및 Value set

@@ -5,7 +5,7 @@
 
 회원가입을 위한 회원정보 입력화면.....<br/>
 
-	<form method="post" action="/homework04/jsp01/addUser.jsp">
+	<form method="post" action="/homework04_teacher/jsp01/addUser.jsp">
 		
 		<table border="1" width="80%">
 			<tr>

@@ -5,7 +5,7 @@
 
  회원정보 검색입력화면.....(검색할 ID을 입력하세요.)<br/>
 
-	<form method="post" action="/homework04/jsp01/findUser.jsp">
+	<form method="post" action="/homework04_teacher/jsp01/findUser.jsp">
 		
 		<table border="1" width="80%">
 			<tr>

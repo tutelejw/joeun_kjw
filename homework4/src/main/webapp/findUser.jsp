@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
 <%@ page import="homework4.*" %>
+<%@ page import="jw.service.user.dao.UserDAO" %>
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -24,7 +25,8 @@
         }
     }
 
-    UserLoginPoolDAO dao = new UserLoginPoolDAO();
+    //UserLoginPoolDAO dao = new UserLoginPoolDAO();
+    UserDAO dao = new UserDAO();
     UserVO userVO = dao.getUserById(id);
 %>
 

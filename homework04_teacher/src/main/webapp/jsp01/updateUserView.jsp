@@ -26,7 +26,7 @@
 
 회원정보 수정화면 입니다. 수정하시고..... 수정완료.....<br/>
 
-	<form method="Get" action="/homework04/jsp01/updateUser.jsp">
+	<form method="Get" action="/homework04_teacher/jsp01/updateUser.jsp">
 		
 		<table border="1" width="80%">
 			<tr>

@@ -1,9 +1,13 @@
 package homework4;
 
-import jw.common.pool.OracleConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+//import jw.common.pool.OracleConnectionPool;
+import jw.common.util.DBUtil;
 
 public class UserLoginPoolDAO {
 
@@ -22,7 +26,8 @@ public class UserLoginPoolDAO {
 
         
         try {
-            conn = OracleConnectionPool.getInstance().getConnection();
+        	conn = DBUtil.getConnection();
+        	//conn = OracleConnectionPool.getInstance().getConnection();
             String sql = "SELECT id, pwd FROM ADDUSER_TEST WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
@@ -49,7 +54,8 @@ public class UserLoginPoolDAO {
         PreparedStatement pstmt = null;
 
         try {
-            conn = OracleConnectionPool.getInstance().getConnection();
+            //conn = OracleConnectionPool.getInstance().getConnection();
+        	conn = DBUtil.getConnection();
             String sql = "INSERT INTO ADDUSER_TEST (id, pwd, gender, married) VALUES (?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
 
@@ -74,7 +80,8 @@ public class UserLoginPoolDAO {
         ResultSet rs = null;
 
         try {
-            conn = OracleConnectionPool.getInstance().getConnection();
+            //conn = OracleConnectionPool.getInstance().getConnection();
+        	conn = DBUtil.getConnection();
             String sql = "SELECT no, id, pwd, gender, married FROM ADDUSER_TEST";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -107,7 +114,8 @@ public class UserLoginPoolDAO {
         UserVO user = null;
 
         try {
-            conn = OracleConnectionPool.getInstance().getConnection();
+            //conn = OracleConnectionPool.getInstance().getConnection();
+        	conn = DBUtil.getConnection();
             String sql = "SELECT * FROM ADDUSER_TEST WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
