@@ -27,6 +27,7 @@
     </form>
 
     <br><br>
+    <p><a href="updateUserHtml.jsp">사용자조회 페이지 이동</a></p>
     <p><a href="findUserHtml.jsp">사용자조회 페이지 이동</a></p>
 	<br>
 </body>

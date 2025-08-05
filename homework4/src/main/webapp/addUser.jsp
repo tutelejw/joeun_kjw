@@ -36,6 +36,7 @@
     <h2>회원가입 완료</h2>
     <p>사용자 ID: <%= id %></p>
     
+    <p><a href="updateUserHtml.jsp">사용자 정보 수정 하기</a></p>
     <p><a href="findUserHtml.jsp">사용자 조회 하기</a></p>
     <p><a href="addUserHtml.jsp">메인페이지</a></p>
     

@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
-<%@ page import="homework4.*" %>
+<%-- <%@ page import="homework4.*" %>  --%>
+<%@ page import="jw.service.user.vo.UserVO" %>
 <%@ page import="jw.service.user.dao.UserDAO" %>
 
 <%
