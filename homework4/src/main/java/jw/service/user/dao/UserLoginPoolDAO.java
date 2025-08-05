@@ -1,9 +1,14 @@
 package jw.service.user.dao;
 
-import jw.common.pool.OracleConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import jw.common.pool.OracleConnectionPool;
+import jw.service.user.vo.UserVO;
+
 
 public class UserLoginPoolDAO {
 

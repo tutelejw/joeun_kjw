@@ -4,7 +4,7 @@ public class UserVO {
     private String no;
 	private String id;
     private String pwd;
-    private Boolean active; 
+    private Boolean active = false; 
 
     public String getNo() {
         return no;
@@ -31,7 +31,7 @@ public class UserVO {
     }
 
     public boolean isActive() {
-        return active;
+        return active != null && active;
     }
     public void setActive(boolean active) {
     	this.active = active;

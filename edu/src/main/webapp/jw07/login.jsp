@@ -9,23 +9,24 @@
     String id = request.getParameter("id");
     String pwd = request.getParameter("pwd");
 
-    UserDao dao = new UserDao();
-    boolean success = dao.login(id, pwd);
+    UserVO userVO = new UserVO();
+	userVO.setId(id);
+	userVO.setPwd(pwd);
+	
+	UserDao userDAO = new UserDao();
+	userDAO.getUser(userVO);
 %>
 
 <html>
 <head><title>로그인 결과</title></head>
 <body>
 <%
-    if (success) {
-%>
-        <h2>환영합니다, <%= id %>님!</h2>
-<%
-    } else {
-%>
-        <h2>로그인 실패. 다시 시도해주세요.</h2>
-<%
-    }
-%>
+    if (userVO.isActive()){ %>
+    <%= id %> 님 환영 합니다. 
+    <% session.setAttribute("userVO", userVO);  %>
+    <%     } else {  %>
+        <h2>로그인 실패. id pwd를 확인 후 다시 시도해주세요.</h2>
+<%    } %>
+<p/><p/><a href='/edu/jw07/login.html'> login.html 로 이동 </a>
 </body>
 </html>

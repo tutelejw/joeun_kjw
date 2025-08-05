@@ -3,9 +3,9 @@ package jw.service.user.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import jw.common.dao.AbstractDao;
-import jw.common.util.DBUtil;
 import jw.service.user.vo.UserVO;
 
 public class UserDao extends AbstractDao {
@@ -71,30 +71,34 @@ public class UserDao extends AbstractDao {
 		return insertResult; 
 	}//end of addUser()
 	
-	// 로그인 체크 메서드
-    public boolean login(String id, String pwd) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean result = false;
-
-        try {
-            conn = DBUtil.getConnection();
-            String sql = "SELECT * FROM users WHERE id = ? AND pwd = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-            pstmt.setString(2, pwd);
-            rs = pstmt.executeQuery();
-
-            // 결과가 있으면 로그인 성공
-            result = rs.next();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            close(conn, pstmt, rs);
-        }
-
-        return result;
-    }
+	public ArrayList<UserVO> getUserList(){
+		ArrayList<UserVO> arrayList = new ArrayList<UserVO>();
+		Connection con = null;
+		PreparedStatement pStmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = this.connect();
+			
+			pStmt = con.prepareStatement("select no, id, pwd from users order by no");
+			
+			rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				UserVO userVO=new UserVO();
+				userVO.setNo(rs.getString("no"));
+				userVO.setPwd(rs.getString("pwd"));
+				userVO.setId(rs.getString("id"));
+				System.out.println(userVO);
+				
+				arrayList.add(userVO);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			this.close(con, pStmt, rs);
+		}
+		return arrayList;
+	}
     
 }
