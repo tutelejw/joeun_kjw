@@ -1,5 +1,5 @@
 <%@ page import="jw.service.user.dao.UserDao" %>
-<%@ page import="jw.service.user.vo.UserVo" %>
+<%@ page import="jw.service.user.vo.UserVO" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page language="java" %>
 

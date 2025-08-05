@@ -1,15 +1,49 @@
 package jw.common.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import jw.common.util.DBUtil;
 
 public abstract class AbstractDao {
-    protected void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-        try { if (rs != null) rs.close(); } catch (Exception e) {}
-        try { if (pstmt != null) pstmt.close(); } catch (Exception e) {}
-        try { if (conn != null) conn.close(); } catch (Exception e) {}
+    public AbstractDao() {
     }
-
-    protected void close(Connection conn, PreparedStatement pstmt) {
-        close(conn, pstmt, null);
+    
+    public Connection connect() {
+    	Connection con = null;
+    	try {
+    		con = DBUtil.getConnection();
+    	}catch(RuntimeException ex) {
+    		throw ex;
+    	}
+    	return con;
+    }
+    
+    public void close (Connection con, PreparedStatement pStmt, ResultSet rs) {
+    	if(rs != null ) {
+    		try {
+    			rs.close();
+    		}catch (Exception ex) {
+    			ex.printStackTrace();
+    		}
+    	}
+    	this.close(con,  pStmt);
+    }
+    
+    public void close(Connection con, PreparedStatement pStmt) {
+    	if(pStmt != null ) {
+    		try {
+    			pStmt.close();
+    		}catch (Exception ex) {
+    			ex.printStackTrace();
+    		}
+    	}
+    	if(con != null) {
+    		try {
+    			con.close();
+    		} catch(Exception ex) {
+    			ex.printStackTrace();
+    		}
+    	}
     }
 }

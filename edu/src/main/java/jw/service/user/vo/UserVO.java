@@ -1,12 +1,19 @@
-package jw05;
+package jw.service.user.vo;
 
 public class UserVO {
-	private String no;
+    private String no;
 	private String id;
     private String pwd;
-    private String active; // 'Y' or 'N'
+    private Boolean active; 
 
+    public String getNo() {
+        return no;
+    }
 
+    public void setNo(String no) {
+        this.no = no;
+    }
+    
     public String getId() {
         return id;
     }
@@ -23,12 +30,11 @@ public class UserVO {
         this.pwd = pwd;
     }
 
-    public String getActive() {
+    public boolean isActive() {
         return active;
     }
-
-    public void setActive(String active) {
-        this.active = active;
+    public void setActive(boolean active) {
+    	this.active = active;
     }
     
     public String toString() {
