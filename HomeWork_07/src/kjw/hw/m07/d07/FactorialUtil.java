@@ -1,3 +1,5 @@
+package kjw.hw.m07.d07;
+
 import java.util.Scanner;
 
 public class FactorialUtil {

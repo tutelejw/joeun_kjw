@@ -1,3 +1,5 @@
+package kjw.hw.m07.d09;
+
 class Book{
 	/// Field
 	private String title;

@@ -1,3 +1,4 @@
+package kjw.hw.m07.d07;
 //2차로 모델링 하게 
 class Person {
 	private String name;

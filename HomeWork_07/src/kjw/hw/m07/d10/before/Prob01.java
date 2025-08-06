@@ -1,3 +1,5 @@
+package kjw.hw.m07.d10.before;
+
 public class Prob01{
 	public static void printGugudan(int no){ 
 	

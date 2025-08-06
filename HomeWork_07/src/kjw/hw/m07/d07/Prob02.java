@@ -1,34 +1,37 @@
+package kjw.hw.m07.d07;
+
+import kjw.hw.m07.d07.Prob02;
 //2차로 모델링 하게 
 
-class Person {
+class Person_Prob02 {
 	String name;
 	int age;
 	
-	public Person(String name, int age) {
+	public Person_Prob02(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}
 }
 
-class Student extends Person {
+class Student_Prob02 extends Person_Prob02 {
 	
 	int id;
 	
-	public Student(String name, int age, int id) {
+	public Student_Prob02 (String name, int age, int id) {
 		super(name, age);
 		this.id = id;
 	}
 	
 	public void print() {
-		System.out.println("이름 : " + name + "  / 나이 : " + age + "  /   학번 : " + id);
+		System.out.println("이름 : " + this.name + "  / 나이 : " + age + "  /   학번 : " + id);
 	}
 }
 
-class Teacher extends Person {
+class Teacher_Prob02 extends Person_Prob02 {
 	
 	String subject;
 	
-	public Teacher(String name, int age, String subject) {
+	public Teacher_Prob02(String name, int age, String subject) {
 		super(name, age);
 		this.subject = subject;
 	}
@@ -38,11 +41,11 @@ class Teacher extends Person {
 	}
 }
 
-class Employee extends Person {
+class Employee_Prob02 extends Person_Prob02 {
 	
 	String dept;
 	
-	public Employee(String name, int age, String dept) {
+	public Employee_Prob02(String name, int age, String dept) {
 		super(name, age);
 		this.dept = dept;
 	}
