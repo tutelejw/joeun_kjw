@@ -9,7 +9,7 @@ import mini.project.d250806.util.DBUtil;
 public class UserDAO {
    // 회원 등록 메서드
    public int registerUser(User user) throws Exception {
-       String sql = "INSERT INTO users VALUES (?, ?, ?)";
+       String sql = "INSERT INTO users_mini01 VALUES (?, ?, ?)";
        try (Connection conn = DBUtil.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
            pstmt.setString(1, user.getId());
@@ -22,7 +22,7 @@ public class UserDAO {
 
    // 로그인 메서드
    public User login(String id, String password) throws Exception {
-       String sql = "SELECT * FROM users WHERE id=? AND password=?";
+       String sql = "SELECT * FROM users_mini01 WHERE id=? AND password=?";
        try (Connection conn = DBUtil.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
            pstmt.setString(1, id);
@@ -39,7 +39,7 @@ public class UserDAO {
    // 전체 사용자 목록 조회 메서드
    public List<User> getAllUsers() throws Exception {
        List<User> list = new ArrayList<>();
-       String sql = "SELECT * FROM users";
+       String sql = "SELECT * FROM users_mini01";
        try (Connection conn = DBUtil.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery()) {

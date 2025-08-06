@@ -8,150 +8,40 @@
   metadata-complete="true">
 
 	<servlet>
-		<servlet-name>FirstServlet</servlet-name>
-		<servlet-class>FirstServlet</servlet-class>
-	</servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>mini.project.d250806.controller.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
 
-	<servlet>
-		<servlet-name>ServletTest</servlet-name>
-		<servlet-class>ServletTest</servlet-class>
-	</servlet>
-	
-	    <servlet>
-        <servlet-name>HelloServletService</servlet-name> 
-		<servlet-class>HelloServletService</servlet-class> 
-		</servlet>
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>mini.project.d250806.controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>ServletTest</servlet-name>
-		<url-pattern>/ServletTest</url-pattern>
-	</servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>mini.project.d250806.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>FirstServlet</servlet-name>
-		<url-pattern>/FirstServlet</url-pattern>
-	</servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>HelloServletService</servlet-name> 
-		<url-pattern>/HelloServletService</url-pattern> 
-	</servlet-mapping>	
-		
-
-	<servlet>
-		<servlet-name>HelloServletdoGet</servlet-name> 
-		<servlet-class>HelloServletdoGet</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>HelloServletdoGet</servlet-name> 
-		<url-pattern>/HelloServletdoGet</url-pattern> 
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>HelloServletdoPost</servlet-name> 
-		<servlet-class>HelloServletdoPost</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>HelloServletdoPost</servlet-name> 
-		<url-pattern>/HelloServletdoPost</url-pattern> 
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>HelloServletdoPostOverGet</servlet-name> 
-		<servlet-class>HelloServletdoPostOverGet</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>HelloServletdoPostOverGet</servlet-name> 
-		<url-pattern>/HelloServletdoPostOverGet</url-pattern> 
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>GetData</servlet-name> 
-		<servlet-class>GetData</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>GetData</servlet-name> 
-		<url-pattern>/GetData</url-pattern> 
-	</servlet-mapping>
-
-		<servlet>
-		<servlet-name>PostData</servlet-name> 
-		<servlet-class>PostData</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>PostData</servlet-name> 
-		<url-pattern>/PostData</url-pattern> 
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>GetDataKr</servlet-name> 
-		<servlet-class>GetDataKr</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>GetDataKr</servlet-name> 
-		<url-pattern>/GetDataKr</url-pattern> 
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>Login</servlet-name> 
-		<servlet-class>jw04.Login</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name> 
-		<url-pattern>/Login</url-pattern> 
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>LoginBean</servlet-name> 
-		<servlet-class>jw04.LoginBean</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>LoginBean</servlet-name> 
-		<url-pattern>/LoginBean</url-pattern> 
-	</servlet-mapping>
-	
-		<servlet>
-		<servlet-name>LoginBeanVODao</servlet-name> 
-		<servlet-class>jw04.LoginBeanVODao</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>LoginBeanVODao</servlet-name> 
-		<url-pattern>/LoginBeanVODao</url-pattern> 
-	</servlet-mapping>
-			<servlet>
-		<servlet-name>LoginBeanPool</servlet-name> 
-		<servlet-class>jw04.LoginBeanPool</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>LoginBeanPool</servlet-name> 
-		<url-pattern>/LoginBeanPool</url-pattern> 
-	</servlet-mapping>
-
-
-	<servlet>
-		<servlet-name>CookieReaderToServer</servlet-name> 
-		<servlet-class>jw05.CookieReaderToServer</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>CookieReaderToServer</servlet-name> 
-		<url-pattern>/CookieReaderToServer</url-pattern> 
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>CookieWriterToClient</servlet-name> 
-		<servlet-class>jw05.CookieWriterToClient</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>CookieWriterToClient</servlet-name> 
-		<url-pattern>/CookieWriterToClient</url-pattern> 
-	</servlet-mapping>
-		<servlet>
-		<servlet-name>LoginBeanDataSourceSession</servlet-name> 
-		<servlet-class>jw05.LoginBeanDataSourceSession</servlet-class> 
-	</servlet>
-    <servlet-mapping>
-        <servlet-name>LoginBeanDataSourceSession</servlet-name> 
-		<url-pattern>/LoginBeanDataSourceSession</url-pattern> 
-	</servlet-mapping>
+  <servlet>
+    <servlet-name>UserListServlet</servlet-name>
+    <servlet-class>mini.project.d250806.controller.UserListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserListServlet</servlet-name>
+    <url-pattern>/UserListServlet</url-pattern>
+  </servlet-mapping>
 	
 	
 	

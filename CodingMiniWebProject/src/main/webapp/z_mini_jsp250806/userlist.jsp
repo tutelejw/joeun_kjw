@@ -15,6 +15,6 @@
         }
     %>
   </table>
-  <a href="welcome.jsp">Back</a>
+  <a href="z_mini_jsp250806/welcome.jsp">Back</a>
 </body>
 </html>

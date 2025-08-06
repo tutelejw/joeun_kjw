@@ -12,6 +12,6 @@
 <html>
 <body>
   <h2>Welcome, <%= user.getName() %>!</h2>
-  <a href="logout">Logout</a> | <a href="userlist">User List (Admin)</a>
+  <a href="logout">Logout</a> | <a href="UserListServlet">User List (Admin)</a>
 </body>
 </html>

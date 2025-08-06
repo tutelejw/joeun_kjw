@@ -33,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
            // 회원 등록 메서드 호출
            dao.registerUser(user);
            // 회원가입 성공 후 로그인 페이지로 이동
-           response.sendRedirect("login.jsp");
+           response.sendRedirect("z_mini_jsp250806/login.jsp");
        } catch (Exception e) {
            throw new ServletException(e);
        }
