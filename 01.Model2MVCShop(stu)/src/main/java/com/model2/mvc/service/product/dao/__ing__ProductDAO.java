@@ -66,17 +66,17 @@ public class __ing__ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "select * from ProductS ";
+		String sql = "select * from Product ";
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where Product_ID='" + searchVO.getSearchKeyword()
+				sql += " where PROD_ID='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where Product_NAME='" + searchVO.getSearchKeyword()
+				sql += " where PROD_NAME='" + searchVO.getSearchKeyword()
 						+ "'";
 			}
 		}
-		sql += " order by Product_ID";
+		sql += " order by PROD_ID";
 
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
@@ -99,14 +99,12 @@ public class __ing__ProductDAO {
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				ProductVO vo = new ProductVO();
-				vo.setProductId(rs.getString("Product_ID"));
-				vo.setProductName(rs.getString("Product_NAME"));
-				vo.setPassword(rs.getString("PASSWORD"));
-				vo.setRole(rs.getString("ROLE"));
-				vo.setSsn(rs.getString("SSN"));
-				vo.setPhone(rs.getString("CELL_PHONE"));
-				vo.setAddr(rs.getString("ADDR"));
-				vo.setEmail(rs.getString("EMAIL"));
+				vo.setProdNo(rs.getInt("PROD_ID"));
+				vo.setProdName(rs.getString("PROD_NAME"));
+				vo.setProdDetail(rs.getString("PROD_DETAIL"));
+				vo.setManuDate(rs.getString("MANUFACTURE_DAY"));
+				vo.setPrice(rs.getInt("PRICE"));
+				vo.setFileName(rs.getString("IMAGE_FILE"));
 				vo.setRegDate(rs.getDate("REG_DATE"));
 
 				list.add(vo);
