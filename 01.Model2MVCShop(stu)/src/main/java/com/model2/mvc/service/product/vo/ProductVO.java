@@ -5,13 +5,13 @@ import java.sql.Date;
 
 public class ProductVO {
 	
-	private String fileName;
-	private String manuDate;
-	private int price;
-	private String prodDetail;
-	private String prodName;
-	private int prodNo;
-	private Date regDate;
+	private String fileName; 		// IMAGE_FILE
+	private String manuDate;    // MANUFACTURE_DAY
+	private int price;					// PRICE
+	private String prodDetail;   // PROD_DETAIL
+	private String prodName;    //PROD_NAME
+	private int prodNo;					// PROD_NO
+	private Date regDate;				// REG_DATE
 	private String proTranCode;
 	
 	public ProductVO(){

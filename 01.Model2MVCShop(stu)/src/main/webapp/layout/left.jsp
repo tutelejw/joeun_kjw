@@ -76,7 +76,9 @@ function history(){
 			</td>
 		</tr>
 		<td class="Depth03">
-				<a href="/listProduct.do?menu=manage" target="rightFrame">판매상품관리</a>
+				<!-- kjw -->
+				<!-- <a href="/listProduct.do?menu=manage" target="rightFrame">판매상품관리</a>  -->
+				<a href="../listProduct.do?menu=manage" target="rightFrame">판매상품관리</a>
 			</td>
 		</tr>
 		<tr>
