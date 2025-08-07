@@ -11,9 +11,9 @@ import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.product.vo.ProductVO;
 
 
-public class __ing__ProductDAO {
+public class ProductDAO {
 	
-	public __ing__ProductDAO(){
+	public ProductDAO(){
 	}
 
 	public void insertProduct(ProductVO productVO) throws Exception {
@@ -125,14 +125,15 @@ public class __ing__ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 
-		String sql = "update ProductS set Product_NAME=?,CELL_PHONE=?,ADDR=?,EMAIL=? where Product_ID=?";
+		String sql = "update Product set PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?,IMAGE_FILE=? where PROD_NO=?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, productVO.getProductName());
-		stmt.setString(2, productVO.getPhone());
-		stmt.setString(3, productVO.getAddr());
-		stmt.setString(4, productVO.getEmail());
-		stmt.setString(5, productVO.getProductId());
+		stmt.setString(1, productVO.getProdName());
+		stmt.setString(2, productVO.getProdDetail());
+		stmt.setString(3, productVO.getManuDate());
+		stmt.setInt(4, productVO.getPrice());
+		stmt.setString(5, productVO.getFileName());
+		stmt.setInt(6,productVO.getProdNo());
 		stmt.executeUpdate();
 		
 		con.close();
