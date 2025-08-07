@@ -91,7 +91,7 @@ public class ProductDAO {
 						+ "'";
 			}
 		}
-		sql += " order by PROD_NO";
+		sql += " order by PROD_NO desc";
 
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
