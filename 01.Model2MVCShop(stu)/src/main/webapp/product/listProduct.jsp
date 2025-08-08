@@ -2,13 +2,18 @@
 
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.service.product.vo.*" %>
+<%@ page import="com.model2.mvc.service.user.vo.UserVO" %>
 <%@ page import="com.model2.mvc.common.*" %>
 
 <%
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
+	//session.setAttribute("user", userVO);
+	// 세션에서 "user"로 저장된 userVO를 가져옵니다.
+	UserVO userVO = (UserVO) session.getAttribute("user");
 	
 	int total=0;
+    String menu = "search";
 	ArrayList<ProductVO> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
@@ -23,6 +28,24 @@
 		if(total%searchVO.getPageUnit() >0)
 			totalPage += 1;
 	}
+ 
+
+
+// userVO가 null이 아니면 처리합니다.
+if (userVO != null) {
+    request.setAttribute("userVO", userVO);
+
+    if ("admin".equals(userVO.getRole())) {
+        menu = "manage";
+    }
+} else {
+    // userVO가 null일 경우 로그인되지 않은 상태
+    out.println("로그인되지 않았습니다.");
+    // 또는 로그인 페이지로 리디렉션 처리할 수 있습니다.
+    response.sendRedirect("login.jsp");
+    return; // 로그인 페이지로 리디렉션 후 나머지 코드가 실행되지 않도록 합니다.
+}
+
 %>
 
 <html>
@@ -133,16 +156,22 @@ function fncGetProductList(){
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
+
+
 	<% 	
 		int no=list.size();
 		for(int i=0; i<list.size(); i++) {
 			ProductVO vo = (ProductVO)list.get(i);
+
 	%>
+
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
 		<td align="left">
-			<a href="/getProduct.do?prodNo=<%=vo.getProdNo() %>"><%= vo.getProdNo() %></a>
+			<%--<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>"><%= vo.getProdNo() %></a>--%>
+			<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=<%=menu%>"><%= vo.getProdNo() %></a>
+			 
 		</td>
 		<td></td>
 		<td align="left"><%= vo.getProdName() %></td>
