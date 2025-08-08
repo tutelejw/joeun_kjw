@@ -21,6 +21,8 @@ public class GetProductAction extends Action{
 		
 		request.setAttribute("vo", vo);
 
+		// if로 manege와 user 분기로 updateProduct.jsp로 분기해야 하는건가? --- 할일
 		return "forward:/product/readProduct.jsp";
+		
 	}
 }
