@@ -17,26 +17,11 @@
 <!--
 function fncUpdateProduct() {
 
-	var name=document.detailForm.userName.value;
-	
-	if(name == null || name.length <1){
-		alert("이름은  반드시 입력하셔야 합니다.");
-		return;
-	}
 		
 	document.detailForm.action='/updateProduct.do';
 	document.detailForm.submit();
 }
 
-function check_email(frm) {
-	alert
-	var email=document.detailForm.email.value;
-    if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1)){
-    	alert("이메일 형식이 아닙니다.");
-		return false;
-    }
-    return true;
-}
 
 function resetData() {
 	document.detailForm.reset();

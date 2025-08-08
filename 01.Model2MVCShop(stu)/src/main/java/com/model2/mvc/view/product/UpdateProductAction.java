@@ -18,10 +18,11 @@ public class UpdateProductAction extends Action {
 												HttpServletResponse response) throws Exception {
 		//String prodNo=(String)request.getParameter("ProdNo");
 		int prodNo=  Integer.parseInt( request.getParameter("ProdNo"));
-		
+		System.out.println("=========UdateProductAction 21 라인 부근");
 		ProductVO productVO=new ProductVO();
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
+		System.out.println("=========UdateProductAction 25 라인 부근");
 		productVO.setManuDate(request.getParameter("manuDate"));
 		productVO.setPrice(Integer.parseInt(request.getParameter("price")));
 		productVO.setFileName(request.getParameter("fileName"));
