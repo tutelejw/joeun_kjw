@@ -14,6 +14,7 @@
 	
 	int total=0;
     String menu = "search";
+    
 	ArrayList<ProductVO> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
