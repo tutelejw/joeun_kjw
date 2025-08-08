@@ -1,20 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.model2.mvc.service.user.vo.*" %>
+<%@ page import="com.model2.mvc.service.product.vo.*" %>
 
 <%
-	UserVO vo=(UserVO)request.getAttribute("userVO");
+	ProductVO vo=(ProductVO)request.getAttribute("productVO");
 %>
 
 <html>
 <head>
-<title>회원정보수정</title>
+<title>상품정보수정</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
 <!--
-function fncUpdateUser() {
+function fncUpdateProduct() {
 
 	var name=document.detailForm.userName.value;
 	
@@ -23,13 +24,7 @@ function fncUpdateUser() {
 		return;
 	}
 		
-	if(document.detailForm.phone2.value != "" && document.detailForm.phone2.value != "") {
-		document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
-	} else {
-		document.detailForm.phone.value = "";
-	}
-		
-	document.detailForm.action='/updateUser.do';
+	document.detailForm.action='/updateProduct.do';
 	document.detailForm.submit();
 }
 
@@ -54,7 +49,7 @@ function resetData() {
 
 <form name="detailForm"  method="post" >
 
-<input type="hidden" name="userId" value="<%=vo.getUserId() %>">
+<input type="hidden" name="prodNo" value="<%=vo.getProdNo() %>">
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -64,7 +59,7 @@ function resetData() {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">회원정보수정</td>
+					<td width="93%" class="ct_ttl01">상품정보수정</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
 			</table>
@@ -77,31 +72,29 @@ function resetData() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
-			아이디 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
+			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="105"><%=vo.getUserId() %></td>
-					<td>	</td>
-				</tr>
-			</table>
+			<input type="text" name="prodName" value="<%=vo.getProdName() %>" class="ct_input_g" 
+						style="width:100px; height:19px"  maxLength="50" >
 		</td>
 	</tr>
+
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	
 	<tr>
 		<td width="104" class="ct_write">
-			이름 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
+			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="userName" value="<%=vo.getUserName() %>" class="ct_input_g" 
+			<input type="text" name="prodDetail" value="<%=vo.getProdDetail() %>" class="ct_input_g" 
 						style="width:100px; height:19px"  maxLength="50" >
 		</td>
 	</tr>
@@ -110,63 +103,37 @@ function resetData() {
 	</tr>
 	
 	<tr>
-		<td width="104" class="ct_write">주소</td>
+		<td width="104" class="ct_write">상품제조일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="addr" value="<%=vo.getAddr() %>" class="ct_input_g" 
+			<input 	type="text" name="manuDate" value="<%=vo.getManuDate() %>" class="ct_input_g" 
 							style="width:370px; height:19px"  maxLength="100">
 		</td>
 	</tr>
+	
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">휴대전화번호</td>
+		<td width="104" class="ct_write">상품가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<select 	name="phone1" class="ct_input_g" style="width:50px" 
-							onChange="document.detailForm.phone2.focus();">
-				<option value="010" >010</option>
-				<option value="011" >011</option>
-				<option value="016" >016</option>
-				<option value="018" >018</option>
-				<option value="019" >019</option>
-			</select>
-			<input type="text" name="phone2"
-						<%if (vo.getPhone() != null) {%> 
-							value="<%=vo.getPhone().split("-")[1] %>"
-						<%} %> 
-						class="ct_input_g" style="width:100px; height:19px"  maxLength="9" >
-			- 
-			<input type="text" name="phone3" 
-						<%if (vo.getPhone() != null) {%> 
-							value="<%=vo.getPhone().split("-")[2] %>"
-						<%} %> 
-						class="ct_input_g" style="width:100px; height:19px"  maxLength="9" >
-			<input type="hidden" name="phone" class="ct_input_g"  >
+			<input 	type="text" name="price" value="<%=vo.getPrice() %>" class="ct_input_g" 
+							style="width:370px; height:19px"  maxLength="100">
 		</td>
 	</tr>
-
-	<tr>
+		<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">이메일 </td>
+		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26">
-						<input 	type="text" name="email" value="<%=vo.getEmail() %>" class="ct_input_g" 
-										style="width:100px; height:19px" onChange="check_email(this.form);">
-					</td>
-				</tr>
-			</table>
+			<input 	type="text" name="fileName" value="<%=vo.getFileName() %>" class="ct_input_g" 
+							style="width:370px; height:19px"  maxLength="100">
 		</td>
 	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
@@ -179,7 +146,7 @@ function resetData() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncUpdateUser();">수정</a>
+						<a href="javascript:fncUpdateProduct();">상품수정</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
