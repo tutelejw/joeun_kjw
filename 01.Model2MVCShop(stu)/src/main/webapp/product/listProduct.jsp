@@ -4,6 +4,17 @@
 <%@ page import="com.model2.mvc.service.product.vo.*" %>
 <%@ page import="com.model2.mvc.service.user.vo.UserVO" %>
 <%@ page import="com.model2.mvc.common.*" %>
+<%
+    String uri = request.getRequestURI();         // 예: /product/listProduct.jsp
+    String url = request.getRequestURL().toString();  // 예: http://localhost:8080/product/listProduct.jsp
+    String query = request.getQueryString();      // 예: prodNo=123&menu=search
+    String method = request.getMethod();          // GET or POST
+
+    System.out.println("[로그] 요청 URI: " + uri);
+    System.out.println("[로그] 전체 URL: " + url);
+    System.out.println("[로그] 쿼리스트링: " + query);
+    System.out.println("[로그] 요청 방식: " + method);
+    %>
 
 <%
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
@@ -31,27 +42,35 @@
 	}
  
 
+	String menuParam = request.getParameter("menu");
+    String link;
+    String title="상품 목록 조회";
+
+    if ("manage".equals(menuParam)) {
+        title = "상품관리";
+    } 
+
 
 // userVO가 null이 아니면 처리합니다.
-if (userVO != null) {
-    request.setAttribute("userVO", userVO);
-
-    if ("admin".equals(userVO.getRole())) {
-        menu = "manage";
-    }
-} else {
-    // userVO가 null일 경우 로그인되지 않은 상태
-    out.println("로그인되지 않았습니다.");
-    // 또는 로그인 페이지로 리디렉션 처리할 수 있습니다.
-    response.sendRedirect("login.jsp");
-    return; // 로그인 페이지로 리디렉션 후 나머지 코드가 실행되지 않도록 합니다.
-}
+//if (userVO != null) {
+//    request.setAttribute("userVO", userVO);
+//
+//    if ("admin".equals(userVO.getRole())) {
+//        menu = "manage";
+//    }
+//} else {
+//    // userVO가 null일 경우 로그인되지 않은 상태
+//    out.println("로그인되지 않았습니다.");
+ //   // 또는 로그인 페이지로 리디렉션 처리할 수 있습니다.
+//    response.sendRedirect("login.jsp");
+//    return; // 로그인 페이지로 리디렉션 후 나머지 코드가 실행되지 않도록 합니다.
+//}
 
 %>
 
 <html>
 <head>
-<title>상품 목록조회</title>
+<title><%=title %></title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
@@ -76,7 +95,7 @@ function fncGetProductList(){
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품 목록조회</td>
+					<td width="93%" class="ct_ttl01"><%=title %></td>
 				</tr>
 			</table>
 		</td>
@@ -165,13 +184,20 @@ function fncGetProductList(){
 			ProductVO vo = (ProductVO)list.get(i);
 
 	%>
-
+<%
+if ("manage".equals(menuParam)) {
+    link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
+} else {
+    link = "/getProduct.do?prodNo=" + vo.getProdNo();  // 기본은 search
+}
+%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
 		<td align="left">
-			<%--<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>"><%= vo.getProdNo() %></a>--%>
-			<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=<%=menu%>"><%= vo.getProdNo() %></a>
+			<a href="<%=link%>"><%= vo.getProdNo() %></a>
+			<%-- <a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>"><%= vo.getProdNo() %></a>  --%>
+			<%-- <a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=<%=menu%>"><%= vo.getProdNo() %></a>  --%>
 			 
 		</td>
 		<td></td>

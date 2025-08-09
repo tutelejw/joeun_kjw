@@ -23,13 +23,13 @@ public class UpdateProductViewAction extends Action{
 		
 		request.setAttribute("productVO", productVO);
 		
-		//return "forward:/product/updateProduct.jsp";
+		return "forward:/product/updateProduct.jsp";
 		
-		if ("manage".equals(menu)) {
-	        return "forward:/product/updateProductView.jsp";
-	    } else {
-	        //return "forward:/product/getProduct.jsp";
-	    	return "forward:/product/readProduct.jsp";
-	    }
+//		if ("manage".equals(menu)) {
+//	        return "forward:/product/updateProductView.jsp";
+//	    } else {
+//	        //return "forward:/product/getProduct.jsp";
+//	    	return "forward:/product/readProduct.jsp";
+//	    }
 	}
 }

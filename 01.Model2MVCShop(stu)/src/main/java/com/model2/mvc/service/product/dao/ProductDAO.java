@@ -139,19 +139,23 @@ public class ProductDAO {
 	public void updateProduct(ProductVO productVO) throws Exception {
 		System.out.println("ProductDAO 의 updateProduct 주석해놓음. 추가해야함.");
 		System.out.println("ProductDAO 의 updateProduct 주석해놓음. 추가해야함.");
-		System.out.println("ProductDAO 의 updateProduct 주석해놓음. 추가해야함.");
-//		Connection con = DBUtil.getConnection();
-//
-//		String sql = "update USERS set USER_NAME=?,CELL_PHONE=?,ADDR=?,EMAIL=? where USER_ID=?";
-//		
-//		PreparedStatement stmt = con.prepareStatement(sql);
-//		stmt.setString(1, userVO.getUserName());
-//		stmt.setString(2, userVO.getPhone());
-//		stmt.setString(3, userVO.getAddr());
-//		stmt.setString(4, userVO.getEmail());
-//		stmt.setString(5, userVO.getUserId());
-//		stmt.executeUpdate();
-//		
-//		con.close();
+
+		Connection con = DBUtil.getConnection();
+
+		String sql = "update PRODUCT set PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?,IMAGE_FILE=? where PROD_NO=?";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		//productVO = new ProductVO();
+		
+		stmt.setString(1, productVO.getProdName());
+		stmt.setString(2, productVO.getProdDetail());
+		stmt.setString(3, productVO.getManuDate());
+		stmt.setInt(4,productVO.getPrice());
+		stmt.setString(5, productVO.getFileName());
+		stmt.setInt(6,productVO.getProdNo());
+		stmt.executeUpdate();
+		
+		
+		con.close();
 	}
 }

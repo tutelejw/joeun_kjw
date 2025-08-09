@@ -17,10 +17,12 @@ public class UpdateProductAction extends Action {
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
 	    
-	    
-		//String prodNo=(String)request.getParameter("ProdNo");
-		int prodNo=  Integer.parseInt( request.getParameter("ProdNo"));
 		System.out.println("=========UdateProductAction 21 라인 부근");
+		//String prodNo=(String)request.getParameter("ProdNo");
+		int prodNo=  Integer.parseInt( request.getParameter("prodNo"));
+		
+		
+		
 		ProductVO productVO=new ProductVO();
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
@@ -36,14 +38,10 @@ public class UpdateProductAction extends Action {
 		//String sessionId=((UserVO)session.getAttribute("user")).getUserId();
 		int sessionId=((ProductVO) session.getAttribute("vo")).getProdNo();
 	
-		//if(sessionId.equals(userId)){
 		if(sessionId == prodNo){
 			session.setAttribute("vo", productVO);
 		}
-		
-		
 
-	    
 	    
 		return "redirect:/getProduct.do?prodNo="+prodNo;
 	}
