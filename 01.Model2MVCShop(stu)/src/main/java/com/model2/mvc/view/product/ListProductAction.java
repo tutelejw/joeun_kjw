@@ -36,6 +36,7 @@ public class ListProductAction extends Action {
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
 		
+		//return "forward:/product/readProduct.jsp";
 		return "forward:/product/listProduct.jsp";
 	}
 }

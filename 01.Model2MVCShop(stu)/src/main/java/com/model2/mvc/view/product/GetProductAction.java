@@ -22,7 +22,9 @@ public class GetProductAction extends Action{
 		request.setAttribute("vo", vo);
 
 		// if로 manege와 user 분기로 updateProduct.jsp로 분기해야 하는건가? --- 할일
-		return "forward:/product/readProduct.jsp";
+		//return "forward:/product/readProduct.jsp";
+		return "forward:/product/getProduct.jsp";
+		//8/9 14시 일단 상품 정보 조회는 됨. 상품수정 분기 확인해야함.
 		
 	}
 }

@@ -48,7 +48,7 @@ public class ProductVO {
 		this.prodDetail = prodDetail;
 	}
 	public String getProdName() {
-		return prodName;
+		return prodName; 
 	}
 	public void setProdName(String prodName) {
 		this.prodName = prodName;

@@ -16,6 +16,8 @@ public class UpdateProductAction extends Action {
 	@Override
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
+	    
+	    
 		//String prodNo=(String)request.getParameter("ProdNo");
 		int prodNo=  Integer.parseInt( request.getParameter("ProdNo"));
 		System.out.println("=========UdateProductAction 21 라인 부근");
@@ -39,6 +41,10 @@ public class UpdateProductAction extends Action {
 			session.setAttribute("vo", productVO);
 		}
 		
+		
+
+	    
+	    
 		return "redirect:/getProduct.do?prodNo="+prodNo;
 	}
 }

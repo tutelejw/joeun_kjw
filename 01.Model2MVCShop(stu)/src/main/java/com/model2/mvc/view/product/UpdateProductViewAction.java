@@ -14,6 +14,7 @@ public class UpdateProductViewAction extends Action{
 	@Override
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
+		String menu = request.getParameter("menu");  // 파라미터 받기
 //		String userId=request.getParameter("userId");
 		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
 		
@@ -22,6 +23,13 @@ public class UpdateProductViewAction extends Action{
 		
 		request.setAttribute("productVO", productVO);
 		
-		return "forward:/product/updateProduct.jsp";
+		//return "forward:/product/updateProduct.jsp";
+		
+		if ("manage".equals(menu)) {
+	        return "forward:/product/updateProductView.jsp";
+	    } else {
+	        //return "forward:/product/getProduct.jsp";
+	    	return "forward:/product/readProduct.jsp";
+	    }
 	}
 }
