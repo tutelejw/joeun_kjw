@@ -17,16 +17,12 @@ public class UpdateProductAction extends Action {
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
 	    
-		System.out.println("=========UdateProductAction 21 라인 부근");
-		//String prodNo=(String)request.getParameter("ProdNo");
 		int prodNo=  Integer.parseInt( request.getParameter("prodNo"));
 		
-		
-		
 		ProductVO productVO=new ProductVO();
+		productVO.setProdNo(prodNo);
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
-		System.out.println("=========UdateProductAction 25 라인 부근");
 		productVO.setManuDate(request.getParameter("manuDate"));
 		productVO.setPrice(Integer.parseInt(request.getParameter("price")));
 		productVO.setFileName(request.getParameter("fileName"));
@@ -35,13 +31,18 @@ public class UpdateProductAction extends Action {
 		service.updateProduct(productVO);
 		
 		HttpSession session=request.getSession();
-		//String sessionId=((UserVO)session.getAttribute("user")).getUserId();
-		int sessionId=((ProductVO) session.getAttribute("vo")).getProdNo();
+		//int sessionId=((ProductVO) session.getAttribute("vo")).getProdNo();
+		ProductVO sessionProductVO = (ProductVO) session.getAttribute("vo");
 	
-		if(sessionId == prodNo){
-			session.setAttribute("vo", productVO);
+//		if(sessionId == prodNo){
+//			session.setAttribute("vo", productVO);
+//		}
+		if (sessionProductVO != null) { // 세션에 'vo'가 있을 때만 작업
+		    int sessionId = sessionProductVO.getProdNo();
+		    if (sessionId == prodNo) { // 세션에 있는 prodNo와 비교
+		        session.setAttribute("vo", productVO); // 세션에 새로운 productVO 저장
+		    }
 		}
-
 	    
 		return "redirect:/getProduct.do?prodNo="+prodNo;
 	}

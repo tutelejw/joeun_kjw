@@ -137,8 +137,15 @@ public class ProductDAO {
 	}
 
 	public void updateProduct(ProductVO productVO) throws Exception {
-		System.out.println("ProductDAO 의 updateProduct 주석해놓음. 추가해야함.");
-		System.out.println("ProductDAO 의 updateProduct 주석해놓음. 추가해야함.");
+	    // 로그를 추가하여 값 확인
+	    System.out.println("ProductDAO 의 updateProduct 실행 시작");
+	    System.out.println("Received ProductVO:");
+	    System.out.println("Product Name: " + productVO.getProdName());
+	    System.out.println("Product Detail: " + productVO.getProdDetail());
+	    System.out.println("Manufacture Date: " + productVO.getManuDate());
+	    System.out.println("Price: " + productVO.getPrice());
+	    System.out.println("File Name: " + productVO.getFileName());
+	    System.out.println("Product No: " + productVO.getProdNo());
 
 		Connection con = DBUtil.getConnection();
 
@@ -153,8 +160,12 @@ public class ProductDAO {
 		stmt.setInt(4,productVO.getPrice());
 		stmt.setString(5, productVO.getFileName());
 		stmt.setInt(6,productVO.getProdNo());
-		stmt.executeUpdate();
-		
+		//stmt.executeUpdate();
+	    // SQL 실행
+		System.out.println("Executing SQL: " + sql);
+		System.out.println("Product No: " + productVO.getProdNo());
+	    int rowsAffected = stmt.executeUpdate();
+	    System.out.println("Rows affected: " + rowsAffected);
 		
 		con.close();
 	}
