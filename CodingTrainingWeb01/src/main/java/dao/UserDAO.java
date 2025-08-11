@@ -51,7 +51,7 @@ public class UserDAO {
 		}
 	}//end of method isIdExists
     /**
-     * 3) 로그인 - 입력한 아이디와 비밀번호가 맞으면 User 객체 반환
+     * 3) 로그인 - method  User 입력한 아이디와 비밀번호가 맞으면 User 객체 반환
      * User 클래스는 다음과 같은 필드를 갖고 있습니다.
 		String id
 		String password
@@ -86,7 +86,44 @@ public class UserDAO {
 					return null;	// 로그인 실패
 				}
 		}
-	}//end of method login
+	}//end of method 3) login
+	
+	/**
+	 * 4) 회원 정보 수정 - method updateUser
+	 * User 클래스는 다음과 같은 필드를 갖고 있습니다.
+	 *      String id
+	 *      String password
+	 *      String name
+	 *      String role
+	 *
+	 * 다음 요구사항에 맞게 updateUser 메서드를 작성하세요.
+	 *
+	 * 입력값: @param user User 객체 (id, 변경할 password, 변경할 name을 포함해야 함)
+	 * 동작: users 테이블에서 id가 일치하는 사용자의 비밀번호와 이름을 수정한다.
+	 *   SQL 쿼리: "UPDATE users SET password = ?, name = ? WHERE id = ?"
+	 * 반환값:
+	 *   @return 업데이트된 레코드 수 (수정 성공 시 1, 실패 시 0)
+	 * 예외처리:
+	 *   @throws Exception 데이터베이스 연결 오류 또는 SQL 실행 오류 발생 가능성 있음
+	 * 사용 예시:
+	 *   User user = new User("hong123", "newpass", "홍길동", "user");
+	 *   int result = updateUser(user);
+	 *   // result == 1 이면 수정 성공, 0 이면 해당 id 없음
+	 */
+
+	public int updateUser(User user) throws Exception{
+		String sql = "update users set password = ? , name = ?, where id = ?";
+		try(Connection conn = DBUtil.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1,  user.getPassword());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getId());
+			return pstmt.executeUpdate();
+		}
+	}
+
+	
+	
 	
 }
 

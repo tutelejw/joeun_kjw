@@ -86,13 +86,6 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">제품제조일자</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26"><%=vo.getManuDate() %></td>
-				</tr>
 			</table>
 		</td>
 	</tr>
@@ -109,11 +102,20 @@
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
-		<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+
 		<tr>
 		<td width="104" class="ct_write">등록일자</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01"><%=vo.getRegDate() %></td>
+	</tr>
+
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
+	
+			<tr>
+		<td width="104" class="ct_write">상태</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01"><%=vo.getRegDate() %></td>
 	</tr>

@@ -73,25 +73,33 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT PROD_NO,\r\n"
-		+ "    PROD_NAME,\r\n"
-		+ "    PROD_DETAIL,\r\n"
-		+ "    MANUFACTURE_DAY,\r\n"
-		+ "    PRICE,\r\n"
-		+ "    IMAGE_FILE,\r\n"
-		+ "    REG_DATE \r\n"
-		+ "	 FROM PRODUCT ";
+	    // 기존 SQL (거래 상태 코드 없음)
+	    /*
+	    String sql = "SELECT PROD_NO,\r\n"
+	            + "    PROD_NAME,\r\n"
+	            + "    PROD_DETAIL,\r\n"
+	            + "    MANUFACTURE_DAY,\r\n"
+	            + "    PRICE,\r\n"
+	            + "    IMAGE_FILE,\r\n"
+	            + "    REG_DATE \r\n"
+	            + " FROM PRODUCT ";
+	    */
 		
-		if (searchVO.getSearchCondition() != null) {
-			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where PROD_NO='" + searchVO.getSearchKeyword()
-						+ "'";
-			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where PROD_NAME='" + searchVO.getSearchKeyword()
-						+ "'";
-			}
-		}
-		sql += " order by PROD_NO desc";
+	    // [수정됨] 거래 상태 코드 포함을 위해 TRANSACTION 테이블 JOIN
+		String sql = 
+			    "SELECT P.PROD_NO, P.PROD_NAME, P.PROD_DETAIL, P.MANUFACTURE_DAY, " +
+			    "       P.PRICE, P.IMAGE_FILE, P.REG_DATE, " +
+			    "       CASE WHEN T.PROD_NO IS NOT NULL THEN '재고없음' ELSE '판매중' END AS TRAN_STATUS_TEXT " +
+			    "FROM PRODUCT P LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
+	    
+	    if (searchVO.getSearchCondition() != null) {
+	        if (searchVO.getSearchCondition().equals("0")) {
+	            sql += " AND P.PROD_NO = '" + searchVO.getSearchKeyword() + "' ";
+	        } else if (searchVO.getSearchCondition().equals("1")) {
+	            sql += " AND P.PROD_NAME = '" + searchVO.getSearchKeyword() + "' ";
+	        }
+	    }
+	    sql += " ORDER BY P.PROD_NO DESC";
 
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
@@ -104,6 +112,7 @@ public class ProductDAO {
 		System.out.println("로우의 수:" + total);
 
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		//map.put("count", total);
 		map.put("count", new Integer(total));
 
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
@@ -121,6 +130,7 @@ public class ProductDAO {
 				vo.setPrice(rs.getInt("PRICE"));
 				vo.setFileName(rs.getString("IMAGE_FILE"));
 				vo.setRegDate(rs.getDate("REG_DATE"));
+	            vo.setProTranCode(rs.getString("TRAN_STATUS_TEXT"));  // 바로 상태텍스트 세팅
 
 				list.add(vo);
 				if (!rs.next())

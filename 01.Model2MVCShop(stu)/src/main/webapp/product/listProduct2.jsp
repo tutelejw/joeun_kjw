@@ -188,16 +188,13 @@ function fncGetProductList(){
 	%>
 <%
 if ("manage".equals(menuParam)) {
-	// manage일 경우 무조건 링크 있음
-	link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
+    link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
 } else {
-	// search일 경우 재고없음이면 링크 없음, 아니면 링크 있음
-	if ("재고없음".equals(vo.getProTranCode())) {
-		link = "";  // 링크 제거
-	} else {
-		link = "/getProduct.do?prodNo=" + vo.getProdNo();  // 기본은 search
-	}
+	link = "/getProduct.do?prodNo=" + vo.getProdNo();  // 기본은 search
 }
+//if(vo.getProTranCode().equals("판매중")){
+//   link = "/getProduct.do?prodNo=" + vo.getProdNo();  // 기본은 search
+//	}
 //getProTranCode() 가  재고없음일때는 링크가 없어야함.  해야함
 %>
 	<tr class="ct_list_pop">
