@@ -8,17 +8,17 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 public class PurchaseVO {
 	
-	private UserVO buyer;
-	private String divyAddr;
-	private String divyDate;
-	private String divyRequest;
-	private Date orderDate;
-	private String paymentOption;
-	private ProductVO purchaseProd;
-	private String receiverName;
-	private String receiverPhone;
-	private String tranCode;
-	private int tranNo;
+	private UserVO buyer; //UserVO 타입의 구매자 정보
+	private String divyAddr; //String 타입의 배송지 주소
+	private String divyDate; //String 타입의 배송 희망 일자
+	private String divyRequest;//String 타입의 배송시 요구사항
+	private Date orderDate;//java.sql.Date 타입의 구매 일자
+	private String paymentOption; //String 타입의 배송 지불방식
+	private ProductVO purchaseProd; //ProductVO 타입의 구매 물품 정보
+	private String receiverName; //String 타입의 받는사람 이름.
+	private String receiverPhone; //String 타입의 받는사람 전화번호
+	private String tranCode; //String 타입의 구매 상태 코드
+	private int tranNo; //int 타입의 구매 번호
 	
 	public PurchaseVO(){
 	}
