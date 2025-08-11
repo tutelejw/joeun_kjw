@@ -92,15 +92,22 @@ public class ProductDAO {
 			    "       CASE WHEN T.PROD_NO IS NOT NULL THEN '재고없음' ELSE '판매중' END AS TRAN_STATUS_TEXT " +
 			    "FROM PRODUCT P LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
 	    
+//	    if (searchVO.getSearchCondition() != null) {
+//	        if (searchVO.getSearchCondition().equals("0")) {
+//	            sql += " AND P.PROD_NO = '" + searchVO.getSearchKeyword() + "' ";
+//	        } else if (searchVO.getSearchCondition().equals("1")) {
+//	            sql += " AND P.PROD_NAME = '" + searchVO.getSearchKeyword() + "' ";
+//	        }
+//	    }
 	    if (searchVO.getSearchCondition() != null) {
-	        if (searchVO.getSearchCondition().equals("0")) {
-	            sql += " AND P.PROD_NO = '" + searchVO.getSearchKeyword() + "' ";
-	        } else if (searchVO.getSearchCondition().equals("1")) {
-	            sql += " AND P.PROD_NAME = '" + searchVO.getSearchKeyword() + "' ";
-	        }
+	    	if (searchVO.getSearchCondition().equals("0")) {
+	    		sql += " where P.PROD_NO like '%" + searchVO.getSearchKeyword() + "%' ";
+	    	} else if (searchVO.getSearchCondition().equals("1")) {
+	    		sql += " where P.PROD_NAME like '%" + searchVO.getSearchKeyword() + "%' ";
+	    	}
 	    }
 	    sql += " ORDER BY P.PROD_NO DESC";
-
+	    System.out.println("ProductDAO getProductList - SQL : "+sql);
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
 														ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -115,7 +122,7 @@ public class ProductDAO {
 		//map.put("count", total);
 		map.put("count", new Integer(total));
 
-		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
+		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1); 
 		System.out.println("searchVO.getPage():" + searchVO.getPage());
 		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
 

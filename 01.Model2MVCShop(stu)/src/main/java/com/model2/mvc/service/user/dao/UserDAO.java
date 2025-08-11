@@ -40,10 +40,13 @@ public class UserDAO {
 		Connection con = DBUtil.getConnection();
 
 		String sql = "select * from USERS where USER_ID=?";
+		// 변경: 정확히 일치하는 사용자 조회 -> 부분 일치  like 검색으로 수정 
+		//String sql = "select * from USERS where USER_ID like ?";  // ← LIKE 조건으로 변경됨
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, userId);
-
+		//System.out.println("UserVO - findUser method  SQL SQL: select * from USERS where USER_ID like '%" + userId + "%'");
+		//System.out.println("UserVO - findUser method  SQL SQL: " + sql);
 		ResultSet rs = stmt.executeQuery();
 
 		UserVO userVO = null;
@@ -72,15 +75,24 @@ public class UserDAO {
 		String sql = "select * from USERS ";
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where USER_ID='" + searchVO.getSearchKeyword()
-						+ "'";
+				sql += " where USER_ID like '%" + searchVO.getSearchKeyword()
+						+ "%'";
+//				sql += " where USER_ID='" + searchVO.getSearchKeyword()
+//				+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where USER_NAME='" + searchVO.getSearchKeyword()
-						+ "'";
+				sql += " where USER_NAME like '%" + searchVO.getSearchKeyword()
+						+ "%'";
+//				sql += " where USER_NAME='" + searchVO.getSearchKeyword()
+//				+ "'";
 			}
 		}
 		sql += " order by USER_ID";
-
+		// ✅ 최종 SQL 로그 출력 (디버깅용)
+		System.out.println("=== [SQL 로그 - getUserList()] ===");
+		System.out.println("검색조건 : " + searchVO.getSearchCondition());
+		System.out.println("검색키워드 : " + searchVO.getSearchKeyword());
+		System.out.println("최종 SQL : " + sql);
+		System.out.println("===================================");
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
 														ResultSet.TYPE_SCROLL_INSENSITIVE,
