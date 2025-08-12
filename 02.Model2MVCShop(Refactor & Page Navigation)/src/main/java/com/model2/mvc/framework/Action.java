@@ -21,6 +21,6 @@ public abstract class Action {
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
-
+ 
 	public abstract String execute(HttpServletRequest request, HttpServletResponse response) throws Exception ;
 }
