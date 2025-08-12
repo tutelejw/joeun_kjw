@@ -1,0 +1,343 @@
+java 입문 공부 중이야.
+
+테이블 구조 /  DBUtil/  HttpUtil   / PurchaseVO / actionmapping.properties를 참조 해서 
+
+PurchaseDAO를 만들어줘 아래는 수행 내역이야
+
+findPurchase.java 구매정보 상세조회를 위한 DB 접속 및 쿼리 수행 
+getPurchaseList 구매목록 보기를 위한 DB 접속 및 쿼리 수행
+getSaleList 판매목록 보기를 위한 DB 접속 및 쿼리 수행
+insertPurchase구매를 위한 DB 접속 및 쿼리 수행
+updatePurchase구매정보 수정를 위한 DB 접속 및 쿼리 수행
+updateTranCode 구매상태코드 수정를 위한 DB 접속 및 쿼리 수행
+
+
+PurchaseService.java 를 만들어줘  아래는 수행 내역이야
+
+getPurchase 구매정보 상세 조회을 위한 비즈니스 수행
+getPurchaseList 구매목록 보기을 위한 비즈니스 수행
+getSaleList 판매목록 보기을 위한 비즈니스 수행
+addPurchase 구매을 위한 비즈니스 수행
+updatePurchase 구매정보 수정을 위한 비즈니스 수행
+updateTranCode 구매상태코드 수정을 위한 비즈니스 수행
+
+
+PurchaseServiceImpl.java 파일은 PurchaseService.java 참조해서 만들어줘
+
+
+
+CREATE SEQUENCE seq_product_prod_no	 	   INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_transaction_tran_no	   INCREMENT BY 1 START WITH 10000;
+
+
+CREATE TABLE users ( 
+	user_id 			VARCHAR2(20)		NOT NULL,
+	user_name 	VARCHAR2(50)		NOT NULL,
+	password 		VARCHAR2(10)		NOT NULL,
+	role 				VARCHAR2(5) 		DEFAULT 'user',
+	ssn 					VARCHAR2(13),
+	cell_phone   VARCHAR2(14),
+	addr 				VARCHAR2(100),
+	email 				VARCHAR2(50),
+	reg_date 		DATE,
+	PRIMARY KEY(user_id)
+);
+
+
+CREATE TABLE product ( 
+	prod_no 					NUMBER 				NOT NULL,
+	prod_name 				VARCHAR2(100) 	NOT NULL,
+	prod_detail 				VARCHAR2(200),
+	manufacture_day   VARCHAR2(10),
+	price 							NUMBER(10),
+	image_file 					VARCHAR2(100),
+	reg_date 					DATE,
+	PRIMARY KEY(prod_no)
+);
+
+CREATE TABLE transaction ( 
+	tran_no 						NUMBER 			NOT NULL,
+	prod_no 					NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	buyer_id 					VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	payment_option     CHAR(3),
+	receiver_name 		VARCHAR2(20),
+	receiver_phone       VARCHAR2(14),
+	demailaddr 				VARCHAR2(100),
+	dlvy_request 			VARCHAR2(100),
+	tran_status_code   CHAR(3),
+	order_data 				DATE,
+	dlvy_date 				DATE,
+	PRIMARY KEY(tran_no)
+);
+
+
+package com.model2.mvc.common.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
+public class DBUtil {
+	
+	private final static String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private final static String JDBC_URL = "jdbc:oracle:thin:scott/tiger@localhost:1521:xe";
+
+	public static Connection getConnection() {
+		Connection conn = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(JDBC_URL);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+}
+
+
+
+
+
+package com.model2.mvc.common.util;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class HttpUtil {
+	
+	public static void forward(HttpServletRequest request, HttpServletResponse response, String path){
+		try{
+			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+			dispatcher.forward(request, response);
+		}catch(Exception ex){
+			System.out.println("forward 오류 : " + ex);
+			throw new RuntimeException("forward 오류 : " + ex);
+		}
+	}
+	
+	public static void redirect(HttpServletResponse response, String path){
+		try{
+			response.sendRedirect(path);
+		}catch(Exception ex){
+			System.out.println("redirect 오류 : " + ex);
+			throw new RuntimeException("redirect 오류  : " + ex);
+		}
+	}
+}
+
+
+
+
+
+actionmapping.properties 파일
+/checkDuplication.do=com.model2.mvc.view.user.CheckDuplicationAction
+/addUser.do=com.model2.mvc.view.user.AddUserAction
+/login.do=com.model2.mvc.view.user.LoginAction
+/logout.do=com.model2.mvc.view.user.LogoutAction
+/getUser.do=com.model2.mvc.view.user.GetUserAction
+/updateUserView.do=com.model2.mvc.view.user.UpdateUserViewAction
+/updateUser.do=com.model2.mvc.view.user.UpdateUserAction
+/listUser.do=com.model2.mvc.view.user.ListUserAction
+
+/addProduct.do=com.model2.mvc.view.product.AddProductAction
+/getProduct.do=com.model2.mvc.view.product.GetProductAction
+/updateProductView.do=com.model2.mvc.view.product.UpdateProductViewAction
+/updateProduct.do=com.model2.mvc.view.product.UpdateProductAction
+/listProduct.do=com.model2.mvc.view.product.ListProductAction
+
+
+/addPurchase.do=com.model2.mvc.view.purchase.AddPurchaseAction
+/addPurchaseView.do=com.model2.mvc.view.purchase.AddPurchaseViewAction
+/getPurchase.do=com.model2.mvc.view.purchase.GetPuchaseAction
+/updatePurchaseView.do=com.model2.mvc.view.purchase.UpdatePurchaseViewAction
+/updatePurchase.do=com.model2.mvc.view.purchase.UpdatePurchaseAction
+/listPurchase.do=com.model2.mvc.view.purchase.ListPurchaseAction
+/listSale.do=com.model2.mvc.view.purchase.ListSaleAction
+/updateTranCode.do=com.model2.mvc.view.purchase.UpdateTranCodeAction
+/updateTranCodeByProd.do=com.model2.mvc.view.purchase.UpdateTranCodeByProdAction
+
+
+
+
+package com.model2.mvc.service.purchase.vo;
+
+import java.sql.Date;
+
+import com.model2.mvc.service.product.vo.ProductVO;
+import com.model2.mvc.service.user.vo.UserVO;
+
+
+public class PurchaseVO {
+	
+	private UserVO buyer; //UserVO 타입의 구매자 정보
+	private String divyAddr; //String 타입의 배송지 주소
+	private String divyDate; //String 타입의 배송 희망 일자
+	private String divyRequest;//String 타입의 배송시 요구사항
+	private Date orderDate;//java.sql.Date 타입의 구매 일자
+	private String paymentOption; //String 타입의 배송 지불방식
+	private ProductVO purchaseProd; //ProductVO 타입의 구매 물품 정보
+	private String receiverName; //String 타입의 받는사람 이름.
+	private String receiverPhone; //String 타입의 받는사람 전화번호
+	private String tranCode; //String 타입의 구매 상태 코드
+	private int tranNo; //int 타입의 구매 번호
+	
+	public PurchaseVO(){
+	}
+	
+	public UserVO getBuyer() {
+		return buyer;
+	}
+	public void setBuyer(UserVO buyer) {
+		this.buyer = buyer;
+	}
+	public String getDivyAddr() {
+		return divyAddr;
+	}
+	public void setDivyAddr(String divyAddr) {
+		this.divyAddr = divyAddr;
+	}
+	public String getDivyDate() {
+		return divyDate;
+	}
+	public void setDivyDate(String divyDate) {
+		this.divyDate = divyDate;
+	}
+	public String getDivyRequest() {
+		return divyRequest;
+	}
+	public void setDivyRequest(String divyRequest) {
+		this.divyRequest = divyRequest;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+	public String getPaymentOption() {
+		return paymentOption;
+	}
+	public void setPaymentOption(String paymentOption) {
+		this.paymentOption = paymentOption;
+	}
+	public ProductVO getPurchaseProd() {
+		return purchaseProd;
+	}
+	public void setPurchaseProd(ProductVO purchaseProd) {
+		this.purchaseProd = purchaseProd;
+	}
+	public String getReceiverName() {
+		return receiverName;
+	}
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+	public String getReceiverPhone() {
+		return receiverPhone;
+	}
+	public void setReceiverPhone(String receiverPhone) {
+		this.receiverPhone = receiverPhone;
+	}
+	public String getTranCode() {
+		return tranCode;
+	}
+	public void setTranCode(String tranCode) {
+		this.tranCode = tranCode;
+	}
+	public int getTranNo() {
+		return tranNo;
+	}
+	public void setTranNo(int tranNo) {
+		this.tranNo = tranNo;
+	}
+	
+	@Override
+	public String toString() {
+		return "PurchaseVO [buyer=" + buyer + ", divyAddr=" + divyAddr
+				+ ", divyDate=" + divyDate + ", divyRequest=" + divyRequest
+				+ ", orderDate=" + orderDate + ", paymentOption="
+				+ paymentOption + ", purchaseProd=" + purchaseProd
+				+ ", receiverName=" + receiverName + ", receiverPhone="
+				+ receiverPhone + ", tranCode=" + tranCode + ", tranNo="
+				+ tranNo + "]";
+	}
+}
+
+
+
+Dao 샘플 파일
+package com.model2.mvc.service.product.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.model2.mvc.common.SearchVO;
+import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.service.product.vo.ProductVO;
+
+
+
+public class ProductDAO {
+	
+	public ProductDAO(){
+	}
+
+	public void insertProduct(ProductVO productVO) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		//String sql = "insert into PRODUCT (IMAGE_FILE, MANUFACTURE_DAY, PRICE, PROD_DETAIL, PROD_NAME, REG_DATE) values "
+		String sql = "insert into PRODUCT (PROD_NO,IMAGE_FILE, MANUFACTURE_DAY, PRICE, PROD_DETAIL, PROD_NAME, REG_DATE) values "
+				+ "(seq_product_prod_no.nextval,?,?,?,?,?,sysdate)";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, productVO.getFileName());
+		stmt.setString(2, productVO.getManuDate());
+		stmt.setInt(3, productVO.getPrice());
+		stmt.setString(4, productVO.getProdDetail());
+		stmt.setString(5, productVO.getProdName());
+		stmt.executeUpdate();
+		con.close();
+	}
+
+	public void updateProduct(ProductVO productVO) throws Exception {
+	    // 로그를 추가하여 값 확인
+	    System.out.println("ProductDAO 의 updateProduct 실행 시작");
+	    System.out.println("Received ProductVO:");
+	    System.out.println("Product Name: " + productVO.getProdName());
+	    System.out.println("Product Detail: " + productVO.getProdDetail());
+	    System.out.println("Manufacture Date: " + productVO.getManuDate());
+	    System.out.println("Price: " + productVO.getPrice());
+	    System.out.println("File Name: " + productVO.getFileName());
+	    System.out.println("Product No: " + productVO.getProdNo());
+
+		Connection con = DBUtil.getConnection();
+
+		String sql = "update PRODUCT set PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?,IMAGE_FILE=? where PROD_NO=?";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		//productVO = new ProductVO();
+		
+		stmt.setString(1, productVO.getProdName());
+		stmt.setString(2, productVO.getProdDetail());
+		stmt.setString(3, productVO.getManuDate());
+		stmt.setInt(4,productVO.getPrice());
+		stmt.setString(5, productVO.getFileName());
+		stmt.setInt(6,productVO.getProdNo());
+		//stmt.executeUpdate();
+	    // SQL 실행
+		System.out.println("Executing SQL: " + sql);
+		System.out.println("Product No: " + productVO.getProdNo());
+	    int rowsAffected = stmt.executeUpdate();
+	    System.out.println("Rows affected: " + rowsAffected);
+		
+		con.close();
+	}
+}
