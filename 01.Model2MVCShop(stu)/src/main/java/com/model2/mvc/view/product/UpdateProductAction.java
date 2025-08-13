@@ -31,12 +31,8 @@ public class UpdateProductAction extends Action {
 		service.updateProduct(productVO);
 		
 		HttpSession session=request.getSession();
-		//int sessionId=((ProductVO) session.getAttribute("vo")).getProdNo();
 		ProductVO sessionProductVO = (ProductVO) session.getAttribute("vo");
-	
-//		if(sessionId == prodNo){
-//			session.setAttribute("vo", productVO);
-//		}
+
 		if (sessionProductVO != null) { // 세션에 'vo'가 있을 때만 작업
 		    int sessionId = sessionProductVO.getProdNo();
 		    if (sessionId == prodNo) { // 세션에 있는 prodNo와 비교

@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.framework.Action;
-import com.model2.mvc.service.user.UserService;
-import com.model2.mvc.service.user.impl.UserServiceImpl;
+import com.model2.mvc.service.product.ProductService;
+import com.model2.mvc.service.product.impl.ProductServiceImpl;
 
 
-public class ing_____ListProductAction extends Action {
+public class ListProductAction extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request,	HttpServletResponse response) throws Exception {
@@ -35,18 +35,18 @@ public class ing_____ListProductAction extends Action {
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
-		UserService userService=new UserServiceImpl();
-		Map<String , Object> map=userService.getUserList(search);
+		ProductService productService=new ProductServiceImpl();
+		Map<String , Object> map=productService.getProductList(search);
 		
 		Page resultPage	= 
 					new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("ListUserAction ::"+resultPage);
+		System.out.println("ListProductAction ::"+resultPage);
 		
 		// Model 과 View 연결
 		request.setAttribute("list", map.get("list"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 		
-		return "forward:/user/listUser.jsp";
+		return "forward:/user/listProduct.jsp";
 	}
 }
