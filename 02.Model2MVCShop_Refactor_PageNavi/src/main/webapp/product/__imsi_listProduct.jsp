@@ -130,8 +130,7 @@ System.out.println("[로그] 요청 방식: " + method);
 			Product vo = list.get(i);
 			
 	        if ("manage".equals(menuParam)) {
-	            //link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
-	            link = "/updateProductView.do?prodNo=" + vo.getProdNo();
+	            link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
 	        } else {
 	            if ("재고없음".equals(vo.getProTranCode())) {
 	                link = ""; // 링크 없음

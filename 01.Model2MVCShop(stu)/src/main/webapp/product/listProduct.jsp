@@ -141,7 +141,7 @@ function fncGetProductList(){
         ProductVO vo = list.get(i);
 
         if ("manage".equals(menuParam)) {
-            link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
+           	link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
         } else {
             if ("재고없음".equals(vo.getProTranCode())) {
                 link = ""; // 링크 없음
