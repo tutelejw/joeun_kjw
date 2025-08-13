@@ -3,7 +3,7 @@ package com.model2.mvc.common;
 
 public class Page {
 	
-	///Field
+	///Field 
 	private int currentPage;		// 현재페이지
 	private int totalCount;		// 총 게시물 수
 	private int pageUnit;			// 하단 페이지 번호 화면에 보여지는 수
