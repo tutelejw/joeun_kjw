@@ -33,7 +33,7 @@ public class UpdateProductAction extends Action {
 //		String sessionId=((User)session.getAttribute("user")).getUserId();
 		
 //		if(sessionId.equals(userId)){
-//			session.setAttribute("user", user);
+//			session.setAttribute("user", user); 
 //		}
 		
 		return "redirect:/getProduct.do?prodNo="+prodNo;

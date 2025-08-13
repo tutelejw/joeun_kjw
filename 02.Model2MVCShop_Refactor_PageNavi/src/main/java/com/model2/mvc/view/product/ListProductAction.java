@@ -28,8 +28,8 @@ public class ListProductAction extends Action {
 		search.setCurrentPage(currentPage);
 		search.setSearchCondition(request.getParameter("searchCondition"));
 		search.setSearchKeyword(request.getParameter("searchKeyword"));
-		
-		// web.xml  meta-data 로 부터 상수 추출 
+		 
+		// web.xml  meta-data 로 부터 상수 추출  
 		int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
 		int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
 		search.setPageSize(pageSize);
