@@ -47,6 +47,6 @@ public class ListProductAction extends Action {
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 		
-		return "forward:/user/listProduct.jsp";
+		return "forward:/product/listProduct.jsp";
 	}
 }
