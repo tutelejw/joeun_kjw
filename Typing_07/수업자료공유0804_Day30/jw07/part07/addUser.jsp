@@ -4,8 +4,7 @@
 <%@ page import="jw.service.user.dao.UserDao" %>
 
 <%
-	
-	// 방어적 코딩 /  WorkFlow Control
+// 방어적 코딩 /  WorkFlow Control
 	if( request.getMethod().equals("GET") ){
 		response.sendRedirect("addUser.html");
 		return;
@@ -25,7 +24,7 @@
 	userVO.setNo(no);
 	
 	// DB  접근 회원정보 Insert
-	UserDao userDao = new UserDao();
+	ProductDao userDao = new ProductDao();
 %>
 
 <%if(  userDao.addUser(userVO) ){%>
