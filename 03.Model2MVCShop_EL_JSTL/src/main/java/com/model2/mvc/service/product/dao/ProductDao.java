@@ -182,7 +182,10 @@ public class ProductDao {
 
 		System.out.println("Executing SQL: " + sql);
 		System.out.println("Product No: " + vo.getProdNo());
-
+		
+		int result = pStmt.executeUpdate();
+		System.out.println("updateProduct - executeUdate result : " + result);
+		
 		pStmt.close();
 		con.close();
 	}

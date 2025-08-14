@@ -2,11 +2,11 @@
 
 <html>
 <head>
-<title>열어본 상품 보기</title>
+<title>�����ǰ����</title>
 </head>
 
 <body>
-	당신이 열어본 상품을 알고 있다
+	����� ��� ��ǰ�� �˰� �ִ�
 <br>
 <br>
 <%
