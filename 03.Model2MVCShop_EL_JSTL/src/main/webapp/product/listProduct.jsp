@@ -20,10 +20,29 @@
 	String searchCondition = CommonUtil.null2str(search.getSearchCondition());
 	String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 %> 	/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
+<%
+String uri = request.getRequestURI();
+String url = request.getRequestURL().toString();
+String query = request.getQueryString();
+String method = request.getMethod();
+
+System.out.println("[로그] 요청 URI: " + uri);
+System.out.println("[로그] 전체 URL: " + url);
+System.out.println("[로그] 쿼리스트링: " + query);
+System.out.println("[로그] 요청 방식: " + method);
+%>
 
 <html>
 <head>
-<title>상품 목록 조회</title>
+<c:set var="menuParam" value="${param.menu}" />
+<c:set var="title" value="상품 목록 조회" />
+
+<c:if test="${menuParam eq 'manage'}">
+    <c:set var="title" value="상품관리" />
+</c:if>
+
+
+<title>${title}</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
@@ -53,7 +72,7 @@
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품 목록조회</td>
+					<td width="93%" class="ct_ttl01">${title}</td>
 				</tr>
 			</table>
 		</td>
@@ -68,10 +87,10 @@
 		<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 			<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-				<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>상품No</option>
-				<option value="1" <%= (searchCondition.equals("1") ? "selected" : "")%>>상품명</option>
+				<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>회원ID</option>
+				<option value="1" <%= (searchCondition.equals("1") ? "selected" : "")%>>회원명</option>
 				/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
-				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품No</option>
+				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품NO</option>
 				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 			</select>
 			<%--<input type="text" name="searchKeyword" value="<%= searchKeyword %>"  class="ct_input_g" style="width:200px; height:14px" >--%>
@@ -97,7 +116,7 @@
 	<tr>
 		<%--
 		<td colspan="11" >
-			전체  <%= resultPage.getTotalCount() %> 건수, 현재 <%= resultPage.getCurrentPage() %> 페이지
+			전체  <%= resultPage.getTotalCount() %> 건수, 현재 <%= resultPage.getCurrentPage() %>  페이 지
 		</td>
 		 --%>
 		<td colspan="11" >
@@ -107,14 +126,13 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">상품No</td>
-		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">상품명</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">등록일</td>
+		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">상태</td>
-				
+		<td class="ct_list_b">등록일</td>		
+		<td class="ct_line02"></td>
+		<td class="ct_list_b">상태</td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -139,15 +157,41 @@
 	</tr>
 	<% } %>/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
 	
+	<!-- ➊ 루프 인덱스를 수동 증가시키기 위한 초기값 설정 -->
 	<c:set var="i" value="0" />
+	<!-- ➋ forEach 루프를 통해 list 반복 -->
 	<c:forEach var="product" items="${list}">
+		<!-- ➌ 인덱스 증가 (스크립틀릿에서 i++) 대체) -->
 		<c:set var="i" value="${ i+1 }" />
+		<!-- 🔁 아래는 link 변수를 조건에 따라 설정하는 부분 (기존 if-else 분기문 대체) -->
+		<!-- ✅ 수정된 부분 시작 -->
+			<c:choose>
+				<c:when test="${menuParam eq 'manage'}">
+					<c:set var="link" value="/updateProductView.do?prodNo=${product.prodNo}" />
+				</c:when>
+				<c:when test="${product.proTranCode eq '재고없음'}">
+					<c:set var="link" value="" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="link" value="/getProduct.do?prodNo=${product.prodNo}" />
+				</c:otherwise>
+			</c:choose>
+			<!-- ✅ 수정된 부분 끝 -->
+		
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
-			<td align="left"><a href="/getProduct.do?prodNo=${product.prodNo}">${product.prodNo}</a></td>
+			<!-- <td align="left"><a href="/getProduct.do?prodNo=${product.prodNo}">${product.prodNo}</a></td> -->
+			<td align="left">
+            <c:choose>
+                <c:when test="${empty link}"> ${product.prodName}
+                </c:when>
+                <c:otherwise>  <a href="${link}">${product.prodName}</a>
+                </c:otherwise>
+            </c:choose>
+			</td>
 			<td></td>
-			<td align="left">${product.prodName}</td>
+			<td align="left">${product.price}</td>
 			<td></td>
 			<td align="left">${product.regDate}</td>		
 			<td></td>
