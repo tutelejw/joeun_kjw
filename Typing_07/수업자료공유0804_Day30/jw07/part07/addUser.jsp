@@ -24,7 +24,7 @@
 	userVO.setNo(no);
 	
 	// DB  접근 회원정보 Insert
-	ProductDao userDao = new ProductDao();
+	__PurchaseDao userDao = new __PurchaseDao();
 %>
 
 <%if(  userDao.addUser(userVO) ){%>
