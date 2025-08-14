@@ -16,36 +16,14 @@
 <!--
 function fncUpdateProduct() {
 
-	var name=document.detailForm.prodName.value;
-	
-	if(name == null || name.length <1){
-		alert("이름은  반드시 입력하셔야 합니다.");
-		return;
-	}
-		
-	if(document.detailForm.phone2.value != "" && document.detailForm.phone2.value != "") {
-		document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
-	} else {
-		document.detailForm.phone.value = "";
-	}
-		
 	document.detailForm.action='/updateProduct.do';
 	document.detailForm.submit();
 }
 
-function check_email(frm) {
-	alert
-	var email=document.detailForm.email.value;
-    if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1)){
-    	alert("이메일 형식이 아닙니다.");
-		return false;
-    }
-    return true;
+function resetData() {
+	history.back();
 }
 
-function resetData() {
-	document.detailForm.reset();
-}
 -->
 </script>
 </head>
@@ -55,7 +33,7 @@ function resetData() {
 <form name="detailForm"  method="post" >
 
 <input type="hidden" name="prodNo" value="<%=product.getProdNo() %>" />
-
+<% System.out.println("updateProduct.jsb - product.getProdNo : " + product.getProdNo());%>
 	<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 		<tr>
 			<td width="15" height="37">
@@ -81,61 +59,56 @@ function resetData() {
 	</tr>
 	
 	<tr>
-		<td width="104" class="ct_write">
-			아이디 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		<td width="104" class="ct_write">	상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=product.getProdNo() %></td>
+		<td class="ct_write01"><%=product.getProdName() %></td>
 	</tr>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
 	
 	<tr>
-		<td width="104" class="ct_write">
-			이름 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		<td width="104" class="ct_write">상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="prodName" value="<%=product.getProdName() %>" class="ct_input_g" 
+			<input 	type="text" name="prodDetail" value="<%=product.getProdDetail() %>" class="ct_input_g" 
 							style="width:100px; height:19px"  maxLength="50" />
 		</td>
 	</tr>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
 	
 	<tr>
-		<td width="104" class="ct_write">주소</td>
-		<td bgcolor="D6D6D6" width="1"></td>
+		<td width="104" class="ct_write">제조일자</td>	<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="addr" value="<%=product.getProdName() %>" class="ct_input_g" 
+			<input 	type="text" name="manuDate" value="<%=product.getManuDate() %>" class="ct_input_g" 
 							style="width:370px; height:19px"  maxLength="100">
 		</td>
 	</tr>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
+	
+	<!-- <tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr> -->
 	
 	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">이메일 </td>
-		<td bgcolor="D6D6D6" width="1"></td>
+		<td width="104" class="ct_write">가격 </td>		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input		type="text" name="email" value="<%=product.getProdName() %>" class="ct_input_g" 
+			<input		type="text" name="price" value="<%=product.getPrice() %>" class="ct_input_g" 
 							style="width:100px; height:19px" onChange="check_email(this.form);" />
 		</td>
 	</tr>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
+		<tr>
+		<td width="104" class="ct_write">상품이미지 </td>		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input		type="text" name="fileName" value="<%=product.getFileName() %>" class="ct_input_g" 
+							style="width:100px; height:19px" onChange="check_email(this.form);" />
+		</td>
 	</tr>
+	
+	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
@@ -158,7 +131,8 @@ function resetData() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:resetData();">취소</a>
+						<!-- <a href="javascript:resetData();">취소</a> -->
+						<a href="javascript:history.go(-1);">취소</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
