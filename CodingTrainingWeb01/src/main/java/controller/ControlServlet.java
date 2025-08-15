@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * 단순하고 교육용으로 설계: 각 요청을 나누어 처리하고, JSP로 포워드/리다이렉트
  */
- @WebServlet("*.do")
+ //@WebServlet("*.do")
 public class ControlServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -49,7 +49,10 @@ public class ControlServlet extends HttpServlet {
     	String uri = request.getRequestURI();
     	String contextPath = request.getContextPath();
     	String action = uri.substring(contextPath.length());
-    	
+    	System.out.println("ControlServlet - processRequest 인입됨");
+    	System.out.println("ControlServlet - processRequest 인입됨 : uri : " + uri);
+    	System.out.println("ControlServlet - processRequest 인입됨 : contextPath : " + contextPath);
+    	System.out.println("ControlServlet - processRequest 인입됨 : action : " + action);
     	try {
     		switch (action) {
     		case "/registerForm.do":
@@ -57,8 +60,10 @@ public class ControlServlet extends HttpServlet {
     				forward(request, response, "/register.jsp");
     				break;
     		
-    		case "register.do":
+    		case "/register.do":
     			//회원가입처리
+    			System.out.println("ControlServlet - processRequest - register.do ");
+    			System.out.println("call doRegister(request, response)");
     			doRegister(request, response);
     			break;
     			
@@ -115,7 +120,8 @@ public class ControlServlet extends HttpServlet {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
-
+        
+        System.out.println("ControlServlet _ doRegister : " + id +" / "+ password +" / " + name );
         User user = new User(id, password, name, "USER");
         int result = userDAO.registerUser(user);
         if (result == 1) {

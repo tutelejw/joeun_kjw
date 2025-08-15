@@ -18,7 +18,9 @@ public class DBUtil {
     // 드라이버 로드 및 연결 반환
 	public static Connection getConnection() throws ClassNotFoundException, SQLException{
 		//Class.forName 호출 생략 (JDBC 4.0 이상에서는 자동 로딩됨)
-		//Class.forName("oracle.jdbc.driver.PracleDriver");
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		System.out.println("DBUtutil.getConnection --- 호출부분" );
 		return DriverManager.getConnection(URL, USER, PASSWORD);
+
 	}
 }

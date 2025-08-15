@@ -30,6 +30,9 @@ public class UserDAO {
 			psmt.setString(2,  user.getName());
 			psmt.setString(3, user.getPassword());
 			psmt.setString(4, user.getRole() == null ? "USER" :user.getRole());
+			
+			System.out.println("UserDAO _ registerUser _ User : "+ user);
+			System.out.println("UserDAO _ registerUser _ sql : "+ sql);
 			return psmt.executeUpdate();
 		}
 	}//  method registerUser end
@@ -45,6 +48,9 @@ public class UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(sql)){
 				pstmt.setString(1,id);
 				try (ResultSet rs = pstmt.executeQuery()){
+					System.out.println("UserDAO _ isIdExists _ id : "+ id);
+					System.out.println("UserDAO _ isIdExists _ sql : "+ sql);
+					System.out.println("UserDAO _ isIdExists _ rs : "+ rs);
 					if(rs.next()) {
 						return rs.getInt("cnt") > 0;// count가 1 이상이면 존재함 return 메서드종료.
 					}
@@ -77,6 +83,9 @@ public class UserDAO {
 				pstmt.setString(1,id);
 				pstmt.setString(2,password);
 				try(ResultSet rs = pstmt.executeQuery()){
+					System.out.println("UserDAO _ isIdExists _ id : "+ id);
+					System.out.println("UserDAO _ isIdExists _ sql : "+ sql);
+					System.out.println("UserDAO _ isIdExists _ rs : "+ rs);
 					if(rs.next()) {  // 조건에 맞는 회원이 있으면
 						User user = new User();  // User 객체 생성
 						user.setId(rs.getString("id"));
