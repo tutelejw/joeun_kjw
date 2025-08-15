@@ -9,7 +9,7 @@ import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 
 
-public class ___AddPurchaseAction extends Action {
+public class ____11AddPurchaseAction extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

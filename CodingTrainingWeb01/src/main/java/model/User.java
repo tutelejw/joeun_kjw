@@ -14,6 +14,13 @@ public class User {
 	public User() {
 	}
 	
+	public User(String id, String password, String name, String role) {
+		this.id=id;
+		this.password=password;
+		this.name=name;
+		this.role=role;
+	}
+	
 	//getter/setter
 	public String getId() {		return id;	}
 	public void setId(String id) {this.id = id;}

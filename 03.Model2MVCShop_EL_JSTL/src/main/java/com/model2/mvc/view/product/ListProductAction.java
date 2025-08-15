@@ -40,7 +40,7 @@ public class ListProductAction extends Action {
 		
 		Page resultPage	= 
 					new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("ListProductAction ::"+resultPage);
+		System.out.println("123==========ListProductAction ::"+resultPage);
 		
 		// Model 과 View 연결
 		request.setAttribute("list", map.get("list"));

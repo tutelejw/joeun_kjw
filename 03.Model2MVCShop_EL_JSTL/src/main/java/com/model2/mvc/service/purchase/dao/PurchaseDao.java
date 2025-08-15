@@ -100,49 +100,49 @@ public class PurchaseDao {
     }
 
     // 구매 목록 조회 (구매자 기준)
-    public List<Purchase> getPurchaseList(Search search, String buyerId) throws Exception {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        // 구매자 ID로 필터링하고 페이징 처리
-        String sql = "SELECT * FROM (SELECT inner_table.*, ROWNUM AS row_seq " +
-                     "FROM (SELECT t.*, p.prod_name FROM transaction t, product p " +
-                     "WHERE t.prod_no = p.prod_no AND t.buyer_id = ? ORDER BY t.tran_no DESC) inner_table " +
-                     "WHERE ROWNUM <= ?) WHERE row_seq BETWEEN ? AND ?";
-                     
-        List<Purchase> list = new ArrayList<>();
-
-        try {
-            con = DBUtil.getConnection();
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, buyerId);
-            pstmt.setInt(2, search.getEndRowNum());
-            pstmt.setInt(3, search.getStartRowNum());
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                Purchase purchase = new Purchase();
-                // 목록에서는 간소화된 정보만 매핑
-                purchase.setTranNo(rs.getInt("tran_no"));
-                purchase.setTranCode(rs.getString("tran_status_code"));
-                
-                Product product = new Product();
-                product.setProdNo(rs.getInt("prod_no"));
-                product.setProdName(rs.getString("prod_name"));
-                purchase.setPurchaseProd(product);
-                
-                User buyer = new User();
-                buyer.setUserId(rs.getString("buyer_id"));
-                purchase.setBuyer(buyer);
-
-                list.add(purchase);
-            }
-        } finally {
-    		pstmt.close();
-    		con.close();
-        }
-        return list;
-    }
+//    public List<Purchase> getPurchaseList(Search search, String buyerId) throws Exception {
+//        Connection con = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//        // 구매자 ID로 필터링하고 페이징 처리
+//        String sql = "SELECT * FROM (SELECT inner_table.*, ROWNUM AS row_seq " +
+//                     "FROM (SELECT t.*, p.prod_name FROM transaction t, product p " +
+//                     "WHERE t.prod_no = p.prod_no AND t.buyer_id = ? ORDER BY t.tran_no DESC) inner_table " +
+//                     "WHERE ROWNUM <= ?) WHERE row_seq BETWEEN ? AND ?";
+//                     
+//        List<Purchase> list = new ArrayList<>();
+//
+//        try {
+//            con = DBUtil.getConnection();
+//            pstmt = con.prepareStatement(sql);
+//            pstmt.setString(1, buyerId);
+//            pstmt.setInt(2, search.getEndRowNum());
+//            pstmt.setInt(3, search.getStartRowNum());
+//            rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                Purchase purchase = new Purchase();
+//                // 목록에서는 간소화된 정보만 매핑
+//                purchase.setTranNo(rs.getInt("tran_no"));
+//                purchase.setTranCode(rs.getString("tran_status_code"));
+//                
+//                Product product = new Product();
+//                product.setProdNo(rs.getInt("prod_no"));
+//                product.setProdName(rs.getString("prod_name"));
+//                purchase.setPurchaseProd(product);
+//                
+//                User buyer = new User();
+//                buyer.setUserId(rs.getString("buyer_id"));
+//                purchase.setBuyer(buyer);
+//
+//                list.add(purchase);
+//            }
+//        } finally {
+//    		pstmt.close();
+//    		con.close();
+//        }
+//        return list;
+//    }
 
     // 판매 목록 조회 (관리자/판매자 기준)
     public List<Purchase> getSaleList(Search search) throws Exception {
