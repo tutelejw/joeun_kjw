@@ -1,0 +1,40 @@
+    private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+    private static final String DB_USER = "test";
+    private static final String DB_PASS = "test";
+
+-- 테이블 삭제
+DROP TABLE mini_photos CASCADE CONSTRAINTS;
+DROP TABLE mini_users CASCADE CONSTRAINTS;
+
+-- 테이블 생성
+CREATE TABLE mini_users (
+    user_id VARCHAR2(20) PRIMARY KEY,
+    user_password VARCHAR2(255) NOT NULL,
+    user_name VARCHAR2(100) NOT NULL,
+    user_age NUMBER(3) NOT NULL,
+    user_address VARCHAR2(200),
+    memory_title VARCHAR2(100)
+);
+
+CREATE TABLE mini_photos (
+    photo_id NUMBER PRIMARY KEY,
+    photo_path VARCHAR2(255) NOT NULL,
+    photo_description VARCHAR2(500),
+    photo_date DATE,
+    user_id VARCHAR2(20),
+    is_public CHAR(1) DEFAULT 'Y' NOT NULL,
+    CONSTRAINT fk_photo_user FOREIGN KEY (user_id) REFERENCES mini_users(user_id)
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE photo_id_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+
+-- 시퀀스를 사용하는 트리거
+CREATE OR REPLACE TRIGGER trg_mini_photos_photo_id
+BEFORE INSERT ON mini_photos
+FOR EACH ROW
+BEGIN
+    SELECT photo_id_seq.NEXTVAL INTO :new.photo_id FROM dual;
+END;
+/

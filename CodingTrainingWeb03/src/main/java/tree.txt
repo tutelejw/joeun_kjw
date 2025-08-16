@@ -1,0 +1,33 @@
+└─── academy_memories
+     ├─── src
+     │    └─── main
+     │         ├─── java
+     │         │    └─── com
+     │         │         └─── academy
+     │         │              ├─── action
+     │         │              │    ├─── GalleryAction.java
+     │         │              │    ├─── JoinAction.java
+     │         │              │    ├─── LoginAction.java
+     │         │              │    └─── PhotoUploadAction.java
+     │         │              ├─── controller
+     │         │              │    └─── ControlServlet.java
+     │         │              ├─── dao
+     │         │              │    ├─── PhotoDAO.java
+     │         │              │    └─── UserDAO.java
+     │         │              ├─── util
+     │         │              │    └─── DBUtil.java
+     │         │              └─── vo
+     │         │                   ├─── PhotoVO.java
+     │         │                   └─── UserVO.java
+     │         └─── resources
+     │              └─── log4j.properties
+     └─── webapp
+          ├─── jsp
+          │    ├─── gallery.jsp
+          │    ├─── joinForm.jsp
+          │    ├─── login.jsp
+          │    ├─── main.jsp
+          │    └─── photoUpload.jsp
+          ├─── WEB-INF
+          │    └─── web.xml
+          └─── photos
