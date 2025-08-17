@@ -1,0 +1,95 @@
+    private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+    private static final String DB_USER = "test";
+    private static final String DB_PASS = "test";
+
+-- 데이터베이스 스키마: memories_db (Oracle 10g)
+
+-- 기존 테이블이 있다면 삭제하여 깨끗하게 시작합니다.
+-- CASCADE CONSTRAINTS를 사용하여 관련된 외래 키 제약 조건도 함께 삭제합니다.
+DROP TABLE board_posts CASCADE CONSTRAINTS;
+DROP TABLE photos CASCADE CONSTRAINTS;
+DROP TABLE users CASCADE CONSTRAINTS;
+
+-- 기존 시퀀스가 있다면 삭제합니다.
+DROP SEQUENCE photos_seq;
+DROP SEQUENCE board_posts_seq;
+
+-- users 테이블 생성
+-- 사용자 정보를 저장하며, user_id를 기본 키로 사용합니다.
+CREATE TABLE users (
+    user_id VARCHAR2(50) PRIMARY KEY,
+    user_password VARCHAR2(255) NOT NULL,
+    user_name VARCHAR2(100) NOT NULL,
+    user_age NUMBER,
+    user_address VARCHAR2(255),
+    memory_title VARCHAR2(255)
+);
+
+-- photos 테이블의 시퀀스 생성
+-- photo_id에 사용할 자동 증가 시퀀스입니다. 1부터 1씩 증가합니다.
+CREATE SEQUENCE photos_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+-- photos 테이블 생성
+-- 사진 정보를 저장하며, user_id를 외래 키로 참조합니다.
+-- photo_id는 시퀀스와 트리거를 통해 자동 할당됩니다.
+CREATE TABLE photos (
+    photo_id NUMBER PRIMARY KEY,
+    user_id VARCHAR2(50),
+    photo_path VARCHAR2(255) NOT NULL,
+    photo_description CLOB,
+    photo_date DATE DEFAULT SYSDATE,
+    CONSTRAINT fk_photos_user FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- photos 테이블의 트리거 생성
+-- photos_seq의 다음 값을 photo_id에 할당하여 자동 증가 기능을 구현합니다.
+CREATE OR REPLACE TRIGGER photos_bir
+BEFORE INSERT ON photos
+FOR EACH ROW
+BEGIN
+    SELECT photos_seq.NEXTVAL INTO :NEW.photo_id FROM DUAL;
+END;
+/
+
+-- board_posts 테이블의 시퀀스 생성
+-- post_id에 사용할 자동 증가 시퀀스입니다.
+CREATE SEQUENCE board_posts_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+-- board_posts 테이블 생성
+-- 게시글 정보를 저장하며, user_id를 외래 키로 참조합니다.
+-- post_id는 시퀀스와 트리거를 통해 자동 할당됩니다.
+-- created_at과 updated_at을 DATE 타입으로 정의합니다.
+CREATE TABLE board_posts (
+    post_id NUMBER PRIMARY KEY,
+    title VARCHAR2(255) NOT NULL,
+    content CLOB NOT NULL,
+    user_id VARCHAR2(50) NOT NULL,
+    created_at DATE DEFAULT SYSDATE,
+    updated_at DATE DEFAULT SYSDATE,
+    CONSTRAINT fk_board_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- board_posts 테이블의 트리거 생성
+-- board_posts_seq의 다음 값을 post_id에 할당합니다.
+CREATE OR REPLACE TRIGGER board_posts_bir
+BEFORE INSERT ON board_posts
+FOR EACH ROW
+BEGIN
+    SELECT board_posts_seq.NEXTVAL INTO :NEW.post_id FROM DUAL;
+END;
+/
+
+-- board_posts_update_trigger 트리거 생성
+-- 게시글이 수정될 때마다 updated_at 필드를 현재 시각으로 자동 갱신합니다.
+CREATE OR REPLACE TRIGGER board_posts_bur
+BEFORE UPDATE ON board_posts
+FOR EACH ROW
+BEGIN
+    :NEW.updated_at := SYSDATE;
+END;
+/

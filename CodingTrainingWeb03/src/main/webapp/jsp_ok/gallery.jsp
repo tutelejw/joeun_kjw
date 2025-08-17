@@ -1,3 +1,4 @@
+<!-- webapp/WEB-INF/jsp/gallery.jsp -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.academy.vo.PhotoVO" %>
 <%@ page import="java.util.List" %>
