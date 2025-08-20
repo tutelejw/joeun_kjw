@@ -1,0 +1,279 @@
+교육 내용에 맞추어 DAO와 DAOImpl을 하나로 합친 PurchaseDAO 클래스를 만들어 드릴게요. 입문 단계에서는 이렇게 한 파일에 코드를 작성하는 경우도 많습니다. 나중에 배우게 될 인터페이스 기반의 설계가 왜 중요한지 이해하는 데도 도움이 될 겁니다.
+
+이번에는 DAO가 직접 DB 접속과 쿼리 수행을 모두 처리하도록 하겠습니다.
+
+PurchaseDAO.java
+Java
+
+package com.model2.mvc.service.purchase.dao;
+
+import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.service.domain.Search;
+import com.model2.mvc.service.product.vo.ProductVO;
+import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.vo.UserVO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PurchaseDAO {
+
+    public PurchaseDAO() {
+    }
+
+    public void insertPurchase(PurchaseVO purchaseVO) throws SQLException {
+        String sql = "INSERT INTO transaction (tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data) "
+                   + "VALUES (seq_transaction_tran_no.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, purchaseVO.getPurchaseProd().getProdNo());
+            pstmt.setString(2, purchaseVO.getBuyer().getUserId());
+            pstmt.setString(3, purchaseVO.getPaymentOption());
+            pstmt.setString(4, purchaseVO.getReceiverName());
+            pstmt.setString(5, purchaseVO.getReceiverPhone());
+            pstmt.setString(6, purchaseVO.getDivyAddr());
+            pstmt.setString(7, purchaseVO.getDivyRequest());
+            pstmt.setString(8, "001"); // 초기 구매 상태 코드
+            
+            pstmt.executeUpdate();
+        }
+    }
+
+    public PurchaseVO findPurchase(int tranNo) throws SQLException {
+        String sql = "SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date "
+                   + "FROM transaction WHERE tran_no = ?";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, tranNo);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    PurchaseVO purchaseVO = new PurchaseVO();
+                    purchaseVO.setTranNo(rs.getInt("tran_no"));
+                    purchaseVO.setPaymentOption(rs.getString("payment_option"));
+                    purchaseVO.setReceiverName(rs.getString("receiver_name"));
+                    purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+                    purchaseVO.setDivyAddr(rs.getString("demailaddr"));
+                    purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+                    purchaseVO.setTranCode(rs.getString("tran_status_code"));
+                    purchaseVO.setOrderDate(rs.getDate("order_data"));
+                    
+                    UserVO buyer = new UserVO();
+                    buyer.setUserId(rs.getString("buyer_id"));
+                    purchaseVO.setBuyer(buyer);
+
+                    ProductVO product = new ProductVO();
+                    product.setProdNo(rs.getInt("prod_no"));
+                    purchaseVO.setPurchaseProd(product);
+
+                    return purchaseVO;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Map<String, Object> getPurchaseList(Search search, String buyerId) throws SQLException {
+        List<PurchaseVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT a.*, ROWNUM rn FROM ( SELECT * FROM transaction WHERE buyer_id = ? ORDER BY tran_no DESC ) a ) WHERE rn BETWEEN ? AND ?";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int startRow = (search.getCurrentPage() - 1) * search.getPageSize() + 1;
+            int endRow = startRow + search.getPageSize() - 1;
+
+            pstmt.setString(1, buyerId);
+            pstmt.setInt(2, startRow);
+            pstmt.setInt(3, endRow);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    PurchaseVO purchaseVO = new PurchaseVO();
+                    // ResultSet에서 값을 가져와 VO에 설정
+                    list.add(purchaseVO);
+                }
+            }
+        }
+
+        String countSql = "SELECT COUNT(*) FROM transaction WHERE buyer_id = ?";
+        int totalCount = 0;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(countSql)) {
+            pstmt.setString(1, buyerId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    totalCount = rs.getInt(1);
+                }
+            }
+        }
+        
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", list);
+        result.put("totalCount", totalCount);
+        return result;
+    }
+
+    public Map<String, Object> getSaleList(Search search, String sellerId) throws SQLException {
+        List<PurchaseVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM ( SELECT a.*, ROWNUM rn FROM ( SELECT t.* FROM transaction t JOIN product p ON t.prod_no = p.prod_no WHERE p.prod_seller = ? ORDER BY t.tran_no DESC ) a ) WHERE rn BETWEEN ? AND ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int startRow = (search.getCurrentPage() - 1) * search.getPageSize() + 1;
+            int endRow = startRow + search.getPageSize() - 1;
+
+            pstmt.setString(1, sellerId);
+            pstmt.setInt(2, startRow);
+            pstmt.setInt(3, endRow);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    PurchaseVO purchaseVO = new PurchaseVO();
+                    // ResultSet에서 값을 가져와 VO에 설정
+                    list.add(purchaseVO);
+                }
+            }
+        }
+        
+        String countSql = "SELECT COUNT(*) FROM transaction t JOIN product p ON t.prod_no = p.prod_no WHERE p.prod_seller = ?";
+        int totalCount = 0;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(countSql)) {
+            pstmt.setString(1, sellerId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    totalCount = rs.getInt(1);
+                }
+            }
+        }
+        
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", list);
+        result.put("totalCount", totalCount);
+        return result;
+    }
+
+    public void updatePurchase(PurchaseVO purchaseVO) throws SQLException {
+        String sql = "UPDATE transaction SET payment_option = ?, receiver_name = ?, receiver_phone = ?, demailaddr = ?, dlvy_request = ? "
+                   + "WHERE tran_no = ?";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, purchaseVO.getPaymentOption());
+            pstmt.setString(2, purchaseVO.getReceiverName());
+            pstmt.setString(3, purchaseVO.getReceiverPhone());
+            pstmt.setString(4, purchaseVO.getDivyAddr());
+            pstmt.setString(5, purchaseVO.getDivyRequest());
+            pstmt.setInt(6, purchaseVO.getTranNo());
+            
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateTranCode(PurchaseVO purchaseVO) throws SQLException {
+        String sql = "UPDATE transaction SET tran_status_code = ? WHERE tran_no = ?";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, purchaseVO.getTranCode());
+            pstmt.setInt(2, purchaseVO.getTranNo());
+
+            pstmt.executeUpdate();
+        }
+    }
+}
+PurchaseService.java (인터페이스)
+Service 인터페이스와 구현 클래스는 이전 답변과 동일하게 유지됩니다. 이 파일들은 비즈니스 로직을 담당하며, PurchaseDAO 객체를 호출하여 필요한 작업을 수행합니다.
+
+Java
+
+package com.model2.mvc.service.purchase.service;
+
+import java.util.Map;
+import com.model2.mvc.service.domain.Search;
+import com.model2.mvc.service.purchase.vo.PurchaseVO;
+
+public interface PurchaseService {
+
+    void addPurchase(PurchaseVO purchaseVO) throws Exception;
+
+    PurchaseVO getPurchase(int tranNo) throws Exception;
+
+    Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception;
+
+    Map<String, Object> getSaleList(Search search, String sellerId) throws Exception;
+
+    void updatePurchase(PurchaseVO purchaseVO) throws Exception;
+
+    void updateTranCode(PurchaseVO purchaseVO) throws Exception;
+}
+PurchaseServiceImpl.java (Service 구현 클래스)
+Java
+
+package com.model2.mvc.service.purchase.impl;
+
+import java.util.Map;
+import com.model2.mvc.service.domain.Search;
+import com.model2.mvc.service.purchase.dao.PurchaseDAO;
+import com.model2.mvc.service.purchase.service.PurchaseService;
+import com.model2.mvc.service.purchase.vo.PurchaseVO;
+
+public class PurchaseServiceImpl implements PurchaseService {
+
+    private final PurchaseDAO purchaseDAO;
+
+    public PurchaseServiceImpl(PurchaseDAO purchaseDAO) {
+        this.purchaseDAO = purchaseDAO;
+    }
+
+    @Override
+    public void addPurchase(PurchaseVO purchaseVO) throws Exception {
+        System.out.println("구매 비즈니스 로직 수행 (예: 재고 확인, 결제 처리 등)");
+        purchaseDAO.insertPurchase(purchaseVO);
+    }
+
+    @Override
+    public PurchaseVO getPurchase(int tranNo) throws Exception {
+        System.out.println("구매 상세 조회 비즈니스 로직 수행");
+        return purchaseDAO.findPurchase(tranNo);
+    }
+
+    @Override
+    public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
+        System.out.println("구매 목록 조회 비즈니스 로직 수행");
+        return purchaseDAO.getPurchaseList(search, buyerId);
+    }
+
+    @Override
+    public Map<String, Object> getSaleList(Search search, String sellerId) throws Exception {
+        System.out.println("판매 목록 조회 비즈니스 로직 수행");
+        return purchaseDAO.getSaleList(search, sellerId);
+    }
+
+    @Override
+    public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
+        System.out.println("구매 정보 수정 비즈니스 로직 수행 (예: 수정 권한 확인 등)");
+        purchaseDAO.updatePurchase(purchaseVO);
+    }
+
+    @Override
+    public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
+        System.out.println("구매 상태 코드 수정 비즈니스 로직 수행 (예: 유효성 검증 등)");
+        purchaseDAO.updateTranCode(purchaseVO);
+    }
+}
+이제 PurchaseDAO 클래스 하나가 DB 접근 로직을 모두 담당하게 되었습니다. 나중에 인터페이스를 배우고 나면, DAO와 DAOImpl을 분리하는 이유에 대해 더 깊이 이해하실 수 있을 거예요.
