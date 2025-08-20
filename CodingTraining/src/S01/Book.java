@@ -43,5 +43,4 @@ public class Book {
 		Book_Bean b2 = new Book_Bean("코딩클럽", "김유신", 5000);
 		System.out.println(b2);
 	}
-
 }
