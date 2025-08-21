@@ -9,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <title>봉사제공 목록</title>
-  <link rel="stylesheet" href="/css/admin.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.tailwindcss.com" type="text/css">
   <style>
     .wrap { max-width: 1080px; margin: 24px auto; }
     .topbar { display:flex; justify-content: space-between; align-items:center; margin-bottom:12px; }

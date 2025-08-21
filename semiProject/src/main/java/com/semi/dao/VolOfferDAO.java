@@ -1,6 +1,7 @@
 package com.semi.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -30,12 +31,14 @@ public class VolOfferDAO {
             pstmt.setString(1, vo.getTitle());
             pstmt.setString(2, vo.getAuthorId());
             pstmt.setString(3, vo.getPhone());
-            pstmt.setTimestamp(4, new Timestamp(vo.getStartTime().getTime()));
-            pstmt.setTimestamp(5, new Timestamp(vo.getEndTime().getTime()));
+            // LocalDateTime -> Timestamp 변환
+            pstmt.setTimestamp(4, Timestamp.valueOf(vo.getStartTime()));
+            pstmt.setTimestamp(5, Timestamp.valueOf(vo.getEndTime()));
             pstmt.setString(6, vo.getContent());
             pstmt.setString(7, vo.getRegion());
             pstmt.setString(8, vo.getCategory());
-            pstmt.setDate(9, new java.sql.Date(vo.getOfferDate().getTime()));
+            // LocalDate -> java.sql.Date 변환
+            pstmt.setDate(9, Date.valueOf(vo.getOfferDate()));
             pstmt.setString(10, vo.getProcessStatus());
 
             pstmt.executeUpdate();
@@ -43,7 +46,7 @@ public class VolOfferDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DBUtil.close(null, pstmt, conn); // rs는 사용하지 않으므로 null 처리
+            DBUtil.close(pstmt, conn);
         }
     }
 
@@ -59,26 +62,35 @@ public class VolOfferDAO {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
 
+            int rowCount = 0;
             while (rs.next()) {
                 VolOffer vo = new VolOffer();
                 vo.setPostId(rs.getInt("POST_ID"));
                 vo.setTitle(rs.getString("TITLE"));
                 vo.setAuthorId(rs.getString("AUTHOR_ID"));
                 vo.setPhone(rs.getString("PHONE"));
-                vo.setStartTime(rs.getTimestamp("START_TIME"));
-                vo.setEndTime(rs.getTimestamp("END_TIME"));
+                // Timestamp -> LocalDateTime 변환
+                vo.setStartTime(rs.getTimestamp("START_TIME").toLocalDateTime());
+                vo.setEndTime(rs.getTimestamp("END_TIME").toLocalDateTime());
                 vo.setContent(rs.getString("CONTENT"));
                 vo.setRegion(rs.getString("REGION"));
                 vo.setCategory(rs.getString("CATEGORY"));
-                vo.setOfferDate(rs.getDate("OFFER_DATE"));
+                // java.sql.Date -> LocalDate 변환
+                vo.setOfferDate(rs.getDate("OFFER_DATE").toLocalDate());
                 vo.setProcessStatus(rs.getString("PROCESS_STATUS"));
-                vo.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+                vo.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
                 list.add(vo);
+                rowCount++;
+             // 각 행 데이터 출력
+                System.out.println("[DEBUG] 조회된 게시글: " + vo.getPostId() + " | 제목: " + vo.getTitle());
             }
+            System.out.println("[DEBUG] 총 조회 건수: " + rowCount);
         } catch (Exception e) {
+        	System.out.println("[ERROR] getVolOfferList 예외 발생: " + e.getMessage());
             e.printStackTrace();
         } finally {
             DBUtil.close(rs, pstmt, conn);
+            System.out.println("[DEBUG] DB 자원 정리 완료");
         }
         return list;
     }

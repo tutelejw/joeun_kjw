@@ -22,7 +22,7 @@
 	<!-- Filter 를 이용 한글처리 -->
 	<filter>
 		<filter-name>requestFilter</filter-name>
-		<filter-class>com.model2.mvc.common.filter.RequestFilter</filter-class>
+		<filter-class>com.semi.common.filter.RequestFilter</filter-class>
 	</filter>
 	
 	<filter-mapping>
@@ -33,7 +33,7 @@
 	<!-- 단일인입점 설정 -->
 	<servlet>
 		<servlet-name>action</servlet-name>
-		<servlet-class>com.model2.mvc.framework.ActionServlet</servlet-class>
+		<servlet-class>com.semi.framework.ActionServlet</servlet-class>
 		<init-param>
 			<param-name>resources</param-name>
 			<param-value>com/semi/resources/actionmapping.properties</param-value>
