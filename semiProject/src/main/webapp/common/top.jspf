@@ -9,7 +9,7 @@
     </div>
     <div class="nav">
       <a href="#"><span>마음부탁</span></a>
-      <a href="#"><span>손길나눔</span></a>
+      <a href=/semiProject/listVolOffer.do><span>손길나눔</span></a>
       <a href="#"><span>햇살소식</span></a>
 
       <!-- 마이페이지 드롭다운 -->

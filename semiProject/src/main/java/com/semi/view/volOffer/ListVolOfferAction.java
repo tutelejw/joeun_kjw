@@ -24,6 +24,7 @@ public class ListVolOfferAction extends Action {
         request.setAttribute("list", volOfferList);
         
         // 데이터를 보여줄 JSP 페이지로 포워딩
-        return "forward:/volunteer/volOfferList.jsp"; 
+        //return "forward:/volunteer/volOfferList.jsp"; 
+        return "forward:/volOfferList.jsp";
     }
 }

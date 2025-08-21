@@ -33,7 +33,7 @@
 	<!-- 단일인입점 설정 -->
 	<servlet>
 		<servlet-name>action</servlet-name>
-		<servlet-class>com.semi.common.framework.ActionServlet</servlet-class>
+		<servlet-class>com.semi.framework.ActionServlet</servlet-class>
 		<init-param>
 			<param-name>resources</param-name>
 			<param-value>com/semi/resources/actionmapping.properties</param-value>
