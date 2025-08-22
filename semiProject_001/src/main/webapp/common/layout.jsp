@@ -1,19 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title><c:out value="${pageTitle != null ? pageTitle : '온세상'}"/></title>
-  <link rel="stylesheet" href="<c:url value='/css/site.css'/>">
+    <meta charset="UTF-8">
+    <title>온세상</title>
+    <style>
+        body { margin: 0; }
+        header, footer { background: #f2f2f2; padding: 10px; }
+        .content-frame { width: 100%; height: 800px; border: none; }
+    </style>
 </head>
 <body>
-  <%@ include file="/common/top.jspf" %>        <!-- 여기!  /WEB-INF/jsp/... 아님 -->
+    <!-- 상단 메뉴 -->
+    <header>
+        <%@ include file="/common/top.jspf" %>
+    </header>
 
-  <main class="container-main">
-    <jsp:include page="${contentPage}" />
-  </main>
+    <!-- 본문: iframe에 다른 화면을 불러옴 -->
+    <main>
+        <iframe name="downFrame"
+                src="/semiProject_001/home/home.jsp"
+                class="content-frame"></iframe>
+    </main>
 
-  <%@ include file="/common/footer.jspf" %>     <!-- 여기! -->
+    <!-- 하단 -->
+    <footer>
+        <%@ include file="/common/footer.jspf" %>
+    </footer>
 </body>
 </html>
