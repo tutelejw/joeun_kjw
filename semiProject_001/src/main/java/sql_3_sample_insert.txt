@@ -50,16 +50,25 @@ commit;
 
 -- 3. volunteer 10건
 BEGIN
-  FOR i IN 1..10 LOOP
+  FOR i IN 1..30 LOOP
     DECLARE
-      v_created DATE := SYSDATE;
+      v_created     DATE := TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD') || '0900', 'YYYYMMDDHH24MI'); -- 오늘 오전 9시
+      v_start_hour  NUMBER := 9 + MOD(i, 8);  -- 9시 ~ 16시 사이
+      v_starttime   DATE;
+      v_endtime     DATE;
+      v_categories SYS.ODCIVARCHAR2LIST := SYS.ODCIVARCHAR2LIST(
+        '병원동행', '청소', '배달', '집수리', '벌래잡기', '소통대화'
+      );
     BEGIN
+      v_starttime := TRUNC(v_created + 7) + (v_start_hour / 24);       -- 7일 뒤 특정 시각 (9~16시)
+      v_endtime   := v_starttime + (2 / 24);                           -- 2시간 뒤
+
       INSERT INTO volunteer (
         volunteerid, authorid, title, content, phone, region, category,
         createdat, starttime, endtime, status, flag
       ) VALUES (
         seq_volunteer.NEXTVAL,
-        'user' || LPAD(MOD(i, 10) + 1, 2, '0'),  -- user01 ~ user10
+        'user' || LPAD(MOD(i, 10) + 1, 2, '0'),
         '봉사글 제목 ' || i,
         '봉사 내용입니다. 번호: ' || i,
         '0100000' || LPAD(i, 4, '0'),
@@ -70,23 +79,26 @@ BEGIN
           WHEN 3 THEN '서울시 관악구'
           ELSE '서울시 노원구'
         END,
-        '병원동행',
+        v_categories(MOD(i, 6) + 1), -- 순환
         v_created,
-        v_created + 7,
-        v_created + 7 + (2/24), -- 2시간 후
+        v_starttime,
+        v_endtime,
         CASE MOD(i, 4)
           WHEN 0 THEN '모집중'
           WHEN 1 THEN '모집완료'
           WHEN 2 THEN '봉사완료'
           ELSE '만료'
         END,
-        CASE WHEN MOD(i,2) = 0 THEN 'r' ELSE 'o' END
+        CASE WHEN MOD(i, 2) = 0 THEN 'r' ELSE 'o' END
       );
     END;
   END LOOP;
 END;
 /
-commit;
+COMMIT;
+
+
+
 
 -- 4. comments 10건 (각 봉사글에 1개씩)
 DECLARE
