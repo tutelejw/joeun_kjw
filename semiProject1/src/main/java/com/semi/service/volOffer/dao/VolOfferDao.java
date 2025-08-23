@@ -15,7 +15,7 @@ import com.semi.domain.VolOffer;
 
 public class VolOfferDao {
 	
-	///Field
+	///Field 
 	
 	///Constructor
 	public VolOfferDao() {
