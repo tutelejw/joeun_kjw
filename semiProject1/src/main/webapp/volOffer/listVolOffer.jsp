@@ -3,122 +3,137 @@
 
 <html>
 <head>
-<title>손길나눔 목록조회</title>
+  <title>손길나눔 목록조회</title>
+  <link rel="stylesheet" href="/css/site.css" type="text/css">
 
-<link rel="stylesheet" href="/css/site.css" type="text/css">
+  <!-- 추가: 테이블 스타일용 CSS -->
+  <style>
+    .center-table {
+      margin: 20px auto;
+      width: 100%;
+      max-width: 1000px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background-color: rgba(255,255,255,0.9);
+    }
 
-<script type="text/javascript">
-function fncGetUserList(pageNum){
-    console.log("fncGetUserList called with pageNum =", pageNum);
-    document.detailForm.currentPage.value = pageNum;
-    document.detailForm.submit();
-}
-</script>
+    .center-table th, .center-table td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      background-color: rgba(255,255,255,0.8);
+      word-wrap: break-word;
+    }
+
+    .center-table th {
+      background-color: rgba(200,200,200,0.85);
+      font-weight: bold;
+    }
+
+    .header-search {
+      margin: 20px auto;
+      max-width: 1000px;
+      display: flex;
+      justify-content: flex-end; /* 검색 부분을 오른쪽으로 정렬 */
+      align-items: center;
+    }
+
+    .header-search select,
+    .header-search input[type="text"],
+    .header-search input[type="submit"] {
+      padding: 6px;
+      font-size: 1em;
+      margin-left: 10px; /* 간격 추가 */
+    }
+
+    /* 공통 컬럼 스타일 */
+    .center-table .title-column {
+      max-width: 600px; /* 제목 컬럼 길이 늘리기 */
+    }
+
+.center-table .postid-column,
+    .center-table .region-column,
+    .center-table .author-column,
+    .center-table .status-column,
+    .center-table .created-column {
+      width: 90px; /* 공통으로 좁힘 */
+    }
+
+    /* 특별히 좁힐 컬럼만 추가로 조정 */
+    .center-table .region-column {
+      width: 120px; /* status 컬럼 좁히기 */
+    }
+    .center-table .status-column {
+      width: 80px; /* status 컬럼 좁히기 */
+    }
+
+    .center-table .created-column {
+      width: 160px; /* 생성일 컬럼 좁히기 */
+    }
+  </style>
+
+  <script type="text/javascript">
+    function fncGetUserList(pageNum){
+      console.log("fncGetUserList called with pageNum =", pageNum);
+      document.detailForm.currentPage.value = pageNum;
+      document.detailForm.submit();
+    }
+  </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
-
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listVolOffer.do" method="post">
-<input type="hidden" name="currentPage" value="${resultPage.currentPage}" />
+  <!--  상단 바 및 검색 부분 복원 -->
+  <form name="detailForm" action="/listVolOffer.do" method="post">
+    <input type="hidden" name="currentPage" value="${resultPage.currentPage}" />
 
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37">
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">손길나눔 목록조회11111</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37">
-		</td>
-	</tr>
-</table>
+    <div class="header-search">
+      <!-- 추가: 검색 조건 요소 -->
+      <select name="searchCondition">
+        <option value="0">손길나눔ID</option>
+        <option value="1">손길나눔명</option>
+      </select>
+      <input type="text" name="searchKeyword" placeholder="검색어 입력" />
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-	
-		<td align="right">
-			<select name="searchCondition" class="ct_input_g" style="width:80px">
-				<option value="0">손길나눔ID</option>
-				<option value="1">손길나눔명</option>
-			</select>
-			<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px" >
-		</td>
-	
-		<td align="right" width="70">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23">
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetUserList();">검색</a>
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23">
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
+      <!-- 검색 버튼 -->
+      <input type="button" value="검색" onclick="fncGetUserList(1);" />
+    </div>
+    <!-- 여기까지 상단 바 및 검색 영역 복원 -->
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td colspan="11" >전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage} 페이지</td>
-	</tr>
-	<tr>
-		<td class="ct_list_b" width="100">No</td>
-		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">No</td>
-		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">제목</td>
-		<td class="ct_line02"></td>
-		<td class="ct_list_b">이메일</td>		
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="808285" height="1"></td>
-	</tr>
-		
-	<c:set var="i" value="0" />
-	<c:forEach var="volOffer" items="${list}">
-	<c:set var="i" value="${ i+1 }" />
-	<tr class="ct_list_pop">
-		<td align="center">${i}</td>
-		<td></td>
-		<td align="left"><a href="/getUser.do?userId=${volOffer.postId}">${volOffer.postId}</a></td>
-		<td></td>
-		<td align="left">${volOffer.title}</td>
-		<td></td>
-		<td align="left">${volOffer.createdAt}
-		</td>		
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	</c:forEach>
-	
-</table>
+    <!-- 테이블: 중앙 정렬 및 반투명 스타일 적용 -->
+    <table class="center-table">
+      <tr>
+        <th class="postid-column">Post ID</th>
+        <th class="title-column">제목</th>
+        <th class="region-column">region</th>
+        <th class="author-column">authorId</th>
+        <th class="status-column">status</th>
+        <th class="created-column">생성일</th>
+      </tr>
+      <c:set var="i" value="0" />
+      <c:forEach var="volOffer" items="${list}">
+        <c:set var="i" value="${i + 1}" />
+        <tr>
+          <td><a href="/getUser.do?userId=${volOffer.postId}">${volOffer.postId}</a></td>
+          <td><a href="/getUser.do?userId=${volOffer.postId}">${volOffer.title}</a></td>
+          <td>${volOffer.region}</td>
+          <td>${volOffer.authorId}</td>
+          <td>${volOffer.status}</td>
+          <td>${volOffer.createdAt}</td>
+        </tr>
+      </c:forEach>
+    </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td align="center">
-		
-			<jsp:include page="../common/pageNavigator.jsp"/>	
-			
-    	</td>
-	</tr>
-</table>
-<!--  페이지 Navigator 끝 -->
-</form>
+    <!-- 페이지 네비게이터 포함 -->
+    <table width="100%" style="margin-top:10px;">
+      <tr>
+        <td align="center">
+          <jsp:include page="../common/pageNavigator.jsp"/>
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>
-
 </body>
 </html>
