@@ -123,8 +123,13 @@
           <td>${volOffer.createdAt}</td>
         </tr>
       </c:forEach>
+     
     </table>
-
+ <!-- 등록 버튼: 오른쪽 정렬 -->
+<div style="width: 1000px; margin: 10px auto; text-align: right;">
+  <input type="button" value="등록" onclick="location.href='/volOffer/addVolOfferView.jsp'" 
+         style="padding: 8px 16px; font-size: 1em; cursor: pointer;" />
+</div>
     <!-- 페이지 네비게이터 포함 -->
     <table width="100%" style="margin-top:10px;">
       <tr>

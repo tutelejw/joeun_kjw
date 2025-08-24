@@ -27,12 +27,11 @@ public class AddVolOfferAction extends Action {
 		volOffer.setCategory(request.getParameter("category"));
 		
 	    // startTime, endTime을 LocalDateTime으로 변환 (null 체크 없음
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");   
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss");   
 	    volOffer.setStartTime(LocalDateTime.parse(request.getParameter("startTime"), formatter));
 	    volOffer.setEndTime(LocalDateTime.parse(request.getParameter("endTime"), formatter));
-	    
-		volOffer.setStatus(request.getParameter("status"));
-		volOffer.setOfferFlag(request.getParameter("offerFlag"));
+        volOffer.setStatus("모집중"); //✅ status는 고정값 "모집중" (모집 상태: 모집중/모집완료/봉사완료/만료)
+        volOffer.setOfferFlag("o");// ✅ offerFlag는 고정값 "o" flag -> offerFlag (상태 플래그: 'r' 또는 'o')
 		//volOffer.setCreatedAt(request.getParameter("createdAt"));  //생성일자는 입력시간으로 자동입력되게 Dao 에서 진행
 		
 		System.out.println("AddVolOfferAction ::"+volOffer);
@@ -40,6 +39,8 @@ public class AddVolOfferAction extends Action {
 		VolOfferService volOfferService=new VolOfferServiceImpl();
 		volOfferService.addVolOffer(volOffer);
 		
-		return "redirect:/volOffer/listVolOffer.jsp";
+		//return "redirect:/volOffer/listVolOffer.jsp";
+		System.out.println("====AddVolOfferAction-execute 메서드 임시로 redirect:/listVolOffer.do 추후에 detailVolOffer로 옮겨야함");
+		return "redirect:/listVolOffer.do";
 	}
 }
