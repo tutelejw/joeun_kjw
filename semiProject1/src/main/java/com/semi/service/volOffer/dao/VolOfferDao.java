@@ -55,40 +55,47 @@ public class VolOfferDao {
 	}
 
 	public VolOffer findVolOffer(String volOfferId) throws Exception {
-		System.out.println("VolOfferDao - findVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - findVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - findVolOffer 메서드 쿼리 작성 해야함.");
-//		Connection con = DBUtil.getConnection();
-//			
-//		String sql = 	"SELECT "+
-//								"volOffer_id ,  volOffer_name ,  password , role , cell_phone ,  addr ,  email , reg_date " + 
-//								"FROM volOffer WHERE volOffer_id = ?";
-//		
-//		PreparedStatement pStmt = con.prepareStatement(sql);
-//		pStmt.setString(1, volOfferId);
-//
-//		ResultSet rs = pStmt.executeQuery();
-//
-//		VolOffer volOffer = null;
-//
-//		while (rs.next()) {
-//			volOffer = new VolOffer();
-//			volOffer.setVolOfferId(rs.getString("volOffer_id"));
-//			volOffer.setVolOfferName(rs.getString("volOffer_name"));
-//			volOffer.setPassword(rs.getString("password"));
-//			volOffer.setRole(rs.getString("role"));
-//			volOffer.setPhone(rs.getString("cell_phone"));
-//			volOffer.setAddr(rs.getString("addr"));
-//			volOffer.setEmail(rs.getString("email"));
-//			volOffer.setRegDate(rs.getDate("reg_date"));
-//		}
-//		
-//		rs.close();
-//		pStmt.close();
-//		con.close();
-//		
-//		return volOffer;
-		return null;  // return null 임시로 넣어놓음 삭제 해야함.
+		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
+		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
+		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
+		Connection con = DBUtil.getConnection();
+			
+		String sql = 	"SELECT "+
+				"volunteerid ,  authorid ,  title , content ,  phone ,  region , category ,starttime, endtime, status, createdat" + 
+				"FROM volOffer WHERE flag = 'o' and volunteerid= ?";
+		
+		PreparedStatement pStmt = con.prepareStatement(sql);
+//		pStmt.setLong(1, volOffer.postId);
+	    // volOfferId 값을 set하기 전에 null 체크가 필요합니다
+	    if (volOfferId == null) {
+	        pStmt.setNull(1, java.sql.Types.INTEGER);  // 예시로 INTEGER로 설정
+	    } else {
+	        pStmt.setLong(1, Long.parseLong(volOfferId));  // volOfferId를 Long으로 변환
+	    }
+
+		ResultSet rs = pStmt.executeQuery();
+
+		VolOffer volOffer = null;
+
+		while (rs.next()) {
+			volOffer = new VolOffer();
+			volOffer.setAuthorId(rs.getString("authorid"));
+			volOffer.setTitle(rs.getString("title"));
+			volOffer.setContent(rs.getString("content"));
+			volOffer.setPhone(rs.getString("phone"));
+			volOffer.setRegion(rs.getString("region"));
+			volOffer.setCategory(rs.getString("category"));
+			volOffer.setStartTime(rs.getTimestamp("STARTTIME").toLocalDateTime());
+			volOffer.setEndTime(rs.getTimestamp("ENDTIME").toLocalDateTime());
+			volOffer.setStatus(rs.getString("status"));
+			volOffer.setCreatedAt(rs.getTimestamp("CREATEDAT").toLocalDateTime());
+		}
+		
+		rs.close();
+		pStmt.close();
+		con.close();
+		
+		return volOffer;
 	}
 
 	public Map<String , Object> getVolOfferList(Search search) throws Exception {
