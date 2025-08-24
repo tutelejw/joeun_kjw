@@ -10,7 +10,7 @@ import com.semi.domain.VolOffer;
  */
 public interface VolOfferService {
 	
-	//public void addVolOffer(VolOffer volOffer) throws Exception;
+	public void addVolOffer(VolOffer volOffer) throws Exception;
 	
 	//public VolOffer loginVolOffer(VolOffer volOffer) throws Exception;
 	

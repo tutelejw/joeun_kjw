@@ -3,7 +3,7 @@ package com.semi.service.volOffer.impl;
 import java.util.Map;
 
 import com.semi.common.Search;
-import com.semi.service.user.dao.UserDao;
+import com.semi.domain.VolOffer;
 import com.semi.service.volOffer.VolOfferService;
 import com.semi.service.volOffer.dao.VolOfferDao;
 
@@ -22,6 +22,9 @@ public class VolOfferServiceImpl implements VolOfferService{
 //	public void addVolOffer(VolOffer volOffer) throws Exception {
 //		volOfferDao.insertVolOffer(volOffer);
 //	}
+	public void addVolOffer(VolOffer volOffer) throws Exception {
+	volOfferDao.insertVolOffer(volOffer);
+}
 
 //	public VolOffer getVolOffer(String volOfferId) throws Exception {
 //		return volOfferDao.findVolOffer(volOfferId);

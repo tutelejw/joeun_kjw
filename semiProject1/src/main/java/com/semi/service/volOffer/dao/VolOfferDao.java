@@ -3,6 +3,8 @@ package com.semi.service.volOffer.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,27 +25,33 @@ public class VolOfferDao {
 
 	///Method
 	public void insertVolOffer(VolOffer volOffer) throws Exception {
-		System.out.println("VolOfferDao - insertVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - insertVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - insertVolOffer 메서드 쿼리 작성 해야함.");
-//		Connection con = DBUtil.getConnection();
-//		
-//		String sql = 	"INSERT "+ 
-//								"INTO USERS "+ 
-//								"VALUES (?,?,?,'volOffer',?,?,?,?,SYSDATE)";
-//		
-//		PreparedStatement pStmt = con.prepareStatement(sql);
-//		pStmt.setString(1, volOffer.getVolOfferId());
-//		pStmt.setString(2, volOffer.getVolOfferName());
-//		pStmt.setString(3, volOffer.getPassword());
-//		pStmt.setString(4, volOffer.getSsn());
-//		pStmt.setString(5, volOffer.getPhone());
-//		pStmt.setString(6, volOffer.getAddr());
-//		pStmt.setString(7, volOffer.getEmail());
-//		pStmt.executeUpdate();
-//		
-//		pStmt.close();
-//		con.close();
+		System.out.println("VolOfferDao - insertVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함.");
+		System.out.println("VolOfferDao - insertVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함.");
+		System.out.println("VolOfferDao - insertVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함.");
+		Connection con = DBUtil.getConnection();
+		
+	    String sql = "INSERT INTO volunteer (volunteerid, authorid, title, content, phone, region, category, starttime, endtime, status, flag, createdat) "
+                + "VALUES (seq_volunteer.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement pStmt = con.prepareStatement(sql);
+        // 파라미터 설정
+		pStmt.setString(1, volOffer.getAuthorId());  // authorid
+		pStmt.setString(2, volOffer.getTitle());     // title
+		pStmt.setString(3, volOffer.getContent());   // content
+		pStmt.setString(4, volOffer.getPhone());     // phone
+		pStmt.setString(5, volOffer.getRegion());    // region
+		pStmt.setString(6, volOffer.getCategory());  // category
+		  // starttime과 endtime을 java.sql.Timestamp로 변환하여 바인딩
+	    pStmt.setTimestamp(7, Timestamp.valueOf(volOffer.getStartTime())); // starttime
+	    pStmt.setTimestamp(8, Timestamp.valueOf(volOffer.getEndTime()));   // endtime
+		pStmt.setString(9, volOffer.getStatus());    // (모집 상태: 모집중/모집완료/봉사완료/만료)
+		pStmt.setString(10, volOffer.getOfferFlag());     // flag -> offerFlag (상태 플래그: 'r' 또는 'o')
+	    // createdAt을 현재 시간으로 설정(DB default로 입력되나. 가독성을 위헤 추가함..)
+	    pStmt.setTimestamp(11, Timestamp.valueOf(LocalDateTime.now())); // createdAt: 현재 시간
+		pStmt.executeUpdate();
+		
+		pStmt.close();
+		con.close();
 	}
 
 	public VolOffer findVolOffer(String volOfferId) throws Exception {
@@ -129,12 +137,9 @@ public class VolOfferDao {
 			volOffer.setCreatedAt(rs.getTimestamp("CREATEDAT").toLocalDateTime());
 			volOffer.setStartTime(rs.getTimestamp("STARTTIME").toLocalDateTime());
 			volOffer.setEndTime(rs.getTimestamp("ENDTIME").toLocalDateTime());
-//			volOffer.setCreatedAt(rs.getString("CREATEDAT")); // 20250501121300
-//			volOffer.setStartTime(rs.getString("STARTTIME")); // 20250501121300
-//			volOffer.setEndTime(rs.getString("ENDTIME")); // 20250501121300
 			volOffer.setRegion(rs.getString("REGION"));
 			volOffer.setStatus(rs.getString("STATUS")); //모집중/모집완료/봉사완료/만료  *만료=시간 초과로 모집 종료
-			volOffer.setOfferFlag(rs.getString("FLAG")); // r/o
+			volOffer.setOfferFlag(rs.getString("FLAG")); //flag -> offerFlag (상태 플래그: 'r' 또는 'o')
 			list.add(volOffer);
 		}
 		

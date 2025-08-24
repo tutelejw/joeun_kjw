@@ -11,7 +11,7 @@ public class VolOffer extends Post implements Serializable {
     /** 오퍼 전용 플래그(다이어그램의 offerFlag) */
     private String offerFlag;
 
-    public String offerFlag() { return offerFlag; }
+    public String getOfferFlag() { return offerFlag; }
     public void setOfferFlag(String offerFlag) { this.offerFlag = offerFlag; }
     
     @Override
