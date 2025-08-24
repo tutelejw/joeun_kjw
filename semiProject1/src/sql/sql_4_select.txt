@@ -12,10 +12,11 @@ ALTER SYSTEM SET processes = 500 SCOPE = SPFILE;
 ALTER SYSTEM SET sessions = 555 SCOPE = SPFILE;
 ALTER SYSTEM SET transactions = 610 SCOPE = SPFILE;
 
--- 데이터베이스 재시작 필요
+-- 데이터베이스 재시작 필요 - 시간 1분 ~ 5분 정도 걸림
 SHUTDOWN IMMEDIATE;
 STARTUP;
 
+exit
 
 
 

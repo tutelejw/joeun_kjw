@@ -1,13 +1,27 @@
+
+
 delete from notice;
 delete from comments;
 delete from volunteer;
 delete from users;
 commit;
 
+-- 시퀀스 삭제
+DROP SEQUENCE seq_users;
+DROP SEQUENCE seq_notice;
+DROP SEQUENCE seq_volunteer;
+DROP SEQUENCE seq_comments;
 
--- 1. users 10명
+-- 시퀀스 생성
+CREATE SEQUENCE seq_users      START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE seq_notice     START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE seq_volunteer  START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE seq_comments   START WITH 1 INCREMENT BY 1 NOCACHE;
+
+
+-- 1. users 50명
 BEGIN
-  FOR i IN 1..10 LOOP
+  FOR i IN 1..50 LOOP
     INSERT INTO users (
       userid, password, region, name, birthdate, phone, gender, category, status
     ) VALUES (
@@ -18,10 +32,11 @@ BEGIN
         WHEN 1 THEN '서울시 은평구'
         WHEN 2 THEN '서울시 용산구'
         WHEN 3 THEN '서울시 관악구'
+        WHEN 4 THEN '서울시 서초구'  -- 오류 수정: 3이 5번 반복되던 부분
         ELSE '서울시 노원구'
       END,
       '사용자' || i,
-      TO_DATE('1990' || LPAD(i, 2, '0') || '01', 'YYYYMMDD'),
+      TO_DATE('1990' || LPAD(MOD(i-1, 12)+1, 2, '0') || '01', 'YYYYMMDD'),  -- 날짜 범위 수정
       '0101234' || LPAD(i, 4, '0'),
       CASE WHEN MOD(i, 2) = 0 THEN 'F' ELSE 'M' END,
       '병원동행',
@@ -30,11 +45,12 @@ BEGIN
   END LOOP;
 END;
 /
+
 commit;
 
--- 2. notice 10건 (작성자: user01 ~ user05 반복)
+-- 2. notice 50건 (작성자: user01 ~ user5 반복)
 BEGIN
-  FOR i IN 1..10 LOOP
+  FOR i IN 1..50 LOOP
     INSERT INTO notice (
       noticeid, authorid, title, content
     ) VALUES (
@@ -48,9 +64,9 @@ END;
 /
 commit;
 
--- 3. volunteer 30건
+-- 3. volunteer 100건
 BEGIN
-  FOR i IN 1..30 LOOP
+  FOR i IN 1..100 LOOP
     DECLARE
       v_created     DATE := TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD') || '0900', 'YYYYMMDDHH24MI'); -- 오늘 오전 9시
       v_start_hour  NUMBER := 9 + MOD(i, 8);  -- 9시 ~ 16시 사이
@@ -68,7 +84,7 @@ BEGIN
         createdat, starttime, endtime, status, flag
       ) VALUES (
         seq_volunteer.NEXTVAL,
-        'user' || LPAD(MOD(i, 10) + 1, 2, '0'),
+        'user' || LPAD(MOD(i, 20) + 1, 2, '0'),
         '봉사글 제목 ' || i,
         '봉사 내용입니다. 번호: ' || i,
         '0100000' || LPAD(i, 4, '0'),
@@ -100,12 +116,12 @@ COMMIT;
 
 
 
--- 4. comments 10건 (각 봉사글에 1개씩)
+-- 4. comments 50건 (각 봉사글에 1개씩)
 DECLARE
   CURSOR vol_cursor IS
     SELECT volunteerid FROM (
       SELECT volunteerid FROM volunteer ORDER BY volunteerid
-    ) WHERE ROWNUM <= 10;
+    ) WHERE ROWNUM <= 50;
 
   v_volunteerid volunteer.volunteerid%TYPE;
   i NUMBER := 1;
@@ -117,7 +133,7 @@ BEGIN
       commentid, authorid, createdat, content, volunteerid
     ) VALUES (
       seq_comments.NEXTVAL,
-      'user' || LPAD(i, 2, '0'),
+      'user' || LPAD(MOD(i - 1, 20) + 1, 2, '0'),
       SYSDATE,
       '댓글 내용입니다. 번호: ' || i,
       v_volunteerid
@@ -127,7 +143,12 @@ BEGIN
   END LOOP;
 END;
 /
-commit;
+COMMIT;
 
+set pagesize 1000;
+set linesize 1000;
 
-
+select count(*) from users;
+select count(*) from notice;
+select count(*) from volunteer;
+select count(*) from comments;
