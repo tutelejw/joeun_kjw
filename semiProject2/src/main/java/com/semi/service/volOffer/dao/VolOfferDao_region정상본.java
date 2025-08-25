@@ -15,12 +15,12 @@ import com.semi.common.util.DBUtil;
 import com.semi.domain.VolOffer;
 
 
-public class VolOfferDao {
+public class VolOfferDao_region정상본 {
 	
 	///Field 
 	
 	///Constructor
-	public VolOfferDao() {
+	public VolOfferDao_region정상본() {
 	}
 
 	///Method
@@ -93,7 +93,7 @@ public class VolOfferDao {
 		return volOffer;
 	}
 
-	public Map<String , Object> getVolOfferList(Search search, String region) throws Exception {
+	public Map<String , Object> getVolOfferList(Search search,String region) throws Exception {
 		
 		Map<String , Object>  map = new HashMap<String, Object>();
 		
@@ -101,24 +101,58 @@ public class VolOfferDao {
 		
 		// Original Query 구성
 		String sql = "SELECT VOLUNTEERID, AUTHORID, '(' || CATEGORY || ')' || TITLE AS CAT_TITLE, \r\n"
-//				+ "	TO_CHAR(CREATEDAT, 'YYYYMMDDHH24MI') AS CREATEDAT,\r\n"
-//				+ " TO_CHAR(STARTTIME, 'YYYYMMDDHH24MI') AS STARTTIME,\r\n"
-//				+ " TO_CHAR(ENDTIME, 'YYYYMMDDHH24MI') AS ENDTIME,\r\n"
 				+ "	CREATEDAT, STARTTIME, ENDTIME,\r\n"
 				+ " REGION, STATUS, FLAG \r\n"
 				+ " FROM VOLUNTEER ";
 		
+
+		
 		if (search.getSearchCondition() != null) {
 			if ( search.getSearchCondition().equals("0") &&  !search.getSearchKeyword().equals("") ) {
 				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
+//		        hasWhereClause = true; // ✅ 이거 추가
+//		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
+//		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
 			} else if ( search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
 				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
+//		        hasWhereClause = true; // ✅ 이거 추가
+//		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
+//		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
 			}
 		}
+		boolean hasWhereClause = false;
+		
+		// region 조건 추가
+		System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
+		System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
+		System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);		
+		if (region != null && !region.isEmpty()) {
+			if (hasWhereClause) {
+				sql += " AND REGION = '" + region + "'";
+			} else {
+				sql += " WHERE REGION = '" + region + "'";
+				hasWhereClause = true;
+			}
+			System.out.println("Region 조건 추가됨: " + region);
+		}
+		
 		sql += " order by VOLUNTEERID desc";
 		System.out.println("VolOfferDAO::Original SQL :: " + sql);
+
+		System.out.println("searchCondition: " + search.getSearchCondition());
+		System.out.println("searchKeyword: " + search.getSearchKeyword());
+		System.out.println("region: " + region);
+		System.out.println("최종 SQL (페이징 전): " + sql);
+		
+		System.out.println("=== 페이징 디버깅 ===");
+		System.out.println("currentPage: " + search.getCurrentPage());
+		System.out.println("pageSize: " + search.getPageSize());
+		System.out.println("makeCurrentPageSql :: " + sql);
 		
 		//==> TotalCount GET
+		System.out.println("getTotalCount 이전 로그 디버깅합니다.");
+		System.out.println("getTotalCount 이전 로그 디버깅합니다.");
+		System.out.println("getTotalCount 이전 로그 디버깅합니다.");
 		int totalCount = this.getTotalCount(sql);
 		System.out.println("VolOfferDAO :: totalCount  :: " + totalCount);
 		

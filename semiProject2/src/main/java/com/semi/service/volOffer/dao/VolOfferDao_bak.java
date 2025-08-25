@@ -15,12 +15,12 @@ import com.semi.common.util.DBUtil;
 import com.semi.domain.VolOffer;
 
 
-public class VolOfferDao {
+public class VolOfferDao_bak {
 	
 	///Field 
 	
 	///Constructor
-	public VolOfferDao() {
+	public VolOfferDao_bak() {
 	}
 
 	///Method
@@ -94,68 +94,96 @@ public class VolOfferDao {
 	}
 
 	public Map<String , Object> getVolOfferList(Search search, String region) throws Exception {
-		
-		Map<String , Object>  map = new HashMap<String, Object>();
-		
-		Connection con = DBUtil.getConnection();
-		
-		// Original Query 구성
-		String sql = "SELECT VOLUNTEERID, AUTHORID, '(' || CATEGORY || ')' || TITLE AS CAT_TITLE, \r\n"
-//				+ "	TO_CHAR(CREATEDAT, 'YYYYMMDDHH24MI') AS CREATEDAT,\r\n"
-//				+ " TO_CHAR(STARTTIME, 'YYYYMMDDHH24MI') AS STARTTIME,\r\n"
-//				+ " TO_CHAR(ENDTIME, 'YYYYMMDDHH24MI') AS ENDTIME,\r\n"
-				+ "	CREATEDAT, STARTTIME, ENDTIME,\r\n"
-				+ " REGION, STATUS, FLAG \r\n"
-				+ " FROM VOLUNTEER ";
-		
-		if (search.getSearchCondition() != null) {
-			if ( search.getSearchCondition().equals("0") &&  !search.getSearchKeyword().equals("") ) {
-				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
-			} else if ( search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
-				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
-			}
-		}
-		sql += " order by VOLUNTEERID desc";
-		System.out.println("VolOfferDAO::Original SQL :: " + sql);
-		
-		//==> TotalCount GET
-		int totalCount = this.getTotalCount(sql);
-		System.out.println("VolOfferDAO :: totalCount  :: " + totalCount);
-		
-		//==> CurrentPage 게시물만 받도록 Query 다시구성
-		sql = makeCurrentPageSql(sql, search);
-		PreparedStatement pStmt = con.prepareStatement(sql);
-		ResultSet rs = pStmt.executeQuery();
-	
-		System.out.println(search);
+	    Map<String , Object> map = new HashMap<String, Object>();
+	    
+	    Connection con = DBUtil.getConnection();
 
-		List<VolOffer> list = new ArrayList<VolOffer>();
+	    // Original Query 구성
+	    String sql = "SELECT VOLUNTEERID, AUTHORID, '(' || CATEGORY || ')' || TITLE AS CAT_TITLE, "
+	               + " CREATEDAT, STARTTIME, ENDTIME, REGION, STATUS, FLAG "
+	               + " FROM VOLUNTEER ";
 
-		while(rs.next()){
-			VolOffer volOffer = new VolOffer();
-			volOffer.setPostId(rs.getLong("VOLUNTEERID"));
-			volOffer.setAuthorId(rs.getString("AUTHORID"));
-			volOffer.setTitle(rs.getString("CAT_TITLE"));
-			volOffer.setCreatedAt(rs.getTimestamp("CREATEDAT").toLocalDateTime());
-			volOffer.setStartTime(rs.getTimestamp("STARTTIME").toLocalDateTime());
-			volOffer.setEndTime(rs.getTimestamp("ENDTIME").toLocalDateTime());
-			volOffer.setRegion(rs.getString("REGION"));
-			volOffer.setStatus(rs.getString("STATUS")); //모집중/모집완료/봉사완료/만료  *만료=시간 초과로 모집 종료
-			volOffer.setOfferFlag(rs.getString("FLAG")); //flag -> offerFlag (상태 플래그: 'r' 또는 'o')
-			list.add(volOffer);
-		}
-		
-		//==> totalCount 정보 저장
-		map.put("totalCount", new Integer(totalCount));
-		//==> currentPage 의 게시물 정보 갖는 List 저장
-		map.put("list", list);
+	    boolean hasWhereClause = false;
 
-		rs.close();
-		pStmt.close();
-		con.close();
+	    // 지역(region) 조건 추가
+	    if (region != null && !region.isEmpty()) {
+	        sql += " WHERE REGION = ? ";  // region을 조건으로 추가
+	        hasWhereClause = true;
+	        System.out.println("getVolOfferList region 값 받아오는지 확인 WHERE REGION = ? : " + region);
+	    } else {
+	        System.out.println("Region is either null or empty.");
+	    }
 
-		return map;
+	    // 기존 검색 조건을 처리 (검색 조건이 있을 경우)
+//	    if (search.getSearchCondition() != null) {
+//	        if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
+//	            sql += (hasWhereClause ? " AND " : " WHERE ") + "flag = 'o' or 1010='" + search.getSearchKeyword() + "'"; // 임시값 조건
+//	        } else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
+//	            sql += (hasWhereClause ? " AND " : " WHERE ") + "flag = 'o' or 1010='" + search.getSearchKeyword() + "'"; // 임시값 조건
+//	        }
+//	    }
+
+	    sql += " order by VOLUNTEERID desc";
+	    System.out.println("VolOfferDAO::Original SQL :: " + sql);
+
+	    PreparedStatement pStmt = con.prepareStatement(sql);
+	    int index = 1; // PreparedStatement에서 첫 번째 인덱스는 1부터 시작
+
+	    // region이 null이 아니면 매개변수로 설정
+	    if (region != null && !region.isEmpty()) {
+	        System.out.println("getVolOfferList region 값 받아오는지 확인 pStmt.setString(" + index + ", region); : " + region);
+	        pStmt.setString(index++, region);  // region 값을 1번 인덱스에 설정
+		    System.out.println("VolOfferDAO::Original SQL  if문 내부에 sql  :: " + sql);
+	    }
+
+	    // 검색 조건이 있을 경우, 해당 검색 조건도 매개변수로 전달
+//	    if (search.getSearchCondition() != null) {
+//	        if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
+//	            pStmt.setString(index++, search.getSearchKeyword());  // 검색어 설정
+//	        } else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
+//	            pStmt.setString(index++, search.getSearchKeyword());  // 검색어 설정
+//	        }
+//	    }
+
+	    ResultSet rs = pStmt.executeQuery();
+ System.out.println("여기까지`11111111111111111111");
+	    //==> TotalCount GET
+ System.out.println("sql 확인  :: " + sql);
+	    int totalCount = this.getTotalCount(sql);    
+	    System.out.println("VolOfferDAO :: totalCount  :: " + totalCount);
+
+	    //==> CurrentPage 게시물만 받도록 Query 다시구성
+	    sql = makeCurrentPageSql(sql, search);
+
+	    List<VolOffer> list = new ArrayList<VolOffer>();
+
+	    while (rs.next()) {
+	        VolOffer volOffer = new VolOffer();
+	        volOffer.setPostId(rs.getLong("VOLUNTEERID"));
+	        volOffer.setAuthorId(rs.getString("AUTHORID"));
+	        volOffer.setTitle(rs.getString("CAT_TITLE"));
+	        volOffer.setCreatedAt(rs.getTimestamp("CREATEDAT").toLocalDateTime());
+	        volOffer.setStartTime(rs.getTimestamp("STARTTIME").toLocalDateTime());
+	        volOffer.setEndTime(rs.getTimestamp("ENDTIME").toLocalDateTime());
+	        volOffer.setRegion(rs.getString("REGION"));
+	        volOffer.setStatus(rs.getString("STATUS")); //모집중/모집완료/봉사완료/만료  *만료=시간 초과로 모집 종료
+	        volOffer.setOfferFlag(rs.getString("FLAG")); //flag -> offerFlag (상태 플래그: 'r' 또는 'o')
+	        list.add(volOffer);
+	    }
+
+	    //==> totalCount 정보 저장
+	    map.put("totalCount", new Integer(totalCount));
+	    //==> currentPage 의 게시물 정보 갖는 List 저장
+	    map.put("list", list);
+
+	    rs.close();
+	    pStmt.close();
+	    con.close();
+
+	    return map;
 	}
+
+
 
 	public void updateVolOffer(VolOffer vo) throws Exception {
 		System.out.println("VolOfferDao - updateVolOffer 메서드 쿼리 작성 해야함.");
@@ -182,10 +210,12 @@ public class VolOfferDao {
 	
 	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
 	private int getTotalCount(String sql) throws Exception {
-		
+		System.out.println("getTotalCount 시작");
+		System.out.println("getTotalCount 시작");
+		System.out.println("getTotalCount 시작");
 		sql = "SELECT COUNT(*) "+
 		          "FROM ( " +sql+ ") countTable";
-		
+		System.out.println("getTotalCount sql " + sql);
 		Connection con = DBUtil.getConnection();
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		ResultSet rs = pStmt.executeQuery();

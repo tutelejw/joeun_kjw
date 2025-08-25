@@ -73,8 +73,8 @@
   </style>
 
   <script type="text/javascript">
-    function fncGetList(pageNum){
-      console.log("fncGetList called with pageNum =", pageNum);
+    function fncGetUserList(pageNum){
+      console.log("fncGetUserList called with pageNum =", pageNum);
       document.detailForm.currentPage.value = pageNum;
       document.detailForm.submit();
     }
@@ -87,13 +87,9 @@
 <div style="width:98%; margin-left:10px;">
 
   <!--  상단 바 및 검색 부분 복원 -->
-  <form name="detailForm" action="/listVolOffer.do" method="get">
+  <form name="detailForm" action="/listVolOffer.do" method="post">
     <input type="hidden" name="currentPage" value="${resultPage.currentPage}" />
-  <!-- 선택 파라미터 유지 (region, searchCondition, searchKeyword 등) -->
-  <input type="hidden" name="region" value="${param.region}" />
-  <input type="hidden" name="searchCondition" value="${param.searchCondition}" />
-  <input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
-  
+
     <div class="header-search">
       <!-- 추가: 검색 조건 요소 -->
       <select name="searchCondition">
