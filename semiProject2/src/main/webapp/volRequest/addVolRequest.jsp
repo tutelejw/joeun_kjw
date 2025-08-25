@@ -1,0 +1,98 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>봉사요청 등록</title>
+  <link rel="stylesheet" href="<c:url value='/css/site.css'/>">
+</head>
+<body>
+<%@ include file="/common/top.jspf"%>
+
+<div class="container-main">
+  <div class="hero">
+    <div class="title">봉사요청 등록</div>
+
+    <form method="post" action="<c:url value='/addVolRequest.do'/>" style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;">
+      <!-- 입력 영역 -->
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px;">
+        <div style="margin-bottom:10px;">
+          <label>제목</label><br/>
+          <input type="text" name="title" required style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div>
+            <label>시작일시</label><br/>
+            <input type="datetime-local" name="start" required style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+          </div>
+          <div>
+            <label>종료일시</label><br/>
+            <input type="datetime-local" name="end" required style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <label>연락처</label><br/>
+          <input type="text" name="phone" placeholder="010-0000-0000" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+        </div>
+
+        <div style="margin-top:10px;">
+          <label>지역</label><br/>
+          <input type="text" name="region" required placeholder="예: 서울시 구로구" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+        </div>
+
+        <div style="margin-top:10px;">
+          <label>카테고리</label><br/>
+          <input type="text" name="category" placeholder="예: 병원동행" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;">
+        </div>
+      </div>
+
+      <!-- 미리보기 영역 -->
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px;">
+        <div style="color:var(--subtle-ink); margin-bottom:8px;">미리보기</div>
+        <div id="preview" style="white-space:pre-line; min-height:220px;"></div>
+      </div>
+
+      <div style="grid-column: 1 / span 2; display:flex; gap:8px; justify-content:flex-end;">
+        <a href="<c:url value='/listVolRequest.do'/>" class="btn">취소</a>
+        <button type="submit" class="btn">등록하기</button>
+      </div>
+
+      <div style="grid-column: 1 / span 2; margin-top:8px;">
+        <label>봉사요청 상세내용</label><br/>
+        <textarea name="content" rows="8" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px;"></textarea>
+      </div>
+    </form>
+  </div>
+</div>
+
+<jsp:include page="/common/footer.jspf"/>
+
+<script>
+  // 간단 미리보기
+  const $ = (s)=>document.querySelector(s);
+  function syncPreview(){
+    const start = $('[name=start]').value;
+    const end = $('[name=end]').value;
+    const content = $('[name=content]').value;
+    const phone = $('[name=phone]').value;
+    const region = $('[name=region]').value;
+    const category = $('[name=category]').value;
+    $('#preview').textContent = 
+      (start? start : '') + "\n" +
+      (end? end : '') + "\n" +
+      (content? content : '') + "\n" +
+      (phone? phone : '') + "\n" +
+      (region? region : '') + "\n" +
+      (category? category : '');
+  }
+  document.addEventListener('input', (e)=>{
+    if(['start','end','content','phone','region','category'].includes(e.target.name)){
+      syncPreview();
+    }
+  });
+</script>
+</body>
+</html>
