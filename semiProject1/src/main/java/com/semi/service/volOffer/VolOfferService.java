@@ -14,7 +14,7 @@ public interface VolOfferService {
 	
 	//public VolOffer loginVolOffer(VolOffer volOffer) throws Exception;
 	
-	//public VolOffer getVolOffer(String volOfferId) throws Exception;
+	public VolOffer getVolOffer(Long postId) throws Exception;
 	
 	public Map<String, Object> getVolOfferList(Search search) throws Exception;
 	

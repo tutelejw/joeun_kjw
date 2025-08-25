@@ -54,24 +54,19 @@ public class VolOfferDao {
 		con.close();
 	}
 
-	public VolOffer findVolOffer(String volOfferId) throws Exception {
+	public VolOffer findVolOffer(Long postId) throws Exception {
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
 		Connection con = DBUtil.getConnection();
 			
 		String sql = 	"SELECT "+
-				"volunteerid ,  authorid ,  title , content ,  phone ,  region , category ,starttime, endtime, status, createdat" + 
-				"FROM volOffer WHERE flag = 'o' and volunteerid= ?";
+				"volunteerid ,  authorid ,  title , content ,  phone ,  region , category ,starttime, endtime, status, createdat " + 
+				" FROM VOLUNTEER WHERE flag = 'o' and volunteerid= ?";
 		
+		System.out.println("VolOfferDao - findVolOffer : " + sql);
 		PreparedStatement pStmt = con.prepareStatement(sql);
-//		pStmt.setLong(1, volOffer.postId);
-	    // volOfferId 값을 set하기 전에 null 체크가 필요합니다
-	    if (volOfferId == null) {
-	        pStmt.setNull(1, java.sql.Types.INTEGER);  // 예시로 INTEGER로 설정
-	    } else {
-	        pStmt.setLong(1, Long.parseLong(volOfferId));  // volOfferId를 Long으로 변환
-	    }
+	    pStmt.setLong(1, postId);  // postId 는 Long 데이터 타입으로 넘어온다.
 
 		ResultSet rs = pStmt.executeQuery();
 

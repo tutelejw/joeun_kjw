@@ -115,8 +115,8 @@
       <c:forEach var="volOffer" items="${list}">
         <c:set var="i" value="${i + 1}" />
         <tr>
-          <td><a href="/getUser.do?userId=${volOffer.postId}">${volOffer.postId}</a></td>
-          <td><a href="/getUser.do?userId=${volOffer.postId}">${volOffer.title}</a></td>
+          <td><a href="/detailVolOffer.do?postId=${volOffer.postId}">${volOffer.postId}</a></td>
+          <td><a href="/detailVolOffer.do?postId=${volOffer.postId}">${volOffer.title}</a></td>
           <td>${volOffer.region}</td>
           <td>${volOffer.authorId}</td>
           <td>${volOffer.status}</td>

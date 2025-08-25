@@ -19,16 +19,13 @@ public class VolOfferServiceImpl implements VolOfferService{
 	}
 
 	///Method
-//	public void addVolOffer(VolOffer volOffer) throws Exception {
-//		volOfferDao.insertVolOffer(volOffer);
-//	}
 	public void addVolOffer(VolOffer volOffer) throws Exception {
 	volOfferDao.insertVolOffer(volOffer);
 }
 
-//	public VolOffer getVolOffer(String volOfferId) throws Exception {
-//		return volOfferDao.findVolOffer(volOfferId);
-//	}
+	public VolOffer getVolOffer(Long postId) throws Exception {
+		return volOfferDao.findVolOffer(postId);
+	}
 
 	public Map<String,Object> getVolOfferList(Search search) throws Exception {
 		return volOfferDao.getVolOfferList(search);
