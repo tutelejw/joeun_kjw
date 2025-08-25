@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.framework.Action;            // 프로젝트에서 쓰던 Action 기반 유지
-import com.semi.common.Search;                    // 기존 Search VO 사용
+import com.semi.framework.Action;       
+import com.semi.common.Search;                    
 import com.semi.domain.Notice;
 import com.semi.service.notice.NoticeService;
 import com.semi.service.notice.impl.NoticeServiceImpl;

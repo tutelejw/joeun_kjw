@@ -127,41 +127,57 @@ public class NoticeDao {
         }
     }
 
-    // ====== 등록 ======
+ // ====== 등록 ======
+ // ====== 등록 ======
     public long insert(Notice notice) throws SQLException {
         System.out.println("[NoticeDao] insert() :: authorId=" + notice.getAuthorId());
 
         Connection conn = null;
-        PreparedStatement pstmt = null;
+        PreparedStatement p1 = null;
+        PreparedStatement p2 = null;
         ResultSet rs = null;
 
-        // createdat = SYSDATE, PK = seq_notice.NEXTVAL
-        String sql = "INSERT INTO notice (noticeid, authorid, title, content, createdat) "
-                   + "VALUES (seq_notice.NEXTVAL, ?, ?, ?, SYSDATE)";
+        final String INSERT_SQL =
+            "INSERT INTO notice (noticeid, authorid, title, content, createdat) " +
+            "VALUES (seq_notice.NEXTVAL, ?, ?, ?, SYSDATE)";
 
         try {
             conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, notice.getAuthorId());
-            pstmt.setString(2, notice.getTitle());
-            pstmt.setString(3, notice.getContent());
 
-            int updated = pstmt.executeUpdate();
+            // 1) INSERT
+            p1 = conn.prepareStatement(INSERT_SQL);
+            p1.setString(1, notice.getAuthorId());
+            p1.setString(2, notice.getTitle());
+            p1.setString(3, notice.getContent());
+
+            int updated = p1.executeUpdate();
             if (updated == 0) {
                 throw new SQLException("공지 등록 실패");
             }
 
-            // Oracle에서 GENERATED KEYS 비표준 -> MAX로 보정
-            DBUtil.close(pstmt);
-            pstmt = conn.prepareStatement("SELECT MAX(noticeid) FROM notice");
-            rs = pstmt.executeQuery();
+            // 2) 필요 시 커밋 (풀/드라이버에 따라 auto-commit=false일 수 있음)
+            try {
+                if (!conn.getAutoCommit()) {
+                    conn.commit();
+                    System.out.println("[NoticeDao] commit");
+                }
+            } catch (Exception ignore) {}
+
+            // 3) 방금 발급된 PK 정확 취득
+            DBUtil.close(p1);
+            p2 = conn.prepareStatement("SELECT seq_notice.currval AS new_id FROM dual");
+            rs = p2.executeQuery();
             if (rs.next()) {
-                return rs.getLong(1);
+                long newId = rs.getLong("new_id");
+                System.out.println("[NoticeDao] newId=" + newId);
+                return newId;
             }
             return -1L;
+
         } finally {
             DBUtil.close(rs);
-            DBUtil.close(pstmt);
+            DBUtil.close(p2);
+            DBUtil.close(p1);
             DBUtil.close(conn);
         }
     }
@@ -180,4 +196,42 @@ public class NoticeDao {
 
         return n;
     }
+    
+    /**
+     * 공지 수정 (제목, 내용)
+     */
+    public int update(Notice notice) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String sql = "UPDATE NOTICE SET TITLE = ?, CONTENT = ? WHERE NOTICEID = ?";
+        try {
+            conn = DBUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, notice.getTitle());
+            pstmt.setString(2, notice.getContent());
+            pstmt.setLong(3, notice.getNoticeId());
+            return pstmt.executeUpdate();
+        } finally {
+            DBUtil.close(pstmt, conn);
+        }
+    }
+
+    /**
+     * 공지 삭제
+     */
+    public int delete(long noticeId) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String sql = "DELETE FROM NOTICE WHERE NOTICEID = ?";
+        try {
+            conn = DBUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, noticeId);
+            return pstmt.executeUpdate();
+        } finally {
+            DBUtil.close(pstmt, conn);
+        }
+    }
+
+
 }
