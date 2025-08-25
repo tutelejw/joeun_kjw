@@ -149,7 +149,7 @@
   </section>
 </main>
 
-<footer class="site-footer">© 온세상 조아조아~~♡♥♡♥♡♥♡♥♡♥♡♥</footer>
+<footer class="site-footer">© 온세상 조아조아~~</footer>
 
 </body>
 </html>

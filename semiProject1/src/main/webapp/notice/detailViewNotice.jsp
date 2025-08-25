@@ -157,7 +157,7 @@
   </section>
 </main>
 
-<footer class="site-footer">© ♥♡♥♡♥♡♥♡♥♡♥온세상 너무조앙♥♡♥♡♥♡♥♡♥♡♥</footer>
+<footer class="site-footer">© 온세상 너무조앙</footer>
 
 </body>
 </html>
