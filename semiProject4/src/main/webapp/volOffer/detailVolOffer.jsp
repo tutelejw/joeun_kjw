@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/css/site.css" type="text/css">
 <style>
 
-        /* 테이블의 배경을 반투명하게 */
+        /* 테이블의 배경을  반투명하게 */
     table {
         background-color: rgba(255, 255, 255, 0.9); /* White with 90% opacity */
     }

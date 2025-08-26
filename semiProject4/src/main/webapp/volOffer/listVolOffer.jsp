@@ -34,7 +34,7 @@
       margin: 20px auto;
       max-width: 1000px;
       display: flex;
-      justify-content: flex-end; /* 검색 부분을 오른쪽으로 정렬 */
+      justify-content: flex-end; /* 검색 부분을 오른쪽으로  정렬 */
       align-items: center;
     }
 
