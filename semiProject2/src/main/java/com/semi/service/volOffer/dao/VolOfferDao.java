@@ -32,9 +32,10 @@ public class VolOfferDao {
 		
 	    String sql = "INSERT INTO volunteer (volunteerid, authorid, title, content, phone, region, category, starttime, endtime, status, flag, createdat) "
                 + "VALUES (seq_volunteer.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+		System.out.println("insertVolOffer : " + sql);
 		PreparedStatement pStmt = con.prepareStatement(sql);
         // 파라미터 설정
+		 // volunteerid 는 seq_volunteer.NEXTVAL 쿼리에서 자동 순차 입력됨
 		pStmt.setString(1, volOffer.getAuthorId());  // authorid
 		pStmt.setString(2, volOffer.getTitle());     // title
 		pStmt.setString(3, volOffer.getContent());   // content
@@ -54,7 +55,7 @@ public class VolOfferDao {
 		con.close();
 	}
 
-	public VolOffer findVolOffer(Long postId) throws Exception {
+	public VolOffer findVolOffer(Long postId) throws Exception {    //DetailVolOffer - 
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
 		System.out.println("VolOfferDao - findVolOffer 메서드 authorId는 세션에서 가져오게 수정 해야함..");
@@ -74,6 +75,7 @@ public class VolOfferDao {
 
 		while (rs.next()) {
 			volOffer = new VolOffer();
+			volOffer.setPostId(rs.getLong("volunteerid"));
 			volOffer.setAuthorId(rs.getString("authorid"));
 			volOffer.setTitle(rs.getString("title"));
 			volOffer.setContent(rs.getString("content"));
@@ -192,26 +194,41 @@ public class VolOfferDao {
 	}
 
 	public void updateVolOffer(VolOffer vo) throws Exception {
-		System.out.println("VolOfferDao - updateVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - updateVolOffer 메서드 쿼리 작성 해야함.");
-		System.out.println("VolOfferDao - updateVolOffer 메서드 쿼리 작성 해야함.");
+		System.out.println("VolOfferDao - updateVolOffer 메서드 진행중.");
+		System.out.println("VolOfferDao - updateVolOffer 메서드 진행중.");
+		System.out.println("VolOfferDao - updateVolOffer 메서드 진행중.");
+		System.out.println("VolOfferDao - updateVolOffer 메서드 진행중.");
 
-//		Connection con = DBUtil.getConnection();
-//
-//		String sql = 	"UPDATE volOffers "+
-//								"SET volOffer_name = ?, cell_phone = ? , addr = ? , email = ? "+ 
-//								"WHERE volOffer_id = ?";
-//		
-//		PreparedStatement pStmt = con.prepareStatement(sql);
-//		pStmt.setString(1, vo.getVolOfferName());
-//		pStmt.setString(2, vo.getPhone());
-//		pStmt.setString(3, vo.getAddr());
-//		pStmt.setString(4, vo.getEmail());
-//		pStmt.setString(5, vo.getVolOfferId());
-//		pStmt.executeUpdate();
-//		
-//		pStmt.close();
-//		con.close();
+		Connection con = DBUtil.getConnection();
+
+		String sql = 	"update volunteer set \r\n"
+				+ "  title           = ? \r\n"
+				+ ", content    = ? \r\n"
+				+ ", phone      = ? \r\n"
+				+ ", category  = ? \r\n"
+				+ ", starttime  = ? \r\n"
+				+ ", endtime   = ? \r \n"
+				+ ", status      = ? \r\n"
+				+ ", flag           = ? \r\n"
+				+ " where volunteerid = ? and authorid=?  and flag = 'o' "; // 물음표 10개
+	
+		PreparedStatement pStmt = con.prepareStatement(sql);
+		pStmt.setString(1, vo.getTitle());      // title
+		pStmt.setString(2, vo.getContent());    // content
+		pStmt.setString(3, vo.getPhone());      // phone
+		pStmt.setString(4, vo.getCategory());   // category
+		pStmt.setTimestamp(5, Timestamp.valueOf(vo.getStartTime()));  // starttime
+		pStmt.setTimestamp(6, Timestamp.valueOf(vo.getEndTime()));    // endtime
+		pStmt.setString(7, vo.getStatus());     // status
+		pStmt.setString(8, vo.getOfferFlag());       // flag
+		pStmt.setLong(9, vo.getPostId());  // volunteerid
+		pStmt.setString(10, vo.getAuthorId());  // authorid
+
+		// 쿼리 실행
+		pStmt.executeUpdate();
+		
+		pStmt.close();
+		con.close();
 	}
 	
 	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
