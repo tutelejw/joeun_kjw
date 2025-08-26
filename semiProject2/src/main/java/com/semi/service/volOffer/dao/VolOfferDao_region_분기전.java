@@ -15,12 +15,12 @@ import com.semi.common.util.DBUtil;
 import com.semi.domain.VolOffer;
 
 
-public class VolOfferDao2 {
+public class VolOfferDao_region_분기전 {
 	
 	///Field 
 	
 	///Constructor
-	public VolOfferDao2() {
+	public VolOfferDao_region_분기전() {
 	}
 
 	///Method
