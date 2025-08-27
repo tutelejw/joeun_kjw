@@ -1,0 +1,436 @@
+/* =========================================================
+   0) Tokens & Base
+   ========================================================= */
+:root {
+  /* 색상 토큰 */
+  --bg:#f7f8fa;
+  --surface:#ffffff;
+  --ink:#333333;
+  --subtle-ink:#666666;
+  --line:#e6e9ef;
+  --hover:#eef2f7;
+  --accent:#9db8ff;
+
+  /* 폰트 토큰 */
+  --font-base: 'Spoqa Han Sans Neo','Inter','Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-weight-normal: 500;
+  --font-weight-bold: 600;
+}
+
+*{box-sizing:border-box}
+html, body {
+  font-family: 'Spoqa Han Sans Neo', 'Inter', 'Noto Sans KR',
+               system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;   /* 기본 두께(너무 얇지도 두껍지도 않게) */
+  letter-spacing: 0.1px; /* 살짝 또렷하게 */
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Layout (sticky footer) */
+body{ min-height:100vh; display:flex; flex-direction:column; }
+.container-main{ flex:1; }
+
+/* 공통 컴포넌트 */
+.page-title{ text-align:center; font-size:22px; font-weight:700; margin-bottom:24px; }
+.actions.btn-row{ display:flex; justify-content:center; gap:12px; margin-top:20px; }
+
+/* =========================================================
+   1) Topbar / Nav / Dropdown / Welcome
+   ========================================================= */
+   
+   
+   
+   /* 탑메뉴 전용 폰트 */
+/* 폰트는 상속만—크기/두께/패딩만 관리 */
+.topbar .brand a,
+.topbar .nav a,
+.topbar .nav button,
+.topbar .dropdown-toggle,
+.topbar .login-link,
+.topbar .logout-link,
+.topbar .user-greet {
+  font: inherit;          /* 폰트/크기/두께 전부 상속 */
+  font-weight: 600;       /* 메뉴는 살짝 강조 */
+}
+
+   
+.topbar{ position:relative; width:100%; background:var(--surface); border-bottom:1px solid var(--line); margin: 0;
+  padding: 0;  }
+.topbar .container{
+  max-width:none; width:100%; margin:0 auto; padding:12px 37px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{ margin-right:auto; }
+.brand a{ display:inline-block; font-weight:700; letter-spacing:.2px; text-decoration:none; color:var(--ink); background:none; border:0; padding:0; }
+
+/* ✅ Nav 간격/패딩 통일 */
+.topbar .nav{
+  display:flex; align-items:center;
+  gap:20px !important;           /* 모든 항목 동일 간격 */
+}
+.topbar .nav a,
+.topbar .nav button{
+  appearance:none; border:0; background:none; border-radius:0;
+  font-weight:600; text-decoration:none; color:var(--ink); line-height:1; cursor:pointer;
+  transition:color .15s ease;
+  padding:8px 16px;              /* 링크/버튼 패딩 통일 */
+}
+.topbar .nav a:hover,.topbar .nav button:hover{ color:var(--subtle-ink); }
+.topbar .nav a:focus-visible,.topbar .nav button:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--accent); }
+
+/* 상단 메뉴 호버/채움 효과 (시각 효과, 간격은 gap으로 유지) */
+.topbar .nav > a{
+  display:inline-block; border-radius:0; background-color:transparent; color:inherit;
+  transition:padding .28s ease, background-color .22s ease, color .22s ease, box-shadow .22s ease;
+}
+.topbar .nav > a:hover,
+.topbar .nav > a:focus-visible{
+  background-color:#ff7a00; color:#fff; box-shadow:none; text-decoration:none;
+  padding:14px 24px;             /* 시각적 확대 */
+}
+.topbar .nav > a.active{ background-color:#ff7a00; color:#fff; }
+
+.topbar .dropdown {
+  position: relative;
+  min-width: 0 !important;       /* 불필요한 최소 폭 제거 */
+}
+
+.topbar .dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: inherit !important; /* 주변 메뉴와 동일 크기 */
+  font-weight: 600 !important;   /* 동일 굵기 */
+  padding: 8px 16px !important;  /* 동일 패딩 */
+  line-height: 1 !important;
+  background: transparent !important;
+  border: 0 !important;
+  color: inherit !important;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 200px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+  display: none;
+  box-shadow: 0 10px 30px rgba(20,20,20,.06);
+  z-index: 10;
+}
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.dropdown-menu a:hover {
+  background: var(--hover);
+  border-color: #dfe5ee;
+}
+
+/* 홍길동님 문구를 다른 메뉴와 동일 스펙으로 맞춤 */
+.topbar .nav .user-greet {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px !important;   /* 메뉴와 동일 */
+  font-weight: 600 !important;  /* 메뉴와 동일 */
+  line-height: 1;
+  padding: 8px 16px !important; /* 메뉴와 동일 */
+  color: inherit;
+  margin: 0 !important;         /* gap만으로 간격 관리 */
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   2) Hero / Slogan (홈)
+   ========================================================= */
+.hero{
+  background:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:16px;
+  padding:60px 28px;
+  text-align:center;
+  backdrop-filter:blur(12px) saturate(120%); -webkit-backdrop-filter:blur(12px) saturate(120%);
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+  max-width:1000px; margin:40px auto;
+}
+.hero h1{
+  font-size:2.2rem; font-weight:700; line-height:1.4; margin:0;
+  font-family:"Noto Serif KR","Noto Sans KR",serif; color:#333;
+}
+.hero h1 .highlight{ color:#DF8F6B; font-weight:800; }
+.hero h1 .warm{ color:#E4572E; font-weight:800; }
+
+/* 슬로건: 이미지 위 좌측 고정 */
+.slogan-box{
+  position:absolute; z-index:2; top:100px !important; left:20px !important;
+  margin:0 !important; padding:0; max-width:600px;
+  color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+.slogan-box h1{
+  font-weight:800; line-height:1.3; margin:0;
+  font-size:clamp(30px, 5vw, 50px) !important;
+}
+@media (max-width:640px){
+  .slogan-box{ top:20px; left:10px; max-width:90%; }
+}
+
+/* =========================================================
+   3) Cards (그리드 + 호버 복구)
+   ========================================================= */
+.cards{
+  display:grid; gap:20px;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  max-width:1100px;
+  margin:420px auto 60px !important; /* 슬로건 아래로 */
+  padding:0 24px;
+  perspective:1200px;
+  position:relative; z-index:0; pointer-events:auto;
+}
+.card{
+  background:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:14px; padding:22px 18px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+  backdrop-filter:blur(15px) saturate(120%); -webkit-backdrop-filter:blur(15px) saturate(120%);
+
+  position:relative; z-index:1; pointer-events:auto;
+  transform:translateZ(0);
+  will-change:transform, box-shadow;
+  transition:
+    transform .28s cubic-bezier(.2,.7,.2,1),
+    box-shadow .28s cubic-bezier(.2,.7,.2,1),
+    border-color .28s ease,
+    background-color .28s ease !important;
+}
+.card:hover{
+  transform:translateY(-8px) scale(1.02) !important;
+  box-shadow:0 18px 40px rgba(0,0,0,.18) !important;
+  border-color:rgba(255,255,255,.6) !important;
+  background:rgba(255,255,255,.72) !important;
+}
+.card:focus-within,.card:focus-visible{
+  outline:none;
+  transform:translateY(-6px) scale(1.01) !important;
+  box-shadow:0 18px 40px rgba(0,0,0,.18), 0 0 0 3px color-mix(in srgb, var(--accent) 55%, #fff) !important;
+}
+.card .card-title{ font-weight:700; margin-bottom:6px; font-size:15px; }
+.card .card-meta{ color:var(--subtle-ink); font-size:12px; transition:opacity .2s ease; }
+.card:hover .card-meta{ opacity:.9; }
+.card--wide{ max-width:1000px; margin:24px auto; padding:42px; }
+.card .fly{ transition:transform .28s cubic-bezier(.2,.7,.2,1); }
+.card:hover .fly{ transform:translateY(-2px); }
+@media (prefers-reduced-motion:reduce){
+  .card{ transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease; }
+  .card:hover{ transform:none; }
+}
+
+/* =========================================================
+   4) Forms
+   ========================================================= */
+/* (기존 .form-wrap 등등의 코드...) */
+
+/* ✅ [추가] 유효성 검증 에러 메시지 */
+.error-message {
+  color: #dc3545; /* 빨간색 계열 */
+  font-size: 0.9em;
+  margin-top: 5px;
+  min-height: 1em; /* 메시지 표시/숨김 시 레이아웃 흔들림 방지 */
+}
+
+/* ✅ [추가] 유효성 검증 실패 시 input/textarea 테두리 스타일 */
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+/* (기존 .btn 등등의 코드...) */
+.form-wrap{
+  max-width:720px; margin:40px auto; padding:24px;
+  background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.3);
+  border-radius:14px; backdrop-filter:blur(12px) saturate(120%); -webkit-backdrop-filter:blur(12px) saturate(120%);
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+.form-title{ margin:0 0 16px; font-size:22px; font-weight:700; }
+.form-sub{ margin:0 0 20px; color:var(--subtle-ink); }
+.form-grid{ display:grid; gap:12px; }
+@media(min-width:640px){ .form-grid.cols-2{ grid-template-columns:1fr 1fr; } }
+.form-row{ display:flex; flex-direction:column; gap:8px; }
+.form-label{ font-weight:600; color:var(--subtle-ink); }
+
+.input,.select,.textarea{
+  width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink);
+  outline:none; transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.input:focus,.select:focus,.textarea:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent); }
+.input[disabled],.select[disabled]{ background:var(--hover); color:var(--subtle-ink); }
+input[type="date"],input[type="tel"],input[type="password"]{ height:44px; }
+
+.form-help{ font-size:12px; color:var(--subtle-ink); }
+.form-error{ font-size:13px; color:#dc2626; }
+.form-alert{
+  padding:10px 12px; background:color-mix(in srgb,#dc2626 8%,#fff);
+  border:1px solid color-mix(in srgb,#dc2626 28%,#fff); color:#b91c1c; border-radius:12px; margin:0 0 16px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:36px; padding:6px 14px; border:none; border-radius:8px; cursor:pointer;
+  background:var(--ink); color:#fff; font-size:14px; font-weight:600; transition:background .2s ease, transform .1s ease;
+}
+.btn:hover{ background:#444; }
+.btn:active{ transform:translateY(1px); }
+
+/* =========================================================
+   5) Theme: Warm (전역 오버라이드)
+   ========================================================= */
+body.theme-warm{
+  --bg:#FFF7F2; --surface:rgba(255,255,255,.88);
+  --ink:#3A2F2B; --subtle-ink:#7A6E68; --line:#EBDDD3; --hover:#FBF0E6; --accent:#DF8F6B;
+}
+body.theme-warm .topbar{ background:var(--surface); border-bottom:1px solid var(--line); }
+body.theme-warm .dropdown-menu{ background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:0 10px 30px rgba(20,20,20,.06); }
+body.theme-warm .dropdown-menu a{ color:var(--ink); }
+body.theme-warm .dropdown-menu a:hover{ background:var(--hover); border-color:#e8d8cd; }
+
+body.theme-warm .hero,
+body.theme-warm .card,
+body.theme-warm .form-wrap{
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(235,221,211,.7);
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(154,120,98,.18);
+}
+body.theme-warm .page-title,
+body.theme-warm .form-title{ color:var(--ink); text-align:left; margin-bottom:16px; }
+body.theme-warm .form-sub{ color:var(--subtle-ink); }
+
+body.theme-warm .input,.theme-warm .select,.theme-warm .textarea{
+  border-color:#EAD7C7; background:rgba(255,255,255,.96); color:var(--ink);
+}
+body.theme-warm .input:focus,.theme-warm .select:focus,.theme-warm .textarea:focus{
+  border-color:color-mix(in srgb,var(--accent) 65%,#fff);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 32%,#fff);
+}
+body.theme-warm .btn{
+  min-height:38px; padding:8px 16px; border-radius:10px; background:var(--accent); color:#fff; font-weight:600;
+}
+body.theme-warm .btn:hover{ background:color-mix(in srgb,var(--accent) 85%,#fff); }
+body.theme-warm .btn.secondary{ background:#98B29E; }
+body.theme-warm .btn.secondary:hover{ background:#6F9076; }
+
+/* Table */
+body.theme-warm .table{
+  width:100%; background:var(--surface);
+  border-collapse:collapse; border-radius:14px; overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+body.theme-warm .table thead th{
+  text-align:left; color:var(--subtle-ink); background:#FDF3E7; border-bottom:1px solid var(--line); padding:12px 16px; font-weight:600;
+}
+body.theme-warm .table tbody td{ border-bottom:1px solid #F1E5DA; padding:12px 16px; }
+body.theme-warm .table tbody tr:hover{ background:var(--hover); }
+body.theme-warm .pagination .btn{ min-width:80px; }
+body.theme-warm .form-alert{
+  background:color-mix(in srgb,var(--accent) 8%,#fff);
+  border:1px solid color-mix(in srgb,var(--accent) 28%,#fff);
+  color:#7A2D19;
+}
+
+/* Warm 레이아웃 */
+body.theme-warm .container-main{ display:block; padding:40px 0 64px; min-height:auto; }
+body.theme-warm .page-wrap{ max-width:1100px; margin:0 auto; padding:0 16px; }
+body.theme-warm .page-wrap .form-wrap{ margin:0 auto; max-width:720px; width:100%; }
+
+/* =========================================================
+   6) Footer
+   ========================================================= */
+   
+   /* 푸터 */
+.footer {
+  margin: 0;
+  padding: 0;   /* 필요하다면 조정 */
+}
+footer.site-footer{
+  border-top:1px solid var(--line);
+  background:var(--surface);
+  color:var(--subtle-ink);
+  padding:8px 20px 16px;
+  text-align:center;
+  font-size:14px;
+}
+.footer-inner{
+  max-width:1100px; margin:0 auto;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; gap:4px;
+}
+footer.site-footer p{ margin:2px 0; line-height:1.4; }
+.footer-brand .logo{ font-weight:600; font-size:16px; color:var(--subtle-ink); margin-right:6px; }
+.footer-brand .tagline{ font-size:14px; color:var(--subtle-ink); }
+.footer-meta .links a{ color:var(--subtle-ink); text-decoration:none; margin:0 6px; transition:color .2s ease; }
+.footer-meta .links a:hover{ color:var(--ink); }
+
+/* 정책 페이지 가독성 */
+.policy-h{ font-weight:700; font-size:18px; margin:18px 0 8px; color:var(--ink); }
+.policy-list{ margin:8px 0 12px 18px; padding:0; list-style:disc; }
+.policy-toc{
+  margin:0; padding:0; list-style:none;
+  display:grid; gap:8px; grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+}
+.policy-toc a{
+  display:block; padding:10px 12px; border:1px solid var(--line);
+  border-radius:12px; text-decoration:none; color:var(--ink);
+  background:var(--surface);
+  transition:background .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+.policy-toc a:hover{ background:var(--hover); transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.06); }
+
+
+
+/* 우측 인사 문구: 톤다운 + 한 줄 유지  홍길동님 함꼐하는동행효과*/
+.user-greet{
+  font-size:13px;
+  font-weight:500;
+  color:var(--subtle-ink);
+  margin-left:8px;          /* 로그아웃과 간격 */
+  white-space:nowrap;        /* 줄바꿈 방지 */
+  cursor:default;
+  display:inline-block;
+  transition:opacity .4s ease;  /* 부드러운 전환 */
+}
+.user-greet.fading { opacity:0; } /* 페이드용 상태 */
+
+/* =========================================================
+브랜드 소개
+   ========================================================= */
+
+@media (min-width: 992px) {
+  .brand-hero {
+    position: relative;
+    padding-right: 440px;   /* 글자 영역 확보(기존 420이라면 440으로 살짝 확대) */
+  }
+  .brand-hero .brand-art {
+    position: absolute;     /* hero 기준 고정 */
+    right: -12px;           /* → 더 오른쪽: -20~-8px 범위에서 조정 */
+    top: -24px;             /* ↑ 더 위: -24~-18px, ↓ 더 아래: -10~0px */
+    width: 360px;           /* 크기 유지(필요시 340~380로만 조정) */
+    margin: 0;
+    z-index: 1;
+  }
+}
