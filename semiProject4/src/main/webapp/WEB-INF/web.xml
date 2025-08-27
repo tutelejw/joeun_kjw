@@ -51,6 +51,10 @@
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+		<!-- Quartz 스케줄러 부트 리스너 -->
+	<listener>
+		<listener-class>com.semi.batch.QuartzBootListener</listener-class>
+	</listener>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file> 

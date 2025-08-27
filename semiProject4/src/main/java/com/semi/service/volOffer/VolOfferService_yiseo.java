@@ -18,7 +18,7 @@ public interface VolOfferService {
 	
 	public Map<String, Object> getVolOfferList(Search search, String region) throws Exception;
 	
-	public void updateVolOffer(VolOffer volOffer) throws Exception;
+	public void updateVolOffer(VolOffer volOffer) throws Exception; 
 	
 	//public boolean checkDuplication(String volOfferId) throws Exception;
 	

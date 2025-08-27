@@ -31,9 +31,9 @@ public class VolOfferServiceImpl implements VolOfferService{
 		return volOfferDao.getVolOfferList(search, region);
 	}
 
-	public void updateVolOffer(VolOffer volOffer) throws Exception {
+	public void updateVolOffer(VolOffer volOffer) throws Exception { //삭제추가(이서)
 		volOfferDao.updateVolOffer(volOffer);
-	}
+	} 
 
 //	public boolean checkDuplication(String volOfferId) throws Exception {
 //		boolean result=true;
@@ -79,5 +79,6 @@ public class VolOfferServiceImpl implements VolOfferService{
             throw new IllegalStateException("삭제에 실패했습니다.");
         }
     }
+	
 	
 }

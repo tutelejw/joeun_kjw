@@ -93,6 +93,8 @@ public class VolOfferDao {
 		con.close();
 		
 		return volOffer;
+		
+		
 	}
 
 	public Map<String , Object> getVolOfferList(Search search,String region) throws Exception {
@@ -105,21 +107,18 @@ public class VolOfferDao {
 		String sql = "SELECT VOLUNTEERID, AUTHORID, '(' || CATEGORY || ')' || TITLE AS CAT_TITLE, \r\n"
 				+ "	CREATEDAT, STARTTIME, ENDTIME,\r\n"
 				+ " REGION, STATUS, FLAG \r\n"
-				+ " FROM VOLUNTEER "
-				+ " where flag = 'o' ";
+				+ " FROM VOLUNTEER ";
 		
 
 		
 		if (search.getSearchCondition() != null) {
 			if ( search.getSearchCondition().equals("0") &&  !search.getSearchKeyword().equals("") ) {
-				sql += "  or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
-//				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
+				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
 //		        hasWhereClause = true; // ✅ 이거 추가
 //		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
 //		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
 			} else if ( search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
-				sql += "  or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
-//				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
+				sql += " WHERE flag = 'o' or 1010='" + search.getSearchKeyword()+"'";//where 1010은 임시값-조건없어서 조회되게 만들어놓음
 //		        hasWhereClause = true; // ✅ 이거 추가
 //		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
 //		        System.out.println("hasWhereClause 값 확인 : " + hasWhereClause);
@@ -135,8 +134,7 @@ public class VolOfferDao {
 			if (hasWhereClause) {
 				sql += " AND REGION = '" + region + "'";
 			} else {
-				sql += " AND REGION = '" + region + "'";
-//				sql += " WHERE REGION = '" + region + "'";
+				sql += " WHERE REGION = '" + region + "'";
 				hasWhereClause = true;
 			}
 			System.out.println("Region 조건 추가됨: " + region);
@@ -211,11 +209,11 @@ public class VolOfferDao {
 				+ ", phone      = ? \r\n"
 				+ ", category  = ? \r\n"
 				+ ", starttime  = ? \r\n"
-				+ ", endtime   = ? \r\n"
+				+ ", endtime   = ? \r \n"
+				+ ", status      = ? \r\n"
 				+ ", flag           = ? \r\n"
-//				+ " where volunteerid = ? and authorid=?  and flag = 'o' "; // 물음표 10개
-		+ " where volunteerid = ?  and flag = 'o' "; // 물음표 10개
-	System.out.println("VolOfferDao - updateVolOffer sql : " + sql );
+				+ " where volunteerid = ? and authorid=?  and flag = 'o' "; // 물음표 10개
+	
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		pStmt.setString(1, vo.getTitle());      // title
 		pStmt.setString(2, vo.getContent());    // content
@@ -223,26 +221,13 @@ public class VolOfferDao {
 		pStmt.setString(4, vo.getCategory());   // category
 		pStmt.setTimestamp(5, Timestamp.valueOf(vo.getStartTime()));  // starttime
 		pStmt.setTimestamp(6, Timestamp.valueOf(vo.getEndTime()));    // endtime
-		pStmt.setString(7, vo.getOfferFlag());       // flag
-		pStmt.setLong(8, vo.getPostId());  // volunteerid
-		//pStmt.setString(10, vo.getAuthorId());  // authorid
+		pStmt.setString(7, vo.getStatus());     // status
+		pStmt.setString(8, vo.getOfferFlag());       // flag
+		pStmt.setLong(9, vo.getPostId());  // volunteerid
+		pStmt.setString(10, vo.getAuthorId());  // authorid
 
-		 // 로그로 출력
-	    System.out.println("SQL 쿼리: " + sql);
-	    System.out.println("값들: " + vo.getTitle() + ", " + vo.getContent() + ", " 
-	            + vo.getPhone() + ", " + vo.getCategory() + ", "
-	            + vo.getStartTime() + ", " + vo.getEndTime() + ", " 
-	            + vo.getStatus() + ", " + vo.getOfferFlag() + ", "
-	            + vo.getPostId() + ", " + vo.getAuthorId());
-
-	    int rowsAffected = pStmt.executeUpdate();
-
-	    // 영향받은 행의 수 확인
-	    System.out.println("영향받은 행의 수: " + rowsAffected);
-	    
-	    if (rowsAffected == 0) {
-	        System.out.println("업데이트된 데이터가 없습니다. 조건을 확인하세요.");
-	    }
+		// 쿼리 실행
+		pStmt.executeUpdate();
 		
 		pStmt.close();
 		con.close();
@@ -282,7 +267,7 @@ public class VolOfferDao {
 		
 		return sql;
 	}
-
+	
 	
 	//----------------------
     /** * 작성자 ID 조회
@@ -335,5 +320,4 @@ public class VolOfferDao {
             try { if (con != null) con.close(); } catch (Exception ignore) {}
         }
     }
-
 }

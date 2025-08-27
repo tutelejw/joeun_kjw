@@ -7,18 +7,9 @@
 <head>
 <title>손길나눔상세보기</title>
 <link rel="stylesheet" href="/css/site.css" type="text/css">
-
-	<script type="text/javascript">
-        // 삭제 확인 창을 띄우는 함수
-        function fn_deleteVolOffer() {
-            if (confirm("정말로 삭제하시겠습니까?")) {
-                document.getElementById("deleteForm").submit();
-            }
-        }
-    </script>
 <style>
 
-        /* 테이블의 배경을 반투명하게 */
+        /* 테이블의 배경을  반투명하게 */
     table {
         background-color: rgba(255, 255, 255, 0.9); /* White with 90% opacity */
     }
@@ -105,52 +96,37 @@
         <p>로그인한 사용자 ID: ${sessionScope.userId}</p>
         <p>게시물 작성자 ID: ${volOffer.authorId}</p>
     </div>
-    
-        <form id="deleteForm" action="/deleteVolOffer.do" method="POST" style="display:none;">
-        <input type="hidden" name="volunteerId" value="${volOffer.postId}">
-    	</form>
-    
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-    <tr>
-        <td width="53%"></td>
-        <td align="right">
-            <table border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <%-- 바로 이 부분! c:if 태그로 조건을 검사해서 버튼들을 감싸줬어! --%>
-                    <c:if test="${sessionScope.user.userId != null && sessionScope.user.userId == volOffer.authorId}">
-                        
-                        <%-- 수정 버튼 --%>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+        <tr>
+            <td width="53%"></td>
+            <td align="right">
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
                         <td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
-                        <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-                            <a href="/updateVolOfferView.do?postId=${volOffer.postId}">수정</a>
-                        </td>
-                        <td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
-                        <td width="10"></td>
-
-                        <%-- 삭제 버튼 --%>
-                        <td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
-                        <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-                            <a href="javascript:fn_deleteVolOffer();">삭제</a>
-                        </td>
+					    <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					        <!-- 로그인한 사용자와 작성자ID가 동일한 경우에만 '수정' 버튼을 표시 -->
+					        <c:if test="${sessionScope.userId != null && sessionScope.userId == volOffer.authorId}">
+					            <a href="/updateVolOfferView.do?postId=${volOffer.postId}">수정</a>
+					        </c:if>
+					    </td>
                         <td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
                         <td width="30"></td>
-
-                    </c:if>
-
-
-
-                    <%-- 확인(목록) 버튼 (이건 항상 보여야 하니까 c:if 밖에 있어!) --%>
-                    <td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
-                    <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-                        <a href="/listVolOffer.do">확인</a>
-                    </td>
-                    <td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+                        
+                        
+                        
+                        
+                        
+                        <td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
+                        <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+                            <a href="/listVolOffer.do">확인</a>
+                        </td>
+                        <td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
 </body>
 <%@ include file="/common/footer.jspf" %>
