@@ -208,7 +208,7 @@ public class VolOfferDao {
 		Connection con = DBUtil.getConnection();
 		
 	    String sql = "INSERT INTO volunteer (volunteerid, authorid, title, content, phone, region, category, starttime, endtime, status, flag, createdat) "
-                + "VALUES (seq_volunteer.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (seq_volunteer.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'o', ?)";
 		System.out.println("insertVolOffer : " + sql);
 		PreparedStatement pStmt = con.prepareStatement(sql);
         // 파라미터 설정
@@ -223,9 +223,9 @@ public class VolOfferDao {
 	    pStmt.setTimestamp(7, Timestamp.valueOf(volOffer.getStartTime())); // starttime
 	    pStmt.setTimestamp(8, Timestamp.valueOf(volOffer.getEndTime()));   // endtime
 		pStmt.setString(9, volOffer.getStatus());    // (모집 상태: 모집중/모집완료/봉사완료/만료)
-		pStmt.setString(10, volOffer.getOfferFlag());     // flag -> offerFlag (상태 플래그: 'r' 또는 'o')
+		//pStmt.setString(10, volOffer.getOfferFlag());     // flag -> offerFlag (상태 플래그: 'r' 또는 'o')
 	    // createdAt을 현재 시간으로 설정(DB default로 입력되나. 가독성을 위헤 추가함..)
-	    pStmt.setTimestamp(11, Timestamp.valueOf(LocalDateTime.now())); // createdAt: 현재 시간
+	    pStmt.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // createdAt: 현재 시간
 		pStmt.executeUpdate();
 		
 		pStmt.close();

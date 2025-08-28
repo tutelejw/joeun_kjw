@@ -37,7 +37,7 @@
   <!-- 오른쪽: 등록 버튼 (로그인 시에만 표시) -->
   <div class="paging-actions" style="margin-left:auto;">
     <c:if test="${not empty sessionScope.user}">
-      <a href="<c:url value='/addVolRequestView.do'/>" class="btn">등록</a>
+      <a href="<c:url value='/addVolOfferView.do'/>" class="btn">등록</a>
     </c:if>
   </div>
 </div>
