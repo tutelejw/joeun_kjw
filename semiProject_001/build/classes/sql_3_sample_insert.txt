@@ -48,7 +48,7 @@ END;
 /
 commit;
 
--- 3. volunteer 10건
+-- 3. volunteer 30건
 BEGIN
   FOR i IN 1..30 LOOP
     DECLARE
