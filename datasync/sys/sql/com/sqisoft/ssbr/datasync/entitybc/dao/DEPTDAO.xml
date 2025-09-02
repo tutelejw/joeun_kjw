@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statements>
+
+	<statement name="retrieveDeptList">
+        SELECT
+                a.DEPTCODE as ORG_CD,
+                a.DEPTNAME as ORG_NM,
+                a.PARCODE as SUPER_ORG_CD,
+                1 as SEQ
+        FROM VW_DEPT a
+
+	</statement>
+	
+	<statement name="insertDept">
+    	INSERT INTO post_dept ( dept_id, dept_name, par_id, seq, updt_dt ) 
+    	VALUES ( ?, ?, ifnull(?,''), ?, now() ) ON DUPLICATE KEY UPDATE 
+    	dept_name = ?, par_id  = ifnull(?,''), seq = ? , updt_dt=now()
+	</statement>
+	
+	<statement name="deleteDept">
+    	DELETE FROM post_dept where ( now() - updt_dt ) > 604800
+	</statement>
+	
+</statements>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statements>
+				
+ 	<statement name="retrieveUserList">
+		SELECT 
+			a.EMPCODE as USERID, 
+			a.NAME as USERNAME, 
+			LOWER(RAWTOHEX(UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_DECODE(UTL_RAW.CAST_TO_RAW(a.PWD))))) as USERPSWD, 
+			a.DEPTCODE as DEPTID, 
+			a.DEPTNAME as DEPTNAME, 
+			a.POSNAME as DUTYNAME, 
+			1 as SEQ, 
+			'' as EMAIL, 
+			'' as TEL, 
+			'' as PHONE, 
+			'1' as STAT
+		FROM VW_HR_USER a
+		WHERE a.PWD is not null and a.EMPCODE not like 'A%' and a.EMPCODE not like 'B%' and a.EMPCODE not like 'G%' and a.EMPCODE not like 'm%' and a.EMPCODE not like '6%'
+	</statement>
+	
+	<statement name="insertUser">
+    	INSERT INTO user_ssbr ( user_no, user_id, user_name , user_pswd , user_dept, user_dept_name, user_mail, user_dept_rank, user_telhp, user_telno, user_stat, ins_dt, fm_profile_code, team_manager )
+    	VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , now(), 1, 0)
+    	ON DUPLICATE KEY UPDATE
+    		user_name = ?
+    		, user_pswd = ?
+    		, user_dept  = ?
+    		, user_dept_name  = ?
+		, user_mail = ?
+    		, user_dept_rank = ifnull(?,user_dept_rank)
+		, user_telhp = ?
+		, user_telno = ?
+    		, user_stat = ?
+    		, upt_dt = now()
+	</statement>
+	
+	<statement name="deleteUser">
+    	DELETE FROM user_ssbr where ( now() - upt_dt ) > 604800 and user_no =!'' and user_no!='0'
+	</statement>
+	
+</statements>

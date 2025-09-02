@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statements>
+ 	<statement name="retrievePostUserList">
+		SELECT user_id AS USERID, '' as MAILID, user_name AS USERNAME, user_dept AS DEPTID, user_dept_name AS DEPTNAME, user_dept_rank AS DUTYNAME, 1 as SEQ, now() AS "UPDATE", '1' AS USEFLAG
+		FROM user_ssbr
+		WHERE user_dept_rank LIKE '%팀장%'
+	</statement>
+	 	
+	<statement name="insertPostUser">
+    	INSERT INTO post_user(user_id, mail_id, name, dept_id, dept_name, duty_name, seq, updt_dt, use_flag) 
+    	VALUES (?, ?, ?, ?, ?, ?, ?, now(), 1) 
+    	ON DUPLICATE KEY UPDATE updt_dt = now() ,comnl_reg_flag=0
+	</statement>
+	
+	<statement name="deletePostUser">
+    	DELETE FROM post_user WHERE comnl_reg_flag=0 and ( now() - updt_dt ) > 604800
+	</statement>
+	
+</statements>
