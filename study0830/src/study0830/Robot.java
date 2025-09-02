@@ -33,5 +33,15 @@ public class Robot {
 		Activable activableRobotActivable = robot_imp;
 		activableRobotActivable.activate();
 		
+		controlRobot(robot_imp);
 	}//end of main
+
+	public static void controlRobot(Movable robotToMove) {
+		robotToMove.move();
+		if(robotToMove instanceof Activable) {
+			System.out.println("로봇이 활성화 가능");
+		}
+	}
 }
+
+
