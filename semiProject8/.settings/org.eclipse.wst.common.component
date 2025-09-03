@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="semiProject8">
+                
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <dependent-module archiveName="commons-fileupload-1.2.1.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-fileupload-1.2.1/commons-fileupload-1.2.1">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="ojdbc14.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/ojdbc14/ojdbc14">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="slf4j-simple-1.7.36.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/slf4j-simple-1.7.36/slf4j-simple-1.7.36">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="quartz-2.3.2.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/quartz-2.3.2/quartz-2.3.2">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="javax.servlet.jsp.jstl-1.2.1.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/javax.servlet.jsp.jstl-1.2.1/javax.servlet.jsp.jstl-1.2.1">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="slf4j-api-1.7.36.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/slf4j-api-1.7.36/slf4j-api-1.7.36">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="commons-io-1.4.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-io-1.4/commons-io-1.4">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="javax.servlet.jsp.jstl-api-1.2.1.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/javax.servlet.jsp.jstl-api-1.2.1/javax.servlet.jsp.jstl-api-1.2.1">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
+                
         <property name="context-root" value="semiProject8"/>
+                
         <property name="java-output-path" value="/semiProject8/build/classes"/>
+            
     </wb-module>
+    
 </project-modules>
