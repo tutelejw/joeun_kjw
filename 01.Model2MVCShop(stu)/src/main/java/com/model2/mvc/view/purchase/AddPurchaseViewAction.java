@@ -15,63 +15,46 @@ import com.model2.mvc.service.product.vo.ProductVO;
 public class AddPurchaseViewAction extends Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	    // 1. request 파라미터 값 먼저 디버깅
-		String prodNo = request.getParameter("prodNo");
-	    String prodName = request.getParameter("prodName");
-	    String fileName = request.getParameter("fileName");
-	    String prodDetail = request.getParameter("prodDetail");
-	    String manuDate = request.getParameter("manuDate");
-	    String priceStr = request.getParameter("price");
-	    String regDateStr = request.getParameter("regDate");
+        // 1. prodNo 파라미터 받기
+        String prodNoStr = request.getParameter("prodNo");
 
-	    System.out.println("==== [요청 파라미터 디버깅] ====");
-	    System.out.println("prodNo   : " + prodNo);
-	    System.out.println("prodName   : " + prodName);
-	    System.out.println("fileName   : " + fileName);
-	    System.out.println("prodDetail : " + prodDetail);
-	    System.out.println("manuDate   : " + manuDate);
-	    System.out.println("price      : " + priceStr);
-	    System.out.println("regDate    : " + regDateStr);
-	    System.out.println("================================");
+        System.out.println("==== [디버깅] AddPurchaseViewAction 진입 ====");
+        System.out.println("[파라미터] prodNo : " + prodNoStr);
+        System.out.println("===========================================");
 
-	    // 2. ProductVO 생성 및 값 세팅
-	    ProductVO productVO = new ProductVO();
-	    productVO.setProdNo(Integer.parseInt(prodNo));
-	    productVO.setProdName(prodName);
-	    productVO.setFileName(fileName);
-	    productVO.setProdDetail(prodDetail);
-	    productVO.setManuDate(manuDate);
+        if (prodNoStr == null || prodNoStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("[에러] 상품 번호(prodNo)가 전달되지 않았습니다.");
+        }
 
-	    // 숫자 파싱 처리
-	    if (priceStr != null && !priceStr.isEmpty()) {
-	        productVO.setPrice(Integer.parseInt(priceStr));
-	    } else {
-	        System.out.println("[경고] 가격 정보가 없습니다. priceStr: " + priceStr);
-	    }
+        int prodNo = 0;
+        try {
+            prodNo = Integer.parseInt(prodNoStr);
+        } catch (NumberFormatException e) {
+            System.out.println("[에러] prodNo 파싱 실패: " + prodNoStr);
+            e.printStackTrace();
+            throw e;
+        }
 
-	    // 날짜 파싱 처리
-	    if (regDateStr != null && !regDateStr.isEmpty()) {
-	        try {
-	            java.sql.Date sqlDate = java.sql.Date.valueOf(regDateStr);  // 문자열 → java.sql.Date
-	            productVO.setRegDate(sqlDate);
-	        } catch (IllegalArgumentException e) {
-	            System.out.println("[에러] regDate 형식이 잘못되었습니다: " + regDateStr);
-	            e.printStackTrace();
-	        }
-	    }
+        // 2. 서비스 호출해서 DB에서 상품 정보 조회
+        ProductService service = new ProductServiceImpl();
+        ProductVO productVO = service.getProduct(prodNo);
 
-	    // 디버깅 출력
-	    System.out.println("[디버깅] ProductVO 상태 ↓↓↓↓↓");
-	    System.out.println(productVO);
+        if (productVO == null) {
+            throw new IllegalStateException("[에러] 해당 상품을 찾을 수 없습니다. prodNo=" + prodNo);
+        }
 
-	    // 3. 서비스 호출
-	    ProductService service = new ProductServiceImpl();
-	    service.addProduct(productVO);
+        // 3. 디버깅 출력
+        System.out.println("==== [디버깅] 조회된 ProductVO 정보 ====");
+        System.out.println(productVO);
+        System.out.println("===================================");
 
-	    // 4. 이동
-	    return "forward:/purchase/addPurchaseView.jsp";
+        // 4. request scope에 저장해서 JSP에서 사용할 수 있도록 전달
+        request.setAttribute("vo", productVO);
+
+        // 5. forward 방식으로 JSP 이동
+        return "forward:/purchase/addPurchaseView.jsp";
 		//return "redirect:/product/addPurchaseView.jsp";
 		//return "redirect:/product/listProduct.jsp";
 	}

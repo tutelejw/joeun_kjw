@@ -34,9 +34,11 @@
 	</tr>
 </table>
 
+<!-- form 시작: 구매 요청 시 필요한 모든 값들을 같이 전달 -->
+<!-- <form action="/addPurchaseView.do" method="post"> -->
 
-
-!-- 상품정보 테이블 시작 -->
+<form action="/addPurchase.do" method="post">
+<!-- 상품정보 테이블 시작 -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 13px;">
   <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
 
@@ -140,7 +142,7 @@
 					</td>
 					<!--  구매버튼 추가함 25/09/03 추가함  -->
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/addPurchaseView.do?prod_no=10002">구매</a>
+					<input type="submit" value="구매">
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -159,6 +161,8 @@
 		</td>
 	</tr>
 </table>
+
+</form>
 
 </body>
 </html>

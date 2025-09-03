@@ -15,6 +15,7 @@ public class AddPurchaseAction extends Action {
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
 		ProductVO productVO=new ProductVO();
+		productVO.setProdNo(Integer.parseInt(request.getParameter("prodNo")));
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
 		productVO.setManuDate(request.getParameter("manuDate"));
