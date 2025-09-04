@@ -31,8 +31,8 @@ public class AddPurchaseAction extends Action {
         purchase.setBuyer(buyer);
         purchase.setPurchaseProd(product);
         purchase.setPaymentOption(request.getParameter("paymentOption"));
-        purchase.setReceiverName(request.getParameter("receiverName"));
-        purchase.setReceiverPhone(request.getParameter("receiverPhone"));
+        purchase.setReceiverName(request.getParameter("userName"));
+        purchase.setReceiverPhone(request.getParameter("phone"));
         purchase.setDivyAddr(request.getParameter("receiverAddr"));
         purchase.setDivyRequest(request.getParameter("receiverRequest"));
         purchase.setTranCode("1"); // 기본 구매 상태 (예: '1' = 주문 접수)
@@ -54,6 +54,8 @@ public class AddPurchaseAction extends Action {
         // 5. 다음 페이지로 이동
         request.setAttribute("purchase", purchase);
 //        return "forward:/purchase/addPurchaseResult.jsp";
-		return "redirect:/product/listProduct.jsp";
+		//return "redirect:/product/listProduct.jsp";
+		//return "forward:/product/listProduct.jsp";
+		return "redirect:/listProduct.do";
     }
 }

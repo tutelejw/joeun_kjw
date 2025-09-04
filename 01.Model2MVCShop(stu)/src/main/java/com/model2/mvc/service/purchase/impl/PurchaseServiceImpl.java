@@ -25,9 +25,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 //		return purchaseDAO.findPurchase(prodNo);
 //	}
 //
-//	public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws Exception {
-//		return purchaseDAO.getPurchaseList(searchVO);
-//	}
+	public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws Exception {
+		return purchaseDAO.getPurchaseList(searchVO);
+	}
 //
 //	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
 //		purchaseDAO.updatePurchase(purchaseVO);
