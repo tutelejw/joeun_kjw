@@ -18,11 +18,11 @@ public class PurchaseDAO {
 	        String sql = "	            INSERT INTO transaction (\r\n"
 	        		+ "	                tran_no, prod_no, buyer_id, payment_option, receiver_name,\r\n"
 	        		+ "	                receiver_phone, demailaddr, dlvy_request, tran_status_code,\r\n"
-	        		+ "	                order_data, dlvy_date\r\n"
+	        		+ "	                order_date, dlvy_date\r\n"
 	        		+ "	            ) VALUES (\r\n"
-	        		+ "	                tran_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?\r\n"
+	        		+ "	                seq_transaction_tran_no.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?\r\n"
 	        		+ "	            )";
-
+System.out.println("insertPurchase SQL : " + sql);
 	        PreparedStatement stmt = con.prepareStatement(sql);
 	        stmt.setInt(1, purchase.getPurchaseProd().getProdNo());
 	        stmt.setString(2, purchase.getBuyer().getUserId());
