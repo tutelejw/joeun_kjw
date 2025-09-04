@@ -5,12 +5,23 @@
 
 <%
 	ProductVO vo = (ProductVO)request.getAttribute("vo");
+	UserVO user = (UserVO) session.getAttribute("user");
+	String userId = user.getUserId();       // 구매자 아이디
+	String userName = user.getUserName();   // 구매자 이름
+	String phone = user.getPhone();   // 구매자 이름
+	out.println("<p style='color:green;'>[디버그] ProductVO loaded: " + vo.getProdName() + "</p>");
+	out.println("<p style='color:green;'>[디버그] UserVO.getUserId loaded: " + user.getUserId() + "</p>");
+	out.println("<p style='color:green;'>[디버그] UserVO.getUserName loaded: " + user.getUserName() + "</p>");
+	out.println("<p style='color:green;'>[디버그] UserVO.getPhone loaded: " + user.getPhone() + "</p>");
+	
 %>	
 
 <html>
 <head>
 <title>상품정보조회</title>
-
+<p>구매자 ID: <%= userId %></p>
+<p>구매자 이름: <%= userName %></p>
+<p>연락처: <%= phone %></p>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 </head>
@@ -25,7 +36,7 @@
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품정보조회</td>
+					<td width="93%" class="ct_ttl01">상품구매</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
 			</table>
@@ -35,8 +46,6 @@
 </table>
 
 <!-- form 시작: 구매 요청 시 필요한 모든 값들을 같이 전달 -->
-<!-- <form action="/addPurchaseView.do" method="post"> -->
-
 <form action="/addPurchase.do" method="post">
 <!-- 상품정보 테이블 시작 -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 13px;">
@@ -54,70 +63,145 @@
   <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
 
   <!-- 상품명 -->
-  <tr>
-    <td class="ct_write">상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/></td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getProdName() %>
-      <input type="hidden" name="prodName" value="<%=vo.getProdName()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
+<tr>
+  <td width="104" class="ct_write">
+    상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+  </td>
+  <td bgcolor="D6D6D6" width="1"></td>
+  <td class="ct_write01"><%=vo.getProdName()%></td>
+</tr>
+<tr>
+  <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+</tr>
 
-  <!-- 상품이미지 -->
-  <tr>
-    <td class="ct_write">상품이미지 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/></td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getFileName() %>
-      <input type="hidden" name="fileName" value="<%=vo.getFileName()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
+<!-- 상품상세정보 -->
+<tr>
+  <td width="104" class="ct_write">
+    상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+  </td>
+  <td bgcolor="D6D6D6" width="1"></td>
+  <td class="ct_write01"><%=vo.getProdDetail()%></td>
+</tr>
+<tr>
+  <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+</tr>
 
-  <!-- 상품상세정보 -->
-  <tr>
-    <td class="ct_write">상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/></td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getProdDetail() %>
-      <input type="hidden" name="prodDetail" value="<%=vo.getProdDetail()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
+<!-- 제조일자 -->
+<tr>
+  <td width="104" class="ct_write">제조일자</td>
+  <td bgcolor="D6D6D6" width="1"></td>
+  <td class="ct_write01"><%=vo.getManuDate()%></td>
+</tr>
+<tr>
+  <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+</tr>
 
-  <!-- 제조일자 -->
-  <tr>
-    <td class="ct_write">제조일자</td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getManuDate() %>
-      <input type="hidden" name="manuDate" value="<%=vo.getManuDate()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
+<!-- 가격 -->
+<tr>
+  <td width="104" class="ct_write">가격</td>
+  <td bgcolor="D6D6D6" width="1"></td>
+  <td class="ct_write01"><%=vo.getPrice()%></td>
+</tr>
+<tr>
+  <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+</tr>
 
-  <!-- 가격 -->
-  <tr>
-    <td class="ct_write">가격</td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getPrice() %>
-      <input type="hidden" name="price" value="<%=vo.getPrice()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
-
-  <!-- 등록일자 -->
-  <tr>
-    <td class="ct_write">등록일자</td>
-    <td bgcolor="D6D6D6"></td>
-    <td class="ct_write01">
-      <%=vo.getRegDate() %>
-      <input type="hidden" name="regDate" value="<%=vo.getRegDate()%>"/>
-    </td>
-  </tr>
-  <tr><td height="1" colspan="3" bgcolor="D6D6D6"></td></tr>
+<!-- 등록일자 -->
+<tr>
+  <td width="104" class="ct_write">등록일자</td>
+  <td bgcolor="D6D6D6" width="1"></td>
+  <td class="ct_write01">
+    <%
+      java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+      out.print(sdf.format(vo.getRegDate()));
+    %>
+  </td>
+</tr>
+<tr>
+  <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+</tr>
+	<tr>
+		<td width="104" class="ct_write">
+			구매자아이디 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01"><%= userId %></td>
+		<input type="hidden" name="userId" value="<%= userId %>" />
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">구매방법</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<select 	name="paymentOption"		class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20">
+				<option value="1" selected="selected">현금구매</option>
+				<option value="2">신용구매</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write"><%= userName %>></td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input type="text" name="userName" 	class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="20" value="<%= userName %>" />
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">구매자연락처</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input 	type="text" name="phone" class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20" value="<%= phone %>" />
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">구매자주소</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input 	type="text" name="receiverAddr" class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20" 	value="111" />
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">구매요청사항</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input		type="text" name="receiverRequest" 	class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20" />
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">배송희망일자</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td width="200" class="ct_write01">
+			<input 	type="text" readonly="readonly" name="receiverDate" class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20"/>
+			<img 	src="../images/ct_icon_date.gif" width="15" height="15"	
+						onclick="show_calendar('document.addPurchase.receiverDate', document.addPurchase.receiverDate.value)"/>
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
 </table>
 
 

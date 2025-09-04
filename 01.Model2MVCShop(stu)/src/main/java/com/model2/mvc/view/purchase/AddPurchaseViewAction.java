@@ -52,6 +52,9 @@ public class AddPurchaseViewAction extends Action {
 
         // 4. request scope에 저장해서 JSP에서 사용할 수 있도록 전달
         request.setAttribute("vo", productVO);
+//       // 로그인 성공 후 세션 저장
+//        UserVO user = userService.getUser(userId);
+//        session.setAttribute("user", user);
 
         // 5. forward 방식으로 JSP 이동
         return "forward:/purchase/addPurchaseView.jsp";
