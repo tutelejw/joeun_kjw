@@ -27,7 +27,7 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="updatePurchase" method="post"	action="/updatePurchase.do?tranNo=10005">
+<form name="updatePurchase" method="post"	action="/updatePurchase.do?tranNo=<%= vo.getTranNo() %>">
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -55,8 +55,8 @@
 	<tr>
 		<td width="104" class="ct_write">구매자아이디</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">kjw</td>
-		<input type="hidden" name="buyerId" value="kjw">
+		<td class="ct_write01"><%= vo.getBuyer().getUserId() %></td>
+		<input type="hidden" name="buyerId" >
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
