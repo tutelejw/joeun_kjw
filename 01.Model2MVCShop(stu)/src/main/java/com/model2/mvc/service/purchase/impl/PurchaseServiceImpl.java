@@ -21,10 +21,10 @@ public class PurchaseServiceImpl implements PurchaseService{
 		System.out.println("PurchaseServiceImpl 의 addProdut 입니다. -- " + purchaseVO);
 	}
 
-//	public PurchaseVO getPurchase(int prodNo) throws Exception {
-//		return purchaseDAO.findPurchase(prodNo);
-//	}
-//
+	public PurchaseVO getPurchase(int tranNo) throws Exception {
+		return purchaseDAO.findPurchase(tranNo);
+	}
+
 	public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws Exception {
 		return purchaseDAO.getPurchaseList(searchVO);
 	}

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.service.product.vo.ProductVO;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
 import com.model2.mvc.service.user.vo.UserVO;
 
@@ -50,40 +51,47 @@ System.out.println("insertPurchase SQL : " + sql);
 			con.close();
 	}
 
-//	public ProductVO findProduct(int prodNo) throws Exception {
-//		
-//		Connection con = DBUtil.getConnection();
-//
-//		String sql = "SELECT PROD_NO,\r\n"
-//				+ "    PROD_NAME,\r\n"
-//				+ "    PROD_DETAIL,\r\n"
-//				+ "    MANUFACTURE_DAY,\r\n"
-//				+ "    PRICE,\r\n"
-//				+ "    IMAGE_FILE,\r\n"
-//				+ "    REG_DATE \r\n"
-//				+ "	 FROM PRODUCT where PROD_NO=?";
-//		
-//		PreparedStatement stmt = con.prepareStatement(sql);
-//		stmt.setInt(1, prodNo);
-//
-//		ResultSet rs = stmt.executeQuery();
-//
-//		ProductVO productVO = null;
-//		while (rs.next()) {
-//			productVO = new ProductVO();
-//			productVO.setProdNo(rs.getInt("PROD_NO"));
-//			productVO.setProdName(rs.getString("PROD_NAME"));
-//			productVO.setProdDetail(rs.getString("PROD_DETAIL"));
-//			productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
-//			productVO.setPrice(rs.getInt("PRICE"));
-//			productVO.setFileName(rs.getString("IMAGE_FILE"));
-//			productVO.setRegDate(rs.getDate("REG_DATE"));
-//		}
-//		
-//		con.close();
-//
-//		return productVO;
-//	}
+	public PurchaseVO findPurchase(int tranNo) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+
+		String sql = "	select \r\n"
+				+ "		prod_no, buyer_id, PAYMENT_OPTION, receiver_name, receiver_phone, DEMAILADDR, dlvy_request,DLVY_DATE, ORDER_DATE\r\n"
+				+ "		from transaction where TRAN_NO=?" ;
+	
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, tranNo);
+
+		ResultSet rs = stmt.executeQuery();
+
+		PurchaseVO purchaseVO = null;
+	    if (rs.next()) {
+	        purchaseVO = new PurchaseVO();
+
+	        // ProductVO 생성 및 설정
+	        ProductVO product = new ProductVO();
+	        product.setProdNo(rs.getInt("prod_no"));
+	        purchaseVO.setPurchaseProd(product);
+
+	        // UserVO 생성 및 설정
+	        UserVO buyer = new UserVO();
+	        buyer.setUserId(rs.getString("buyer_id"));
+	        purchaseVO.setBuyer(buyer);
+
+	        // 나머지 필드 설정
+	        purchaseVO.setPaymentOption(rs.getString("payment_option"));
+	        purchaseVO.setReceiverName(rs.getString("receiver_name"));
+	        purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+	        purchaseVO.setDivyAddr(rs.getString("demailaddr"));
+	        purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+	        purchaseVO.setDivyDate(rs.getString("dlvy_date"));
+	        purchaseVO.setOrderDate(rs.getDate("order_date"));
+	    }
+		
+		con.close();
+
+		return purchaseVO;
+	}
 
 	public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws Exception {
 		
@@ -93,6 +101,7 @@ System.out.println("insertPurchase SQL : " + sql);
 		String sql = 
 			    "select tran_no, buyer_id, receiver_name, receiver_phone, dlvy_request,"
 			    + " CASE TRIM(tran_status_code)\r\n"
+			    + "        WHEN '0' THEN '판매중'\r\n"
 			    + "        WHEN '1' THEN '구매완료'\r\n"
 			    + "        WHEN '2' THEN '배송중'\r\n"
 			    + "        WHEN '3' THEN '배송완료'\r\n"
