@@ -3,7 +3,6 @@ package com.model2.mvc.service.purchase.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,9 +14,9 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 
 
-public class PurchaseDAO {
+public class PurchaseDAO2 {
 	
-	public PurchaseDAO(){
+	public PurchaseDAO2(){
 	}
 	public void insertPurchase(PurchaseVO purchase) throws Exception {
 		Connection con = DBUtil.getConnection();
@@ -174,31 +173,43 @@ System.out.println("insertPurchase SQL : " + sql);
 		return map;
 	}
 //
-    // 구매 정보 수정 메서드
-    // 구매 정보 수정 메서드
-    public void updatePurchase(PurchaseVO purchaseVO) throws SQLException {
-        // DB 연결
-        Connection con = DBUtil.getConnection();
-//SELECT receiver_name, receiver_phone, demailaddr, dlvy_request, dlvy_date FROM transaction ;
-        String sql = " UPDATE transaction SET "
-                + " receiver_name = ?, receiver_phone = ?, demailaddr = ?, dlvy_request = ?, dlvy_date = ? "
-                + " WHERE tran_no = ?";
-
-        PreparedStatement stmt = con.prepareStatement(sql);
-
-        // ?에 값 설정
-        stmt.setString(1, purchaseVO.getReceiverName());
-        stmt.setString(2, purchaseVO.getReceiverPhone());
-        stmt.setString(3, purchaseVO.getDivyAddr());
-        stmt.setString(4, purchaseVO.getDivyRequest());
-        stmt.setString(5, purchaseVO.getDivyDate());
-        stmt.setInt(6, purchaseVO.getTranNo());
-
-        // 쿼리 실행
-        int rowsUpdated = stmt.executeUpdate();
-        System.out.println("Rows updated: " + rowsUpdated); // 디버깅용 출력
-
-        // 리소스 해제
-         con.close();
-    }
+	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
+//	    // 로그를 추가하여 값 확인
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		System.out.println("updatePurchase 쿼리 작성해야함.");
+		//	    System.out.println("ProductDAO 의 updateProduct 실행 시작");
+//	    System.out.println("Received ProductVO:");
+//	    System.out.println("Product Name: " + productVO.getProdName());
+//	    System.out.println("Product Detail: " + productVO.getProdDetail());
+//	    System.out.println("Manufacture Date: " + productVO.getManuDate());
+//	    System.out.println("Price: " + productVO.getPrice());
+//	    System.out.println("File Name: " + productVO.getFileName());
+//	    System.out.println("Product No: " + productVO.getProdNo());
+//
+//		Connection con = DBUtil.getConnection();
+//
+//		String sql = "update PRODUCT set PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?,IMAGE_FILE=? where PROD_NO=?";
+//		
+//		PreparedStatement stmt = con.prepareStatement(sql);
+//		//productVO = new ProductVO();
+//		
+//		stmt.setString(1, productVO.getProdName());
+//		stmt.setString(2, productVO.getProdDetail());
+//		stmt.setString(3, productVO.getManuDate());
+//		stmt.setInt(4,productVO.getPrice());
+//		stmt.setString(5, productVO.getFileName());
+//		stmt.setInt(6,productVO.getProdNo());
+//		//stmt.executeUpdate();
+//	    // SQL 실행
+//		System.out.println("Executing SQL: " + sql);
+//		System.out.println("Product No: " + productVO.getProdNo());
+//	    int rowsAffected = stmt.executeUpdate();
+//	    System.out.println("Rows affected: " + rowsAffected);
+//		
+//		con.close();
+	}
 }

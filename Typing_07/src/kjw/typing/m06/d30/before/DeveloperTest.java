@@ -1,4 +1,4 @@
-
+package kjw.typing.m06.d30.before;
 public class DeveloperTest {
 
 	public static void main(String[] args) {

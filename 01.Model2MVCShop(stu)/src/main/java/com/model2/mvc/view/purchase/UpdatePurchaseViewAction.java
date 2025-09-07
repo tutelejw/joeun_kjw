@@ -17,9 +17,16 @@ public class UpdatePurchaseViewAction extends Action{
 //		String userId=request.getParameter("userId");
 		
 		PurchaseService service=new PurchaseServiceImpl();
-		PurchaseVO purchaseVO=service.getPurchase(tranNo);
+		PurchaseVO vo=service.getPurchase(tranNo);
+
+	    if (vo == null) {
+	        System.err.println("해당 tranNo에 대한 Purchase 정보 없음: " + tranNo);
+	        throw new Exception("해당 거래 정보를 찾을 수 없습니다.");
+	    } else {
+	        System.out.println("Purchase 정보 조회 성공: " + vo);
+	    }
 		
-		request.setAttribute("purchaseVO", purchaseVO);
+		request.setAttribute("vo", vo);
 		
 		return "forward:/purchase/updatePurchase.jsp";
 	}

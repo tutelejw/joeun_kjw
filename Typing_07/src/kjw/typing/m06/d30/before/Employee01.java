@@ -1,3 +1,4 @@
+package kjw.typing.m06.d30.before;
 public class Employee01{    // Bean class
 	String part;
 	String name;

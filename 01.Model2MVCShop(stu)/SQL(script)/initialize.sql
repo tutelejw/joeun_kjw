@@ -1,10 +1,17 @@
 
+sqlplus scott/tiger
+
 -- 보기 좋게 컬럼 형식 지정
 COLUMN tran_no        FORMAT 999999;
 COLUMN buyer_id       FORMAT A15;
 COLUMN demailaddr     FORMAT A30;
 COLUMN receiver_name  FORMAT A10;
-COLUMN dlvy_request   FORMAT A20;
+COLUMN dlvy_request   FORMAT A15;
+COLUMN DEMAILADDR   FORMAT A10;
+COLUMN BUYER_ID   FORMAT A10;
+COLUMN RECEIVER_PHONE   FORMAT A14;
+
+
 
 -- 줄 길이와 페이지 길이 설정
 SET LINESIZE 120;

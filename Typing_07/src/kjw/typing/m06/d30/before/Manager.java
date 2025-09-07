@@ -1,3 +1,4 @@
+package kjw.typing.m06.d30.before;
 public class Manager extends Employee{
 
 	int salary;

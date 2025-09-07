@@ -1,7 +1,8 @@
+package kjw.typing.m06.d30.before;
 public class  Hello
 {
 	public static void main(String[] args) 
 	{
-		System.out.println("Hello java :: ¾È³ç ÀÚ¹Ù");
+		System.out.println("Hello java :: ï¿½È³ï¿½ ï¿½Ú¹ï¿½");
 	}
 }

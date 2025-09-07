@@ -1,3 +1,4 @@
+package kjw.typing.m06.d30.before;
 class BusCharge{
 	String section;
 	public BusCharge(){
