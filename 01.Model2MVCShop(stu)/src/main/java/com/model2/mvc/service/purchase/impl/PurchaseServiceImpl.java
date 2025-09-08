@@ -32,6 +32,10 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
 		purchaseDAO.updatePurchase(purchaseVO);
 	}
+	
+    public void updatePurchaseDelivery(int tranNo) throws Exception {
+        purchaseDAO.updatePurchaseDelivery(tranNo);
+    }
 //
 //	public boolean checkDuplication(int prodNo) throws Exception {
 //		boolean result=true;

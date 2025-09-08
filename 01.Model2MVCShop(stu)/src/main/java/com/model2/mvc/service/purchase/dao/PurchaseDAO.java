@@ -111,13 +111,6 @@ System.out.println("insertPurchase SQL : " + sql);
 			    + "    END AS tran_status_code "
 			    + " from transaction T";
 	    
-//	    if (searchVO.getSearchCondition() != null) {
-//	    	if (searchVO.getSearchCondition().equals("0")) {
-//	    		sql += " where T.tran_no like '%" + searchVO.getSearchKeyword() + "%' ";
-//	    	} else if (searchVO.getSearchCondition().equals("1")) {
-//	    		sql += " where T.tran_no like '%" + searchVO.getSearchKeyword() + "%' ";
-//	    	}
-//	    }
 	    sql += " ORDER BY T.tran_no DESC";
 	    System.out.println("PurchaseDAO getPurchaseList - SQL : "+sql);
 		PreparedStatement stmt = 
@@ -201,4 +194,19 @@ System.out.println("insertPurchase SQL : " + sql);
         // 리소스 해제
          con.close();
     }
+    
+    public void updatePurchaseDelivery(int prodNo) throws Exception {
+        Connection con = DBUtil.getConnection();
+
+        String sql = "UPDATE transaction SET tran_status_code = '2' WHERE prod_no = ?";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, prodNo);
+
+        int result = stmt.executeUpdate();
+        System.out.println("배송상태 업데이트 결과: " + result + "건");
+
+//        stmt.close();
+        con.close();
+    }
+
 }

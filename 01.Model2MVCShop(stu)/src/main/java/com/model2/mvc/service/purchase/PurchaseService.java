@@ -18,5 +18,7 @@ public interface PurchaseService {
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception;
 //	
 //	public boolean checkDuplication(int prodNo) throws Exception;
-	
+
+	public void updatePurchaseDelivery(int tranNo) throws Exception;
+
 }

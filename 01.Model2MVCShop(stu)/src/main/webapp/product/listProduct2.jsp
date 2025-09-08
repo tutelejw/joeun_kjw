@@ -141,10 +141,11 @@ function fncGetProductList(){
         ProductVO vo = list.get(i);
 
         if ("manage".equals(menuParam)) {
-            link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
+           	link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
         } else {
-            if (!"판매중".equals(vo.getProTranCode())) {
-                link = ""; // 일반 사용자일 때, 판매중이 아니면 링크 없음
+/*             if ("재고없음".equals(vo.getProTranCode())) { */
+	    if (!"판매중".equals(vo.getProTranCode())) {
+                link = ""; // 링크 없음
             } else {
                 link = "/getProduct.do?prodNo=" + vo.getProdNo();
             }
@@ -165,25 +166,7 @@ function fncGetProductList(){
     <td></td>
     <td align="left"><%= vo.getRegDate() %></td>
     <td></td>
-    <td align="left">
-        <%
-            String status = vo.getProTranCode();
-
-            if (!"manage".equals(menuParam) && "구매완료".equals(status)) {
-                out.print("재고없음");
-            } else {
-                out.print(status);
-            }
-
-            if ("manage".equals(menuParam) && "구매완료".equals(status)) {
-        %>
-<%--             &nbsp;&nbsp;<a href="/updateDelivery.do?prodNo=<%= vo.getProdNo() %>">[배송하기]</a> --%>
-<%--             &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?tranNo=<%= vo.getTranNo() %>">[배송하기]</a> --%>
-            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getProdNo() %>">[배송하기]</a>
-        <%
-            }
-        %>
-    </td>
+    <td align="left"><%= vo.getProTranCode() %></td>
 </tr>
 <tr>
     <td colspan="9" bgcolor="D6D7D6" height="1"></td>
