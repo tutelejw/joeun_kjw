@@ -10,14 +10,30 @@ COLUMN dlvy_request   FORMAT A15;
 COLUMN DEMAILADDR   FORMAT A10;
 COLUMN BUYER_ID   FORMAT A10;
 COLUMN RECEIVER_PHONE   FORMAT A14;
+-- 컬럼 포맷 설정
+COLUMN prod_no        FORMAT 999999        HEADING '상품번호'
+COLUMN prod_name      FORMAT A20           HEADING '상품명'
+COLUMN prod_detail    FORMAT A20           HEADING '상품설명'
+COLUMN manufacture_day FORMAT A12          HEADING '제조일자'
+COLUMN price          FORMAT 9,999,999   HEADING '가격'
+COLUMN image_file     FORMAT A10           HEADING '이미지파일'
+COLUMN reg_date       FORMAT A15           HEADING '등록일'
+
+-- auto commit 설정
+SHOW AUTOCOMMIT;
+SET AUTOCOMMIT ON;
+SHOW AUTOCOMMIT;
+
+-- 예시: 데이터 조회
+SELECT * FROM product;
 
 
 
 -- 줄 길이와 페이지 길이 설정
-SET LINESIZE 120;
-SET PAGESIZE 50;
+SET LINESIZE 1000;
+SET PAGESIZE 1000;
 
-
+select * from product;
 
 
 DROP TABLE transaction;

@@ -143,7 +143,8 @@ function fncGetProductList(){
         if ("manage".equals(menuParam)) {
            	link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
         } else {
-            if ("재고없음".equals(vo.getProTranCode())) {
+/*             if ("재고없음".equals(vo.getProTranCode())) { */
+	    if (!"판매중".equals(vo.getProTranCode())) {
                 link = ""; // 링크 없음
             } else {
                 link = "/getProduct.do?prodNo=" + vo.getProdNo();

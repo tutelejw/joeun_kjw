@@ -72,33 +72,28 @@ public class ProductDAO {
 	public HashMap<String,Object> getProductList(SearchVO searchVO) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
-		
-	    // 기존 SQL (거래 상태 코드 없음)
-	    /*
-	    String sql = "SELECT PROD_NO,\r\n"
-	            + "    PROD_NAME,\r\n"
-	            + "    PROD_DETAIL,\r\n"
-	            + "    MANUFACTURE_DAY,\r\n"
-	            + "    PRICE,\r\n"
-	            + "    IMAGE_FILE,\r\n"
-	            + "    REG_DATE \r\n"
-	            + " FROM PRODUCT ";
-	    */
-		
+	
 	    // [수정됨] 거래 상태 코드 포함을 위해 TRANSACTION 테이블 JOIN
-		String sql = 
-			    "SELECT P.PROD_NO, P.PROD_NAME, P.PROD_DETAIL, P.MANUFACTURE_DAY, " +
-			    "       P.PRICE, P.IMAGE_FILE, P.REG_DATE, " +
-			    "       CASE WHEN T.PROD_NO IS NOT NULL THEN '재고없음' ELSE '판매중' END AS TRAN_STATUS_TEXT " +
-			    "FROM PRODUCT P LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
-	    
-//	    if (searchVO.getSearchCondition() != null) {
-//	        if (searchVO.getSearchCondition().equals("0")) {
-//	            sql += " AND P.PROD_NO = '" + searchVO.getSearchKeyword() + "' ";
-//	        } else if (searchVO.getSearchCondition().equals("1")) {
-//	            sql += " AND P.PROD_NAME = '" + searchVO.getSearchKeyword() + "' ";
-//	        }
-//	    }
+//		String sql = 
+//			    "SELECT P.PROD_NO, P.PROD_NAME, P.PROD_DETAIL, P.MANUFACTURE_DAY, " +
+//			    "       P.PRICE, P.IMAGE_FILE, P.REG_DATE, " +
+//			    "       CASE WHEN T.PROD_NO IS NOT NULL THEN '재고없음' ELSE '판매중' END AS TRAN_STATUS_TEXT " +
+//			    "FROM PRODUCT P LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
+
+		String sql = "SELECT \r\n"
+				+ "    P.PROD_NO,     P.PROD_NAME,     P.PROD_DETAIL,     P.MANUFACTURE_DAY, \r\n"
+				+ "    P.PRICE,     P.IMAGE_FILE,     P.REG_DATE,\r\n"
+				+ " CASE TRIM(t.tran_status_code)\r\n"
+				+ "        WHEN '0' THEN '판매중'\r\n"
+				+ "        WHEN '1' THEN '구매완료'\r\n"
+				+ "        WHEN '2' THEN '배송중'\r\n"
+				+ "        WHEN '3' THEN '배송완료'\r\n"
+				+ "        ELSE '판매중'\r\n"
+				+ "    END AS TRAN_STATUS_TEXT\r\n"
+				+ "FROM     PRODUCT P\r\n"
+				+ "LEFT JOIN     TRANSACTION T \r\n"
+				+ "ON     P.PROD_NO = T.PROD_NO";
+				
 	    if (searchVO.getSearchCondition() != null) {
 	    	if (searchVO.getSearchCondition().equals("0")) {
 	    		sql += " where P.PROD_NO like '%" + searchVO.getSearchKeyword() + "%' ";

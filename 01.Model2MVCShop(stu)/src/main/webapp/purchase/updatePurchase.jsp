@@ -145,13 +145,14 @@
     <td bgcolor="D6D6D6" width="1"></td>
     <td width="200" class="ct_write01">
         <!-- value에 vo.getDivyDate() 값을 설정, 사용자가 수정할 수 있도록 수정 -->
-        <input type="text" name="divyDate" class="ct_input_g" 
+<!--         <input type="text" name="divyDate" class="ct_input_g" --> 
+        <input type="date" name="divyDate" class="ct_input_g" 
                style="width: 100px; height: 19px" maxLength="20"
                 value="<%= formattedDate %>" />
                <%-- value="<%= vo.getDivyDate() %>" /> --%>
         <!-- 달력 아이콘 버튼은 그대로 유지 -->
-        <img src="../images/ct_icon_date.gif" width="15" height="15" 
-             onclick="show_calendar('document.updatePurchase.divyDate', document.updatePurchase.divyDate.value)" />
+    <!--     <img src="../images/ct_icon_date.gif" width="15" height="15" 
+             onclick="show_calendar('document.updatePurchase.divyDate', document.updatePurchase.divyDate.value)" /> -->
     </td>
 </tr>
 

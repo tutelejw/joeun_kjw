@@ -1,10 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ page import="com.model2.mvc.service.purchase.vo.*" %>
-
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date"%>
+<%@ page import="com.model2.mvc.service.purchase.vo.*" %>
 <%
 	PurchaseVO vo = (PurchaseVO)request.getAttribute("vo");
 %>	
+
+<%
+    // vo.getDivyDate()가 String 타입이라고 가정
+    String divyDateStr = vo.getDivyDate(); 
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 원본 포맷
+    SimpleDateFormat desiredFormat = new SimpleDateFormat("yyyy-MM-dd"); // 원하는 출력 포맷
+
+    Date divyDate = null;
+    String formattedDate = "";
+
+    try {
+        divyDate = originalFormat.parse(divyDateStr); // String을 Date로 변환
+        formattedDate = desiredFormat.format(divyDate); // 원하는 포맷으로 변환
+    } catch (Exception e) {
+        e.printStackTrace(); // 예외 처리
+    }
+%>
+
 
 <html>
 <head>
@@ -128,7 +148,8 @@
 	<tr>
 		<td width="104" class="ct_write">배송희망일</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getDivyDate()%></td>
+<%-- 		<td class="ct_write01"><%=vo.getDivyDate()%></td> --%>
+		<td class="ct_write01"><%= formattedDate %></td>
 	</tr>
 
 	<tr>
