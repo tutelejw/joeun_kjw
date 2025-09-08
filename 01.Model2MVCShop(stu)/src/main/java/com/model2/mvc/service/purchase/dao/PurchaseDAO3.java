@@ -15,9 +15,9 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 
 
-public class PurchaseDAO {
+public class PurchaseDAO3 {
 	
-	public PurchaseDAO(){
+	public PurchaseDAO3(){
 	}
 	public void insertPurchase(PurchaseVO purchase) throws Exception {
 		Connection con = DBUtil.getConnection();
