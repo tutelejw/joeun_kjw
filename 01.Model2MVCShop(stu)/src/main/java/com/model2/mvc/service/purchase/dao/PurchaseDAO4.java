@@ -15,9 +15,9 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 
 
-public class PurchaseDAO {
+public class PurchaseDAO4 {
 	
-	public PurchaseDAO(){
+	public PurchaseDAO4(){
 	}
 	public void insertPurchase(PurchaseVO purchase) throws Exception {
 		Connection con = DBUtil.getConnection();
@@ -53,22 +53,19 @@ System.out.println("insertPurchase SQL : " + sql);
 	}
 
 	public PurchaseVO findPurchase(int tranNo) throws Exception {
-	    
-	    Connection con = DBUtil.getConnection();
+		
+		Connection con = DBUtil.getConnection();
 
-	    String sql = "SELECT "
-	            + " T.tran_no, T.prod_no, T.buyer_id, U.user_name, "
-	            + " T.PAYMENT_OPTION, T.receiver_name, T.receiver_phone, T.DEMAILADDR, T.dlvy_request, T.DLVY_DATE, T.ORDER_DATE "
-	            + "FROM transaction T "
-	            + "JOIN users U ON T.buyer_id = U.user_id "
-	            + "WHERE T.TRAN_NO = ?";
+		String sql = "	select \r\n"
+				+ "		tran_no, prod_no, buyer_id, PAYMENT_OPTION, receiver_name, receiver_phone, DEMAILADDR, dlvy_request,DLVY_DATE, ORDER_DATE\r\n"
+				+ "		from transaction where TRAN_NO=?" ;
+	
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, tranNo);
 
-	    PreparedStatement stmt = con.prepareStatement(sql);
-	    stmt.setInt(1, tranNo);
+		ResultSet rs = stmt.executeQuery();
 
-	    ResultSet rs = stmt.executeQuery();
-
-	    PurchaseVO purchaseVO = null;
+		PurchaseVO purchaseVO = null;
 	    if (rs.next()) {
 	        purchaseVO = new PurchaseVO();
 
@@ -80,7 +77,6 @@ System.out.println("insertPurchase SQL : " + sql);
 	        // UserVO 생성 및 설정
 	        UserVO buyer = new UserVO();
 	        buyer.setUserId(rs.getString("buyer_id"));
-	        buyer.setUserName(rs.getString("user_name"));  // 이름 세팅 추가
 	        purchaseVO.setBuyer(buyer);
 
 	        // 나머지 필드 설정
@@ -93,12 +89,11 @@ System.out.println("insertPurchase SQL : " + sql);
 	        purchaseVO.setDivyDate(rs.getString("dlvy_date"));
 	        purchaseVO.setOrderDate(rs.getDate("order_date"));
 	    }
+		
+		con.close();
 
-	    con.close();
-
-	    return purchaseVO;
+		return purchaseVO;
 	}
-
 
 	public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws Exception {
 		
@@ -106,22 +101,23 @@ System.out.println("insertPurchase SQL : " + sql);
 		
 		//select tran_no, buyer_id, receiver_name, receiver_phone, dlvy_request, tran_status_code from transaction;
 		String sql = 
-			    "SELECT T.tran_no, T.buyer_id, U.user_name, T.receiver_name, T.receiver_phone, T.dlvy_request, "
-			  + " CASE TRIM(T.tran_status_code) "
-			  + "   WHEN '0' THEN '판매중' "
-			  + "   WHEN '1' THEN '구매완료' "
-			  + "   WHEN '2' THEN '배송중' "
-			  + "   WHEN '3' THEN '배송완료' "
-			  + "   ELSE '알수없음' "
-			  + " END AS tran_status_code "
-			  + "FROM transaction T "
-			  + "JOIN users U ON T.buyer_id = U.user_id "
-			  + "ORDER BY T.tran_no DESC";
-
-			PreparedStatement stmt = con.prepareStatement(sql,
-			                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-			                    ResultSet.CONCUR_UPDATABLE);
-			ResultSet rs = stmt.executeQuery();
+			    "select tran_no, buyer_id, receiver_name, receiver_phone, dlvy_request,"
+			    + " CASE TRIM(tran_status_code)\r\n"
+			    + "        WHEN '0' THEN '판매중'\r\n"
+			    + "        WHEN '1' THEN '구매완료'\r\n"
+			    + "        WHEN '2' THEN '배송중'\r\n"
+			    + "        WHEN '3' THEN '배송완료'\r\n"
+			    + "        ELSE '알수없음'\r\n"
+			    + "    END AS tran_status_code "
+			    + " from transaction T";
+	    
+	    sql += " ORDER BY T.tran_no DESC";
+	    System.out.println("PurchaseDAO getPurchaseList - SQL : "+sql);
+		PreparedStatement stmt = 
+			con.prepareStatement(	sql,
+														ResultSet.TYPE_SCROLL_INSENSITIVE,
+														ResultSet.CONCUR_UPDATABLE);
+		ResultSet rs = stmt.executeQuery();
 
 		rs.last();
 		int total = rs.getRow();
@@ -140,15 +136,20 @@ System.out.println("insertPurchase SQL : " + sql);
 		    for (int i = 0; i < searchVO.getPageUnit(); i++) {
 		        PurchaseVO vo = new PurchaseVO();
 
+		        // 거래번호
 		        vo.setTranNo(rs.getInt("TRAN_NO"));
+
+		        // 수신자 이름 / 전화번호 / 요청사항
 		        vo.setReceiverName(rs.getString("RECEIVER_NAME"));
 		        vo.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
 		        vo.setDivyRequest(rs.getString("DLVY_REQUEST"));
+
+		        // 거래 상태 코드
 		        vo.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 
+		        // 구매자 정보 (UserVO에 buyer_id만 넣기)
 		        UserVO buyer = new UserVO();
 		        buyer.setUserId(rs.getString("BUYER_ID"));
-		        buyer.setUserName(rs.getString("USER_NAME"));  // 여기에 buyer 이름 추가
 		        vo.setBuyer(buyer);
 
 		        list.add(vo);

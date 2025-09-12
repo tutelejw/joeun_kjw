@@ -103,13 +103,14 @@
 			<a href="/getUser.do?userId=<%= vo.getBuyer().getUserId() %>"><%= vo.getBuyer().getUserId() %></a>
 		</td>
 		<td></td>
-		<td align="left"><%= vo.getReceiverName() %></td>
+		<td align="left"><%=vo.getBuyer().getUserName()%></td>
 		<td></td>
 		<td align="left"><%= vo.getReceiverPhone() %></td>
 		<td></td>
 		<td align="left"><%= vo.getTranCode() %></td>		
 		<td></td>
 		<td align="left">
+		<!-- 강사님 버전 <a href="/updateTranCode.do?tranNo=10012&tranCode=3">물건도착</a> -->
 			
 		</td>
 	</tr>
