@@ -106,7 +106,7 @@ System.out.println("insertPurchase SQL : " + sql);
 		
 		//select tran_no, buyer_id, receiver_name, receiver_phone, dlvy_request, tran_status_code from transaction;
 		String sql = 
-			    "SELECT T.tran_no, T.buyer_id, U.user_name, T.receiver_name, T.receiver_phone, T.dlvy_request, "
+			    "SELECT T.tran_no, T.prod_no, T.buyer_id, U.user_name, T.receiver_name, T.receiver_phone, T.dlvy_request, "
 			  + " CASE TRIM(T.tran_status_code) "
 			  + "   WHEN '0' THEN '판매중' "
 			  + "   WHEN '1' THEN '구매완료' "
@@ -145,6 +145,11 @@ System.out.println("insertPurchase SQL : " + sql);
 		        vo.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
 		        vo.setDivyRequest(rs.getString("DLVY_REQUEST"));
 		        vo.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+		        
+		        // ProductVO 생성 및 설정
+		        ProductVO product = new ProductVO();
+		        product.setProdNo(rs.getInt("PROD_NO"));
+		        vo.setPurchaseProd(product);
 
 		        UserVO buyer = new UserVO();
 		        buyer.setUserId(rs.getString("BUYER_ID"));

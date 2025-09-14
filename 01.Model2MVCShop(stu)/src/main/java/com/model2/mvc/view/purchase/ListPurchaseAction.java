@@ -32,7 +32,8 @@ public class ListPurchaseAction extends Action {
 		
 		PurchaseService service=new PurchaseServiceImpl();
 		HashMap<String,Object> map=service.getPurchaseList(searchVO);
-
+		System.out.println("map : " + map);
+		System.out.println("searchVO : " + searchVO);
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
 		
