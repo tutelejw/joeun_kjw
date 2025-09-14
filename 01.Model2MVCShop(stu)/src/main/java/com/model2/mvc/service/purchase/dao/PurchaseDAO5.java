@@ -15,9 +15,9 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 
 
-public class PurchaseDAO {
+public class PurchaseDAO5 {
 	
-	public PurchaseDAO(){
+	public PurchaseDAO5(){
 	}
 	public void insertPurchase(PurchaseVO purchase) throws Exception {
 		Connection con = DBUtil.getConnection();
@@ -194,13 +194,12 @@ System.out.println("insertPurchase SQL : " + sql);
          con.close();
     }
     
-    public void updatePurchaseDelivery(int prodNo, int tranCode) throws Exception {
+    public void updatePurchaseDelivery(int prodNo) throws Exception {
         Connection con = DBUtil.getConnection();
-        System.out.println(getClass().getSimpleName() + " :: prodNo / tranCode  : " + prodNo +" / "+ tranCode);
-        String sql = "UPDATE transaction SET tran_status_code = ? WHERE prod_no = ?";
+
+        String sql = "UPDATE transaction SET tran_status_code = '2' WHERE prod_no = ?";
         PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setInt(1, tranCode);
-        stmt.setInt(2, prodNo);
+        stmt.setInt(1, prodNo);
 
         int result = stmt.executeUpdate();
         System.out.println("배송상태 업데이트 결과: " + result + "건");

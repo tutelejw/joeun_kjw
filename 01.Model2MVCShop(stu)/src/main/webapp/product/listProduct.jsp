@@ -179,7 +179,8 @@ function fncGetProductList(){
         %>
 <%--             &nbsp;&nbsp;<a href="/updateDelivery.do?prodNo=<%= vo.getProdNo() %>">[배송하기]</a> --%>
 <%--             &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?tranNo=<%= vo.getTranNo() %>">[배송하기]</a> --%>
-            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getProdNo() %>">[배송하기]</a>
+<%--             &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getProdNo() %>">[배송하기]</a> --%>
+            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getProdNo() %>&tranCode=2">[배송하기]</a>
             <!-- 강사님거 <a href="/updateTranCodeByProd.do?prodNo=10002&tranCode=2">배송하기</a> -->
         <%
             }

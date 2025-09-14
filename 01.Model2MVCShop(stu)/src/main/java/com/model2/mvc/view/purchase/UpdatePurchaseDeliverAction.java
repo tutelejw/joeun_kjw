@@ -14,9 +14,11 @@ public class UpdatePurchaseDeliverAction extends Action {
 
         try {
             int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+            int tranCode = Integer.parseInt(request.getParameter("tranCode"));
+            System.out.println(getClass()+ " prodNo / tranCode :: " + prodNo + " /  " + tranCode);
 
             PurchaseService purchaseService = new PurchaseServiceImpl();
-            purchaseService.updatePurchaseDelivery(prodNo);
+            purchaseService.updatePurchaseDelivery(prodNo, tranCode);
 
             // 성공 후 리다이렉트
             return "redirect:/listProduct.do?menu=manage";

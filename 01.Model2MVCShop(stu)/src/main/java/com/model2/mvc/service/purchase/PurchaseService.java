@@ -19,6 +19,6 @@ public interface PurchaseService {
 //	
 //	public boolean checkDuplication(int prodNo) throws Exception;
 
-	public void updatePurchaseDelivery(int tranNo) throws Exception;
+	public void updatePurchaseDelivery(int prodNo, int tranCode) throws Exception;
 
 }
