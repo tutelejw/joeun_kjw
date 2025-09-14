@@ -110,7 +110,11 @@
 		<td align="left"><%= vo.getTranCode() %></td>		
 		<td></td>
 		<td align="left">
+		            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getPurchaseProd().getProdNo() %>&tranCode=3">[물건도착]</a>
+<!-- 		ProductVO purchaseProd -->
+<%-- 		            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getTranNo() %>&tranCode=3">[물건도착]</a> --%>
 		<!-- 강사님 버전 <a href="/updateTranCode.do?tranNo=10012&tranCode=3">물건도착</a> -->
+
 			
 		</td>
 	</tr>
