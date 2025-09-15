@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+
 
 <%@ page import="com.model2.mvc.service.user.vo.*" %>
 <%@ page import="com.model2.mvc.service.product.vo.*" %>
@@ -6,6 +9,42 @@
 <%
 	ProductVO vo = (ProductVO)request.getAttribute("vo");
 %>	
+
+<%
+String prodNo = String.valueOf(vo.getProdNo());  // vo에서 상품번호 추출
+
+// 기존 history 쿠키 가져오기
+String history = "";
+Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+    for (Cookie c : cookies) {
+        if (c.getName().equals("history")) {
+            history = c.getValue();
+        }
+    }
+}
+
+// 중복 저장 방지
+if (!history.contains(prodNo)) {
+    // 최대 10개까지만 저장 (선택사항)
+    String[] historyArr = history.split(",");
+    if (historyArr.length >= 10) {
+        // 맨 앞 제거
+        history = history.substring(history.indexOf(",") + 1);
+    }
+
+    if (!history.isEmpty()) {
+        history += ",";
+    }
+    history += prodNo;
+}
+
+// 쿠키로 저장
+Cookie historyCookie = new Cookie("history", history);
+historyCookie.setMaxAge(60 * 60 * 24 * 7); // 7일
+historyCookie.setPath("/"); // 전체 경로에서 사용 가능
+response.addCookie(historyCookie); 
+%>
 
 <html>
 <head>
