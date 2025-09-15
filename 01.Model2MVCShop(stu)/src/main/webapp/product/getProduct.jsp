@@ -11,40 +11,48 @@
 %>	
 
 <%
-String prodNo = String.valueOf(vo.getProdNo());  // vo에서 상품번호 추출
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
 
-// 기존 history 쿠키 가져오기
-String history = "";
-Cookie[] cookies = request.getCookies();
-if (cookies != null) {
-    for (Cookie c : cookies) {
-        if (c.getName().equals("history")) {
-            history = c.getValue();
+    String prodNo = request.getParameter("prodNo");
+
+    String history = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie c : cookies) {
+            if (c.getName().equals("history")) {
+                history = java.net.URLDecoder.decode(c.getValue(), "UTF-8");  // 디코딩
+            }
         }
     }
-}
 
-// 중복 저장 방지
-if (!history.contains(prodNo)) {
-    // 최대 10개까지만 저장 (선택사항)
-    String[] historyArr = history.split(",");
-    if (historyArr.length >= 10) {
-        // 맨 앞 제거
-        history = history.substring(history.indexOf(",") + 1);
-    }
-
+    java.util.LinkedHashSet<String> set = new java.util.LinkedHashSet<>();
     if (!history.isEmpty()) {
-        history += ",";
+        String[] parts = history.split(",");
+        for (String p : parts) {
+            if (!p.equals("null") && !p.equals(prodNo)) {
+                set.add(p);
+            }
+        }
     }
-    history += prodNo;
-}
+    set.add(prodNo); // 최신 상품 추가
 
-// 쿠키로 저장
-Cookie historyCookie = new Cookie("history", history);
-historyCookie.setMaxAge(60 * 60 * 24 * 7); // 7일
-historyCookie.setPath("/"); // 전체 경로에서 사용 가능
-response.addCookie(historyCookie); 
+    // 최대 5개
+    while (set.size() > 5) {
+        java.util.Iterator<String> it = set.iterator();
+        it.next();
+        it.remove();
+    }
+
+    String newHistory = String.join(",", set);
+    String encodedHistory = java.net.URLEncoder.encode(newHistory, "UTF-8"); // ✅ 인코딩
+
+    Cookie cookie = new Cookie("history", encodedHistory); // ✅ 인코딩된 값 저장
+    cookie.setPath("/");
+    cookie.setMaxAge(60 * 60 * 24 * 7);
+    response.addCookie(cookie);
 %>
+
 
 <html>
 <head>
