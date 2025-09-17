@@ -23,6 +23,9 @@
 			return;
 		}
 	    document.loginForm.submit();
+	    
+		// 숨겨진 submit 버튼 클릭 → Enter 키 대응
+		document.getElementById("realSubmit").click();
 	}
 	
 	//Call Back Method 이용 onload 시 Event 처리
@@ -77,7 +80,7 @@
                 	<img src="/images/text_id.gif" width="100" height="30"/>
                 </td>
                 <td height="30">
-                  <input 	type="text" id="userId" name="userId"  class="ct_input_g" 
+                  <input 	type="text" name="userId"  class="ct_input_g" 
                   				style="width:180px; height:19px"  maxLength='50'/>          
           		</td>
                 <td width="20" height="30">&nbsp;</td>
@@ -103,7 +106,7 @@
                          	<a href="javascript:fncLogin();">
                          		<img src="/images/btn_login.gif" width="56" height="20" border="0"/>
                          	</a>
-                         	                         	 <!-- ★★★ Enter 키 입력 시 폼 submit 처리 위한 숨겨진 submit 버튼 ★★★ -->
+                         	 <!-- ★★★ Enter 키 입력 시 폼 submit 처리 위한 숨겨진 submit 버튼 ★★★ -->
                          	<input type="submit" id="realSubmit" style="display:none;" />
                          </td>
                          <td width="10">&nbsp;</td>

@@ -16,6 +16,7 @@ public class LogoutAction extends Action {
 		
 		session.invalidate();
 		
-		return "redirect:/index.jsp";
+//		return "redirect:/index.jsp";
+		return "redirect:/user/loginView.jsp";
 	}
 }
