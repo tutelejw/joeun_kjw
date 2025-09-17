@@ -36,10 +36,17 @@ public class ListPurchaseAction extends Action {
 		
 		PurchaseService service=new PurchaseServiceImpl();
 		HashMap<String,Object> map=service.getPurchaseList(search);
+
+		// 페이징 관련 추가된 부분
+	    int totalCount = (map.get("totalCount") != null) ? (Integer) map.get("totalCount") : 0;
+	    
+	    // 페이징 처리
+	    Page resultPage = new Page(currentPage, totalCount, pageUnit, pageSize);
+	    System.out.println("ListPurchaseAction ::" + resultPage);
 		
-		Page resultPage	= 
-				new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-	System.out.println("ListPurchaseAction ::"+resultPage);
+//		Page resultPage	= 
+//				new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+//	System.out.println("ListPurchaseAction ::"+resultPage);
 	
 		// Model 과 View 연결
 		request.setAttribute("list", map.get("list"));

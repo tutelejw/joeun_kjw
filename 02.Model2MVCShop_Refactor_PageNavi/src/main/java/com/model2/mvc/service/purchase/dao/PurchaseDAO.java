@@ -133,7 +133,8 @@ System.out.println("insertPurchase SQL : " + sql);
 
 	    // 4. totalCount 조회
 	    int totalCount = getTotalCount(sql);
-	    map.put("count", totalCount);
+	    //map.put("count", totalCount);
+	    map.put("totalCount", totalCount);
 
 	    // 5. 페이징 쿼리 생성
 	    String pagingSql = makeCurrentPageSql(sql, search);

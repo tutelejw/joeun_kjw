@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 
@@ -47,10 +48,18 @@ public class AddPurchaseViewAction extends Action {
         System.out.println(product);
         System.out.println("===================================");
 
+        // 4. 로그인된 사용자 정보 세션에서 가져오기
+        User user = (User) request.getSession().getAttribute("user");
+
+        if (user == null) {
+            throw new IllegalStateException("[에러] 로그인된 사용자가 없습니다.");
+        }
+        
         // 4. request scope에 저장해서 JSP에서 사용할 수 있도록 전달
         request.setAttribute("vo", product);
+        request.setAttribute("user", user); // 로그인 사용자 정보를 JSP로 전달
 //       // 로그인 성공 후 세션 저장
-//        UserVO user = userService.getUser(userId);
+//        User user = userService.getUser(userId);
 //        session.setAttribute("user", user);
 
         // 5. forward 방식으로 JSP 이동

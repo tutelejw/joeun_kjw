@@ -52,7 +52,8 @@ System.out.println("[로그] 요청 방식: " + method);
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-	function fncGetPurchaseList() {
+	function fncGetPurchaseList(page) {
+		document.getElementById("currentPage").value = page;
 		document.detailForm.submit();
 	}
 </script>
@@ -62,8 +63,8 @@ System.out.println("[로그] 요청 방식: " + method);
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listUser.do" method="post">
-
+<form name="detailForm" action="/listPurchase.do" method="post">
+<input type="hidden" id="currentPage" name="currentPage" value="1"/>
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"width="15" height="37"></td>
@@ -146,21 +147,21 @@ System.out.println("[로그] 요청 방식: " + method);
 	<tr>
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value="1"/>
-			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-					◀ 이전
-			<% }else{ %>
-					<a href="javascript:fncGetPurchaseList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-			<% } %>
+<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
+	◀ 이전
+<% }else{ %>
+	<a href="javascript:fncGetPurchaseList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
+<% } %>
 
-			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetPurchaseList('<%=i %>');"><%=i %></a>
-			<% 	}  %>
-	
-			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-					이후 ▶
-			<% }else{ %>
-					<a href="javascript:fncGetPurchaseList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>
+<% for(int i=resultPage.getBeginUnitPage(); i<= resultPage.getEndUnitPage(); i++){ %>
+	<a href="javascript:fncGetPurchaseList('<%= i %>');"><%= i %></a>
+<% } %>
+
+<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
+	이후 ▶
+<% }else{ %>
+	<a href="javascript:fncGetPurchaseList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
+<% } %>
 		
     	</td>
 	</tr>
