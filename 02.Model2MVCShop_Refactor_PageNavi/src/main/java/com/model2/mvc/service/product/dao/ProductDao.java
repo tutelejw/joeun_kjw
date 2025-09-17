@@ -48,7 +48,7 @@ public class ProductDao {
 	}
 
 	
-	public Product findProduct(String prodNo) throws Exception {
+	public Product findProduct(int prodNo) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 			
@@ -65,7 +65,7 @@ public class ProductDao {
 				+ "	 FROM PRODUCT where PROD_NO=?";
 		
 		PreparedStatement pStmt = con.prepareStatement(sql);
-		pStmt.setString(1, prodNo);
+		pStmt.setInt(1, prodNo);
 
 		ResultSet rs = pStmt.executeQuery();
 
@@ -182,7 +182,9 @@ public class ProductDao {
 
 		System.out.println("Executing SQL: " + sql);
 		System.out.println("Product No: " + vo.getProdNo());
-
+		// ✅ SQL 실행
+		int row = pStmt.executeUpdate();  
+		System.out.println(getClass() +" updateProduct  ::  업데이트된 행 수: " + row);
 		pStmt.close();
 		con.close();
 	}

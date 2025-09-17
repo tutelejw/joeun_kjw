@@ -5,6 +5,48 @@
 <%
 	Product product = (Product)request.getAttribute("product");
 %>	
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+
+    String prodNo = request.getParameter("prodNo");
+
+    String history = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie c : cookies) {
+            if (c.getName().equals("history")) {
+                history = java.net.URLDecoder.decode(c.getValue(), "UTF-8");  // 디코딩
+            }
+        }
+    }
+
+    java.util.LinkedHashSet<String> set = new java.util.LinkedHashSet<>();
+    if (!history.isEmpty()) {
+        String[] parts = history.split(",");
+        for (String p : parts) {
+            if (!p.equals("null") && !p.equals(prodNo)) {
+                set.add(p);
+            }
+        }
+    }
+    set.add(prodNo); // 최신 상품 추가
+
+    // 최대 5개
+    while (set.size() > 5) {
+        java.util.Iterator<String> it = set.iterator();
+        it.next();
+        it.remove();
+    }
+
+    String newHistory = String.join(",", set);
+    String encodedHistory = java.net.URLEncoder.encode(newHistory, "UTF-8"); // ✅ 인코딩
+
+    Cookie cookie = new Cookie("history", encodedHistory); // ✅ 인코딩된 값 저장
+    cookie.setPath("/");
+    cookie.setMaxAge(60 * 60 * 24 * 7);
+    response.addCookie(cookie);
+%>
 
 <html>
 <head>

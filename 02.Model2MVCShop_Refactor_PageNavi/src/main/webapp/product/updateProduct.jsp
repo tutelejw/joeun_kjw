@@ -62,7 +62,9 @@ function resetData() {
 		<td width="104" class="ct_write">	상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=product.getProdName() %></td>
+				<td class="ct_write01">
+			<input 	type="text" name="prodName" value="<%=product.getProdName() %>" class="ct_input_g" 
+							style="width:100px; height:19px"  maxLength="50" />
 	</tr>
 	
 	<tr>		<td height="1" colspan="3" bgcolor="D6D6D6"></td>	</tr>
@@ -95,7 +97,7 @@ function resetData() {
 		<td width="104" class="ct_write">가격 </td>		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input		type="text" name="price" value="<%=product.getPrice() %>" class="ct_input_g" 
-							style="width:100px; height:19px" onChange="check_email(this.form);" />
+							style="width:100px; height:19px" />
 		</td>
 	</tr>
 	
@@ -104,7 +106,7 @@ function resetData() {
 		<td width="104" class="ct_write">상품이미지 </td>		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input		type="text" name="fileName" value="<%=product.getFileName() %>" class="ct_input_g" 
-							style="width:100px; height:19px" onChange="check_email(this.form);" />
+							style="width:100px; height:19px" />
 		</td>
 	</tr>
 	

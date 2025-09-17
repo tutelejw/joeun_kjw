@@ -167,7 +167,7 @@ System.out.println("[로그] 요청 방식: " + method);
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
+		   <input type="hidden" id="currentPage" name="currentPage" value="1"/>
 			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
 					◀ 이전
 			<% }else{ %>

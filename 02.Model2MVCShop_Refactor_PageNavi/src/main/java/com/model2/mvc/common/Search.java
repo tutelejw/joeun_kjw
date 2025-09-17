@@ -4,10 +4,10 @@ package com.model2.mvc.common;
 public class Search {
 	
 	///Field
-	private int curruntPage;
-	private String searchCondition;
-	private String searchKeyword;
-	private int pageSize;
+	private int curruntPage;  // 현재 페이지 번호
+	private String searchCondition;  // 검색 조건 (예: "title", "writer" 등)
+	private String searchKeyword;   // 검색 키워드 (예: "갤럭시", "홍길동" 등)
+	private int pageSize;  // 한 페이지에 표시할 항목 수
 	
 	///Constructor
 	public Search() {
