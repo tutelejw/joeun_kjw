@@ -30,9 +30,12 @@ System.out.println("[로그] 요청 방식: " + method);
     String menuParam = request.getParameter("menu");
     String link;
     String title = "상품 목록 조회";
+    System.out.println("[로그] menuParam: " + menuParam);
+    
     
     if ("manage".equals(menuParam)) {
         title = "상품관리";
+        System.out.println("[로그] listProduct.jsp title if: " + menuParam);
     }
     
 %>
@@ -128,7 +131,7 @@ System.out.println("[로그] 요청 방식: " + method);
 	<%
 		for(int i=0; i<list.size(); i++) {
 			Product vo = list.get(i);
-			
+			System.out.println("[로그] menuParam for : " + menuParam);
 	        if ("manage".equals(menuParam)) {
 	            //link = "/getProduct.do?prodNo=" + vo.getProdNo() + "&menu=manage";
 	            link = "/updateProductView.do?prodNo=" + vo.getProdNo();
@@ -155,7 +158,25 @@ System.out.println("[로그] 요청 방식: " + method);
 		<td></td>
 		<td align="left"><%= vo.getRegDate() %>	</td>		
 		<td></td>
-		<td align="left"><%= vo.getProTranCode() %>	</td>	
+		   <td align="left">
+        <%
+            String status = vo.getProTranCode();
+        out.print("페이징시menuParam사라짐/status:" + status);
+        out.print("/menuParam:" + menuParam+"/");
+            if (!"manage".equals(menuParam) && "구매완료".equals(status)) {
+                out.print("if1-재고없음");
+            } else {
+                out.print("if2-"+status);
+            }
+
+            if ("manage".equals(menuParam) && "구매완료".equals(status)) {
+        %>
+            &nbsp;&nbsp;<a href="/updatePurchaseDelivery.do?prodNo=<%= vo.getProdNo() %>&tranCode=2">[배송하기]</a>
+            <!-- 강사님거 <a href="/updateTranCodeByProd.do?prodNo=10002&tranCode=2">배송하기</a> -->
+        <%
+            }
+        %>
+    </td>	
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
