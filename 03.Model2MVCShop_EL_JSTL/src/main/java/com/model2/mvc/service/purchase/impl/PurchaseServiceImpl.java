@@ -1,57 +1,41 @@
 package com.model2.mvc.service.purchase.impl;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.purchase.PurchaseService;
-import com.model2.mvc.service.purchase.dao.PurchaseDao;
+import com.model2.mvc.service.purchase.dao.PurchaseDAO;
 
-public class PurchaseServiceImpl implements PurchaseService {
 
-    private PurchaseDao purchaseDao;
+public class PurchaseServiceImpl implements PurchaseService{
+	
+	private PurchaseDAO purchaseDAO;
+	
+	public PurchaseServiceImpl() {
+		purchaseDAO=new PurchaseDAO();
+	}
 
-    public PurchaseServiceImpl() {
-        purchaseDao = new PurchaseDao();
+	public void addPurchase(Purchase purchase) throws Exception {
+		purchaseDAO.insertPurchase(purchase);
+		System.out.println("PurchaseServiceImpl 의 addProdut 입니다. -- " + purchase);
+	}
+
+	public Purchase getPurchase(int tranNo) throws Exception {
+		return purchaseDAO.findPurchase(tranNo);
+	}
+
+	public HashMap<String,Object> getPurchaseList(Search search) throws Exception {
+		return purchaseDAO.getPurchaseList(search);
+	}
+
+	public void updatePurchase(Purchase purchase) throws Exception {
+		purchaseDAO.updatePurchase(purchase);
+	}
+	
+    public void updatePurchaseDelivery(int prodNo, int tranCode) throws Exception {
+        System.out.println(getClass()+ " prodNo / tranCode :: " + prodNo + " /  " + tranCode);
+        purchaseDAO.updatePurchaseDelivery(prodNo, tranCode);
     }
 
-    @Override
-    public void addPurchase(Purchase purchase) throws Exception {
-        purchaseDao.addPurchase(purchase);
-    }
-
-    @Override
-    public Purchase getPurchase(int tranNo) throws Exception {
-        return purchaseDao.findPurchase(tranNo);
-    }
-
-//    @Override
-//    public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
-//        List<Purchase> list = purchaseDao.getPurchaseList(search, buyerId);
-//        int totalCount = purchaseDao.getTotalCount(buyerId);
-//        
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("list", list);
-//        map.put("totalCount", totalCount);
-//        
-//        return map;
-//    }
-
-    @Override
-    public Map<String, Object> getSaleList(Search search) throws Exception {
-        // DAO 호출 및 Map 패키징
-        return null; // getPurchaseList와 유사하게 구현
-    }
-
-    @Override
-    public void updatePurchase(Purchase purchase) throws Exception {
-        purchaseDao.updatePurchase(purchase);
-    }
-
-    @Override
-    public void updateTranCode(Purchase purchase) throws Exception {
-        purchaseDao.updateTranCode(purchase);
-    }
 }
