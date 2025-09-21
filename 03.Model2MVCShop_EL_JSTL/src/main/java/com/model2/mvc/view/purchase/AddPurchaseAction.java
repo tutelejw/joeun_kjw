@@ -28,9 +28,9 @@ public class AddPurchaseAction extends Action {
         purchase.setPaymentOption(request.getParameter("paymentOption"));
         purchase.setReceiverName(request.getParameter("receiverName"));
         purchase.setReceiverPhone(request.getParameter("receiverPhone"));
-        purchase.setDlvyAddr(request.getParameter("dlvyAddr"));
-        purchase.setDlvyRequest(request.getParameter("dlvyRequest"));
-        purchase.setDlvyDate(request.getParameter("dlvyDate"));
+        purchase.setDivyAddr(request.getParameter("divyAddr"));
+        purchase.setDivyRequest(request.getParameter("divyRequest"));
+        purchase.setDivyDate(request.getParameter("divyDate"));
         
         // 4. 서비스 호출
         PurchaseService service = new PurchaseServiceImpl();
