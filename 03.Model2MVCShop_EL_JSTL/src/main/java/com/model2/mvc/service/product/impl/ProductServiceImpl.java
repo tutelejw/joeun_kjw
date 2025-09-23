@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService{
 		productDao.insertProduct(product);
 	}
 
-	public Product getProduct(String prodNo) throws Exception {
+	public Product getProduct(int prodNo) throws Exception {
 		return productDao.findProduct(prodNo);
 	}
 
@@ -35,12 +35,4 @@ public class ProductServiceImpl implements ProductService{
 		productDao.updateProduct(product);
 	}
 
-	public boolean checkDuplication(String prodNo) throws Exception {
-		boolean result=true;
-		Product product=productDao.findProduct(prodNo);
-		if(product != null) {
-			result=false;
-		}
-		return result;
-	}
 }

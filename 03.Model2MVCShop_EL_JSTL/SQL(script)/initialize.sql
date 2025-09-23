@@ -1,3 +1,54 @@
+sqlplus scott/tiger
+
+-- 컬럼별 출력 포맷 지정 (HEADING 없이)
+COLUMN user_id     FORMAT A10
+COLUMN user_name   FORMAT A15
+COLUMN password    FORMAT A10
+COLUMN role        FORMAT A5
+COLUMN ssn         FORMAT A13
+COLUMN cell_phone  FORMAT A14
+COLUMN addr        FORMAT A20
+COLUMN email       FORMAT A15
+COLUMN reg_date    FORMAT A19
+
+-- 날짜 형식 지정
+-- ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
+
+
+-- 보기 좋게 컬럼 형식 지정
+
+
+COLUMN tran_no        FORMAT 999999;
+COLUMN buyer_id       FORMAT A15;
+COLUMN demailaddr     FORMAT A30;
+COLUMN receiver_name  FORMAT A10;
+COLUMN dlvy_request   FORMAT A15;
+COLUMN DEMAILADDR   FORMAT A10;
+COLUMN BUYER_ID   FORMAT A10;
+COLUMN RECEIVER_PHONE   FORMAT A14;
+-- 컬럼 포맷 설정
+COLUMN prod_no        FORMAT 999999   
+COLUMN prod_name      FORMAT A20      
+COLUMN prod_detail    FORMAT A20      
+COLUMN manufacture_day FORMAT A12     
+COLUMN price          FORMAT 9,999,999 
+COLUMN image_file     FORMAT A10       
+COLUMN reg_date       FORMAT A15       
+
+-- auto commit 설정
+SHOW AUTOCOMMIT;
+SET AUTOCOMMIT ON;
+SHOW AUTOCOMMIT;
+
+-- 줄 길이와 페이지 길이 설정
+SET LINESIZE 1000;
+SET PAGESIZE 1000;
+
+select * from users;
+select * from product;
+select * from transaction;
+
+
 
 DROP TABLE transaction;
 DROP TABLE product;

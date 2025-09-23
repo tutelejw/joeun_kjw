@@ -48,7 +48,7 @@ public class ProductDao {
 	}
 
 	
-	public Product findProduct(String prodNo) throws Exception {
+	public Product findProduct(int prodNo) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 			
@@ -65,7 +65,7 @@ public class ProductDao {
 				+ "	 FROM PRODUCT where PROD_NO=?";
 		
 		PreparedStatement pStmt = con.prepareStatement(sql);
-		pStmt.setString(1, prodNo);
+		pStmt.setInt(1, prodNo);
 
 		ResultSet rs = pStmt.executeQuery();
 

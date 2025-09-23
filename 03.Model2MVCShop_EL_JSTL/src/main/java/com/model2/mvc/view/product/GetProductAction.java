@@ -14,7 +14,7 @@ public class GetProductAction extends Action{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		String prodNo=request.getParameter("prodNo");
+		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
 		
 		ProductService productService=new ProductServiceImpl();
 		Product product=productService.getProduct(prodNo);
