@@ -1,0 +1,20 @@
+전체 흐름 요약
+1. [브라우저] 사용자가 요청 (예: 상품 목록 요청)
+
+2. [서버]
+   - 컨트롤러 or 액션 클래스 실행
+   - DB 조회, 비즈니스 로직 처리
+   - 결과 데이터를 request scope 에 저장:
+        request.setAttribute("list", 상품목록);
+   - JSP 페이지로 forward
+
+3. [JSP]
+   - request scope 의 데이터를 꺼내서 HTML 생성:
+        ${list} 등
+
+4. [서버]
+   - HTML 응답 완성
+
+5. [브라우저]
+   - HTML을 받아서 파싱하고 화면에 보여줌
+   - 이때부터 request scope는 서버에서 사라짐
