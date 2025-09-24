@@ -1,5 +1,8 @@
 package com.model2.mvc.view.purchase;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +23,7 @@ public class GetPurchaseAction extends Action{
 		
 		PurchaseService service=new PurchaseServiceImpl();
 		Purchase vo=service.getPurchase(tranNo);
+		
 		
 		request.setAttribute("vo", vo);
 
