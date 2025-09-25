@@ -22,6 +22,7 @@ public class UpdatePurchaseDeliverAction extends Action {
 
             // 성공 후 리다이렉트
             return "redirect:/listProduct.do?menu=manage";
+            //return "redirect:/listPurchase.do?menu=manage";
 
         } catch (Exception e) {
             e.printStackTrace();

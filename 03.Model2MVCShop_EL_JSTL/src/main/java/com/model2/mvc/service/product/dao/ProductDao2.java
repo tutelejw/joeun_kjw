@@ -14,12 +14,12 @@ import com.model2.mvc.service.domain.Product;
 //import com.model2.mvc.service.product.Product;
 
 
-public class ProductDao {
+public class ProductDao2 {
 	
 	///Field
 	
 	///Constructor
-	public ProductDao() {
+	public ProductDao2() {
 	}
 
 	///Method
@@ -101,23 +101,10 @@ public class ProductDao {
 
 		// 거래 상태 코드 포함을 위해 TRANSACTION 테이블 JOIN
 		String sql = 
-			    "SELECT \r\n"
-			    + "    P.PROD_NO, \r\n"
-			    + "    P.PROD_NAME, \r\n"
-			    + "    P.PROD_DETAIL, \r\n"
-			    + "    P.MANUFACTURE_DAY, \r\n"
-			    + "    P.PRICE, \r\n"
-			    + "    P.IMAGE_FILE, \r\n"
-			    + "    P.REG_DATE, \r\n"
-			    + "    CASE TRIM(T.tran_status_code) \r\n"
-			    + "			    WHEN '0' THEN '판매중' \r\n"
-			    + "			    WHEN '1' THEN '구매완료' \r\n"
-			    + "			    WHEN '2' THEN '배송중' \r\n"
-			    + "			    WHEN '3' THEN '배송완료' \r\n"
-			    + "			    ELSE '판매중' \r\n"
-			    + "    END AS TRAN_STATUS_TEXT\r\n"
-			    + "FROM PRODUCT P \r\n"
-			    + "LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
+			    "SELECT P.PROD_NO, P.PROD_NAME, P.PROD_DETAIL, P.MANUFACTURE_DAY, " +
+			    "       P.PRICE, P.IMAGE_FILE, P.REG_DATE, " +
+			    "       CASE WHEN T.PROD_NO IS NOT NULL THEN '재고없음' ELSE '판매중' END AS TRAN_STATUS_TEXT " +
+			    "FROM PRODUCT P LEFT JOIN TRANSACTION T ON P.PROD_NO = T.PROD_NO";
 	
 	    if (search.getSearchCondition() != null) {
 			if ( search.getSearchCondition().equals("0") &&  !search.getSearchKeyword().equals("") ) {

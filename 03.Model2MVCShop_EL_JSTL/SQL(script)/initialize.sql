@@ -1,3 +1,5 @@
+
+
 sqlplus scott/tiger
 
 -- 컬럼별 출력 포맷 지정 (HEADING 없이)
@@ -46,7 +48,10 @@ SET PAGESIZE 1000;
 
 select * from users;
 select * from product;
-select * from transaction;
+select * from transaction order by tran_no asc;
+
+
+
 
 
 
